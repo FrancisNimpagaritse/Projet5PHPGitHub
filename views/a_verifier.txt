@@ -1,2 +1,0 @@
-Accueil faut le mettre dans blog ou a la racine de views?
-Faire en sorte que index intègre accueil défaut si aucun param n'est specifié
