@@ -1,7 +1,7 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="../../index3.html" class="brand-link">
-      <img src="myImage/photo2.png"
+      <img src="<?php echo URL_PATH; ?>views/admin/myImage/softwaredev1.png"
            alt="Logo"
            class="brand-image img-circle elevation-3"
            style="opacity: .8">
@@ -13,10 +13,10 @@
       <!-- Sidebar user (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="myImage/avatar.png" class="img-circle elevation-2" alt="User Image">
+          <img src="<?php echo URL_PATH; ?>views/admin/myImage/francis-01.png" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">Francis</a>
+          <a href="#" class="d-block"><?php echo $_SESSION['user_firstname']; ?></a>
         </div>
       </div>
 
@@ -34,12 +34,47 @@
                 <span class="right badge badge-danger">New</span>
               </p>
             </a>
-          </li>          
+          </li>
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-chart-pie"></i>
+              <i class="nav-icon fas fa-user"></i>
               <p>
-                Pages
+              Utilisateurs
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+            <li class="nav-item">
+                <a href="<?php echo URL_PATH ;?>user/list" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Liste des admins</p>
+                </a>
+              </li>              
+              <li class="nav-item">
+                <a href="<?php echo URL_PATH ;?>user/new" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Ajouter admin</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="<?php echo URL_PATH ;?>user/edit" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Modifier admin</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="../charts/chartjs.html" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Changer mot de passe</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-address-card"></i>
+              <p>
+                Posts
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
@@ -47,26 +82,32 @@
               <li class="nav-item">
                 <a href="../charts/chartjs.html" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Form-general</p>
+                  <p>Ajouter un post</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="../charts/flot.html" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Table</p>
+                  <p>Modifier un post</p>
                 </a>
               </li>
             </ul>
           </li>
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-chart-pie"></i>
+              <i class="nav-icon fas fa-podcast"></i>
               <p>
-              Paramètres
+              Commentaires
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
-            <ul class="nav nav-treeview">              
+            <ul class="nav nav-treeview">
+            <li class="nav-item">
+                <a href="login" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Liste commentaires</p>
+                </a>
+              </li>              
               <li class="nav-item">
                 <a href="login" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
@@ -81,8 +122,6 @@
               </li>
             </ul>
           </li>
-         
-         
          
         </ul>
       </nav>

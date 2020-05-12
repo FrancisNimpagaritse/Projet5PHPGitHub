@@ -10,8 +10,14 @@ class UserController extends Controller
     }
     public function index()
     {        
+        //$users = $this->userManager->findAll();
+         $this->loadAdminView('accueilAdmin',[]);
+    }
+
+    public function list()
+    {        
         $users = $this->userManager->findAll();
-         $this->loadAdminView('user',['users'=>$users]);
+        $this->loadAdminView('user',['users'=>$users]);
     }
 
     //Login function
@@ -27,7 +33,7 @@ class UserController extends Controller
             //Initialize data posted
             $email=trim($_POST['email']);
             $pass=trim($_POST['password']);
-
+            //var_dump('Email: ' . $email . ' - pwd: ' . $pass); die();
             //Initialize error message
             $data = [
                 'email' => $email,
@@ -77,11 +83,11 @@ class UserController extends Controller
                     $_SESSION['user_email'] = $loggedInUser->getEmail();
                     $_SESSION['user_firstname'] = $loggedInUser->getFirstname();
                     $_SESSION['user_lastname'] = $loggedInUser->getLastname();
-                    $_SESSION['user_profil'] = $loggedInUser->getProfil();
             
                     $_SESSION['message'] = "Vous êtes connecté";
-             
-                    header('Location: http://localhost:1234/finances_perso_frontal/user');
+                    
+                    header('Location: '. URL_PATH.'user');                    
+                    
                 }
                 else
                 {
@@ -118,6 +124,24 @@ class UserController extends Controller
         $this->loadAdminView('editUser',['mode'=>$mode]);
      }
 
+     /* Méthode qui nous affiche le formulaire d'edition déjà rempli avec les valeurs
+     de l'obet Categorie récupéré en bdd */
+    public function edit($id)
+    {       
+        //on récupère l'objet correspondant à l'id specifié de la bdd dans la variable $categorie
+        $user = $this->userManager->findById($id);
+        if($user==null)
+        {
+           echo "utilisateur inexistant!";
+        }
+        else
+        {
+        $mode = "Modifier";
+        $this->loadAdminView('editUser',['user'=>$user,'mode'=>$mode]);
+        }
+    }
+
+
     public function findById($id)
     {
         $userManager = new UserManager();
@@ -133,11 +157,11 @@ class UserController extends Controller
         unset($_SESSION['user_firstname']);
         unset($_SESSION['user_lastname']);
         unset($_SESSION['user_email']);
-        unset($_SESSION['user_profil']);
         unset($_SESSION['message']);
         session_destroy();
         
-        header('Location: http://localhost:1234/finances_perso_frontal/user/login');
+        $this->loadAdminView('user/login',[]);
+;
     }
 
     //juste pour afficher le dashboard
@@ -146,11 +170,7 @@ class UserController extends Controller
         require('views/dashboard.php');
     }   
 
-    /* Méthode qui nous affiche le formulaire d'edition déjà rempli avec les valeurs
-     de l'obet Categorie récupéré en bdd */
-
-
-    public function register()
+    public function add()
     { 
       
         //Avoid data send by GET method
@@ -263,7 +283,74 @@ class UserController extends Controller
         }        
     } 
 
-    public function update($id,$login,$password,$email,$confirmation_token,$confirmed_at)
+    
+    public function update($id)
+    {
+        if($_SERVER['REQUEST_METHOD'] == 'POST')
+        {
+            //Sanitize data
+            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+            $data = [
+                'id' => $id,                
+                'title' => trim($_POST['title']),
+                'content' => trim($_POST['content']),
+                'user_id' => $_SESSION['user_id'],
+                'title_error' => '',
+                'content_error' => '',
+            ];
+
+            //Validate 
+            if(empty($data['title']))
+            {
+                $data['title_error'] = 'Veuillez saisir le titre';
+            } 
+            if(empty($data['content']))
+            {
+                $data['content_error'] = 'Veuillez saisir le contenu';
+            }
+
+            //If no errors
+            if(empty($data['title_error']) && empty($data['content_error']))
+            {                
+                //Validated
+                if($this->postManager->updatePost($data))
+                {
+                    flash('post_message','Article modifié avec succès');
+                    redirect('posts');
+                }
+                else
+                {
+                    die('Une erreur est survenue quelque part!');
+                }
+            }
+            else
+            {
+                //Load view with erros
+                $this->loadView('posts/edit', $data);
+            }
+        }
+        else
+        {
+            //Get existing post from model
+            $post = $this->postManager->getPostById($id);
+
+            //Check for owner
+            if($post->user_id != $_SESSION['user_id'])
+            {
+                redirect('posts');
+            }
+
+            $data = [
+                'id' => $id,
+                'title' => $post->title,
+                'content' => $post->content
+            ];
+            $this->loadView('posts/edit',$data);
+        }
+    }
+
+    public function updateOLD($id,$login,$password,$email,$confirmation_token,$confirmed_at)
     {        
         $userManager = new UserManager();
         $userAModifier = $userManager->findById($id);
