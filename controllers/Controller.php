@@ -5,7 +5,7 @@ abstract class Controller
     //Load model and get data from it
     public function loadModel(string $model)
     {
-        require_once(URLROOT.'models/'.$model.'.php');
+        require_once(APPROOT_REQUIRE.'models/'.$model.'.php');
         
         //Instantiate model class
         return new $model();       
@@ -15,9 +15,9 @@ abstract class Controller
     public function loadView(string $view, array $data = [])
     {
         extract($data);
-        if(file_exists(URLROOT.'views/'.$view.'View.php'))
+        if(file_exists(APPROOT_REQUIRE.'views/'.$view.'View.php'))
         {
-            require_once(URLROOT.'views/'.$view.'View.php');
+            require_once(APPROOT_REQUIRE.'views/'.$view.'View.php');
         }
         else
         {
@@ -31,9 +31,9 @@ abstract class Controller
     public function loadAdminView(string $view, array $data = [])
     {
         extract($data);
-        if(file_exists(URLROOT.'views/admin/'.$view.'View.php'))
+        if(file_exists(APPROOT_REQUIRE.'views/admin/'.$view.'View.php'))
         {
-            require_once(URLROOT.'views/admin/'.$view.'View.php');
+            require_once(APPROOT_REQUIRE.'views/admin/'.$view.'View.php');
         }
         else
         {

@@ -29,7 +29,7 @@
     <div class="card-body login-card-body">
       <p class="login-box-msg">Entrez vos identifiants</p>
 
-      <form action="../../index3.html" method="post">
+      <form action="<?php echo URL_PATH ?>user/login" method="post">
         <div class="input-group mb-3">
           <input type="email" class="form-control" placeholder="Email">
           <div class="input-group-append">
@@ -75,10 +75,10 @@
       <!-- /.social-auth-links -->
 
       <p class="mb-1">
-        <a href="forgot-password.html">Mot de passe oublié</a>
+        <a href="<?php echo URL_PATH ?>user/forgotpassword">Mot de passe oublié</a>
       </p>
       <p class="mb-0">
-        <a href="new" class="text-center">Créer un nouvel utilisateur</a>
+        <a href="<?php echo URL_PATH ?>user/new" class="text-center">Créer un nouvel utilisateur</a>
       </p>
     </div>
     <!-- /.login-card-body -->

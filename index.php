@@ -6,7 +6,7 @@ session_start();
 require_once('config/config.php');
 
 //Load the front controller
-require_once(URLROOT.'controllers/Controller.php');
+require_once(APPROOT_REQUIRE.'/controllers/Controller.php');
 
 //Test if Url is supplied. If not redirect to home page
 if(!isset($_GET['uc']))

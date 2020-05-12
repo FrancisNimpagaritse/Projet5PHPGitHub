@@ -6,22 +6,16 @@ class UserController extends Controller
 { 
     public function __construct()
     {
-       // $this->userManager = $this->loadModel("UserManager");
+       $this->userManager = $this->loadModel("UserManager");
     }
     public function index()
     {        
-        //$users = $this->userManager->findAll();
-        
-       // $this->loadAdminView('user',['users'=>$users]);
-    }
-
-    public function login()
-    {        
-        $this->loadAdminView('login',[]);
+        $users = $this->userManager->findAll();
+         $this->loadAdminView('user',['users'=>$users]);
     }
 
     //Login function
-    public function connect()
+    public function login()
     { 
         //Avoid data send by GET method
         if($_SERVER['REQUEST_METHOD'] == 'POST')
