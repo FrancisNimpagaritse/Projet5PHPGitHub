@@ -3,9 +3,9 @@
 class Comment
 {
     private $id;
-    private $articleId;
+    private $postId;
     private $comment;
-    private $authorName;
+    private $authorId;
     private $authorEmail;
     private $createAt;
     private $status;
@@ -22,21 +22,21 @@ class Comment
     }
 
     /**
-     * Get the value of articleId
+     * Get the value of postId
      */ 
-    public function getArticleId()
+    public function getPostId()
     {
-        return $this->articleId;
+        return $this->postId;
     }
 
     /**
-     * Set the value of articleId
+     * Set the value of postId
      *
      * @return  self
      */ 
-    public function setArticleId($articleId)
+    public function setPostId($postId)
     {
-        $this->articleId = $articleId;
+        $this->postId = $postId;
 
         return $this;
     }
@@ -62,21 +62,21 @@ class Comment
     }
 
     /**
-     * Get the value of authorName
+     * Get the value of authorId
      */ 
-    public function getAuthorName()
+    public function getAuthorId()
     {
-        return $this->authorName;
+        return $this->authorId;
     }
 
     /**
-     * Set the value of authorName
+     * Set the value of authorId
      *
      * @return  self
      */ 
-    public function setAuthorName($authorName)
+    public function setAuthorId($authorId)
     {
-        $this->authorName = $authorName;
+        $this->authorId = $authorId;
 
         return $this;
     }
