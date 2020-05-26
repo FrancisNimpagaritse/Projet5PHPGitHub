@@ -7,6 +7,7 @@ class User
     private $lastname;
     private $email;
     private $password;
+    private $profile;
     private $newPwd;
     private $updatedAt;
 
@@ -139,6 +140,26 @@ class User
     public function setUpdatedAt($updatedAt)
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of profile
+     */ 
+    public function getProfile()
+    {
+        return $this->profile;
+    }
+
+    /**
+     * Set the value of profile
+     *
+     * @return  self
+     */ 
+    public function setProfile($profile)
+    {
+        $this->profile = $profile;
 
         return $this;
     }

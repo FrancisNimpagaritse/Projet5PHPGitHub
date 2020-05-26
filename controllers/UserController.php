@@ -8,18 +8,35 @@ class UserController extends Controller
     {
        $this->userManager = $this->loadModel("UserManager");
     }
+
     public function index()
     {        
-        //$users = $this->userManager->findAll();
-         $this->loadAdminView('accueilAdmin',[]);
-    }
-
-    public function list()
-    {        
         $users = $this->userManager->findAll();
-        $this->loadAdminView('user',['users'=>$users]);
+        $data = [
+                'users' => $users
+                ];
+        $this->loadView('admin/user',$data);
     }
 
+    //Standanrd User register form
+    public function register()
+    {
+          //Initialize data 
+            $data =[    
+            'firstname' => '',
+            'lastname' => '',
+            'email' => '',
+            'password' => '',
+            'confirm_password' => '', 
+            'firstname_error' => '',
+            'lastname_error' => '',           
+            'email_error' => '',
+            'password_error' => '',
+            'confirm_password_error' => ''                
+        ];
+        //Load view
+        $this->loadView('admin/register',$data);
+    }
     //Login function
     public function login()
     { 
@@ -55,13 +72,13 @@ class UserController extends Controller
             
             //Check if that email exists in db valable en registration
             if($this->userManager->findByEmail($email))
-            {
-               //User found ok continue 
+            {               
+                //User found ok continue 
             }
             else
             {
                 //User not found
-                $data['email_error'] = 'Compte utilisateur non trouvé';               
+                $data['email_error'] = 'Email non trouvé!';               
             }
             //If all errors are empty
             if(empty($data['email_error']) && empty($data['password_error']))
@@ -69,31 +86,26 @@ class UserController extends Controller
                 //Validate
                 
                 //Check and set logged in User
-                
-                //Cryptage/hashage du password avec grain de sel
-                $pass = "toto".sha1($pass."123")."2020";
-                
-                $loggedInUser = $this->userManager->login($email,$pass);
+                $loggedInUser = $this->userManager->login($email, $pass);
                 
                 if($loggedInUser)
-                {
-                   
+                {                  
                     //Create session
-                    $_SESSION['user_id'] = $loggedInUser->getId();
-                    $_SESSION['user_email'] = $loggedInUser->getEmail();
+                    $_SESSION['user_id']        = $loggedInUser->getId();
+                    $_SESSION['user_email']     = $loggedInUser->getEmail();
                     $_SESSION['user_firstname'] = $loggedInUser->getFirstname();
-                    $_SESSION['user_lastname'] = $loggedInUser->getLastname();
+                    $_SESSION['user_lastname']  = $loggedInUser->getLastname();
             
-                    $_SESSION['message'] = "Vous êtes connecté";
+                    //$_SESSION['message'] = "Vous êtes connecté";
                     
-                    header('Location: '. URL_PATH.'user');                    
+                    header('Location: '. URL_PATH.'homeAdmin');                    
                     
                 }
                 else
                 {
                     $data['password_error'] = "Mot de passe invalid";
                     //Reload view with errors
-                    $this->loadAdminView('login',$data);
+                    $this->loadView('admin/login',$data);
 
                 }                
             } 
@@ -101,7 +113,7 @@ class UserController extends Controller
             //Reload view with errors
             //var_dump($data);
             //die();
-            $this->loadAdminView('login', $data);
+            $this->loadView('admin/login', $data);
         }
         else
         {
@@ -113,34 +125,9 @@ class UserController extends Controller
                 'password_error' => ''                
             ];
             //Load view
-            $this->loadAdminView('login',$data);
+            $this->loadView('admin/login',$data);
         }        
-    } 
-    
-     //Méthode qui nous affiche le formulaire vide pour ajouter une nouvelle user
-     public function new()
-     {
-        $mode = "Ajouter";
-        $this->loadAdminView('editUser',['mode'=>$mode]);
-     }
-
-     /* Méthode qui nous affiche le formulaire d'edition déjà rempli avec les valeurs
-     de l'obet Categorie récupéré en bdd */
-    public function edit($id)
-    {       
-        //on récupère l'objet correspondant à l'id specifié de la bdd dans la variable $categorie
-        $user = $this->userManager->findById($id);
-        if($user==null)
-        {
-           echo "utilisateur inexistant!";
-        }
-        else
-        {
-        $mode = "Modifier";
-        $this->loadAdminView('editUser',['user'=>$user,'mode'=>$mode]);
-        }
-    }
-
+    }    
 
     public function findById($id)
     {
@@ -152,7 +139,7 @@ class UserController extends Controller
     } 
     //start the login form in case invalid or not supplied URL
     public function logout()
-    {       
+    {        
         unset($_SESSION['user_id']);
         unset($_SESSION['user_firstname']);
         unset($_SESSION['user_lastname']);
@@ -160,222 +147,223 @@ class UserController extends Controller
         unset($_SESSION['message']);
         session_destroy();
         
-        $this->loadAdminView('user/login',[]);
-;
+        header('Location: '. URL_PATH.'user/login'); 
     }
 
-    //juste pour afficher le dashboard
-    public function dashboard()
-    {  
-        require('views/dashboard.php');
-    }   
-
     public function add()
-    { 
-      
+    {
         //Avoid data send by GET method
-        if($_SERVER['REQUEST_METHOD'] == 'POST')
+        if ($_SERVER['REQUEST_METHOD'] == 'POST')
         {
              //Pocess form
              
             //Sanitize POST data
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
             //Initialize data posted
             $firstname=trim($_POST['firstname']);
             $lastname=trim($_POST['lastname']);
             $email=trim($_POST['email']);            
             $pass=trim($_POST['password']);
-            $pass_confirm=trim($_POST['password_confirm']);
+            $pass_confirm=trim($_POST['confirm_password']);
 
-            //Initialize error message
+            //Initialize data
             $data = [
                 'firstname' => $firstname,
                 'lastname' => $lastname,
                 'email' => $email,
                 'password' => $pass,                
-                'password_confirm' => $pass_confirm,
+                'confirm_password' => $pass_confirm,
                 'firstname_error' => '',
                 'lastname_error' => '',
                 'email_error' => '',
                 'password_error' => '',
-                'password_confirm_error' => ''
+                'confirm_password_error' => ''
             ];
             
             //Validate firstname
-            if(empty($firstname))
+            if (empty($data['firstname']))
             {
-                $data['email_error'] = 'Veuiller saisir votre prénom';
+                $data['firstname_error'] = 'Veuiller saisir votre prénom';
             }
             //Validate lastname
-            if(empty($lastname))
+            if (empty($data['lastname']))
             {
-                $data['email_error'] = 'Veuiller saisir uvotre nom';
+                $data['lastname_error'] = 'Veuiller saisir votre nom';
             }
             //Validate email
-            if(empty($email))
+            if (empty($data['email']) || !(filter_var($data['email'], FILTER_VALIDATE_EMAIL)))
             {
                 $data['email_error'] = 'Veuiller saisir un email valide';
             }
+            
             //Validate password
-            if(empty($pass))
+            if (empty($data['password']))
             {
                 $data['password_error'] = 'Veuiller saisir un mot de passe';
+            } else {
+                if (strlen($data['password']) < 6)
+                {
+                    $data['password_error'] = 'Le mot de passe doit avoir au moins 6 caractères';
+                }
+            }
+
+            //Validate password
+            if (empty($data['confirm_password']))
+            {
+                $data['confirm_password_error'] = 'Veuiller confirmer le mot de passe';
+            } else {
+                if ($data['password'] != $data['confirm_password'])
+                {
+                    $data['confirm_password_error'] = 'Les 2 mots de passe ne sont pas identiques';
+                }
             }            
             //Check if that email exists in db valable en registration
-            if($this->userManager->findByEmail($email))
+            if ($this->userManager->findByEmail($email))
             {
-               //User found dupllicate error else continue
+               //User found duplicate error else continue
                $data['email_error'] = 'Email déja utilisé !'; 
             }
             
             //If all errors are empty
-            if(empty($data['firstname_error']) && empty($data['lastname_error'])
+            if (empty($data['firstname_error']) && empty($data['lastname_error'])
             && empty($data['email_error']) && empty($data['password_error']) 
-            && empty($data['password_confirm_error']))
+            && empty($data['confirm_password_error']))
             {             
                 //Validate
-     
-               //Cryptage/hashage du password avec grain de sel
-                $pass = "toto".sha1($pass."123")."2020";
+                
+                //Password hash
+                $pass_hash = password_hash($pass, PASSWORD_DEFAULT);
 
                 $user = new User();                       
                 //Assign values to the new user to create
                 $user->setFirstname($firstname)
                         ->setLastname($lastname)
-                        ->setPassword($pass)
-                        ->setEmail($email);
-                        //->setConfirmation_token($confirmation_token)
-                        //->setConfirmed_at($confirmed_at);
-                
-                //insertion en BDD via le manager en appelant sa méthode create() et en lui passant l'objet hydraté
-                $isSaveOk = $this->userManager->create($user); 
-               
+                        ->setEmail($email)
+                        ->setPassword($pass_hash);
+                                        
+                //insert into db using manager's create method
+                $this->userManager->create($user);                
             
-                    header('Location: http://localhost:1234/finances_perso_frontal/user');
-                    //$this->loadAdminView('user');
-            }
-            else
-            {
-                // $data['password_error'] = "Mot de passe invalid";
+                header('Location: '. URL_PATH.'user/index');
+            } else {
                 //Reload view with errors
-                $this->loadAdminView('user',$data);
-
-            }
-            
-        }
-        else
-        {
-            //Initialize data 
-            $data = [    
+                $this->loadView('admin/addUser',$data);
+            }            
+        } else {
+            //Initialize data for blank form
+            $data = [  
                 'firstname' => '',
                 'lastname' => '',
                 'email' => '',
                 'password' => '',
-                'password_confirm' => '',
+                'confirm_password' => '',
                 'firstname_error' => '',
                 'lastname_error' => '',            
                 'email_error' => '',
                 'password_error' => '',
-                'password_confirm_error' => ''                
+                'confirm_password_error' => ''                
             ];
             //Load view
-            $this->loadAdminView('login',$data);
+            $this->loadView('admin/addUser',$data);
         }        
     } 
 
     
-    public function update($id)
-    {
-        if($_SERVER['REQUEST_METHOD'] == 'POST')
+    public function edit($id)
+    {        
+        //Avoid data send by GET method
+        if ($_SERVER['REQUEST_METHOD'] == 'POST')
         {
-            //Sanitize data
+             //Pocess form
+             
+            //Sanitize POST data
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
+            //Initialize data posted
+            $firstname=trim($_POST['firstname']);
+            $lastname=trim($_POST['lastname']);
+            $email=trim($_POST['email']); 
+
+            //Initialize data
             $data = [
-                'id' => $id,                
-                'title' => trim($_POST['title']),
-                'content' => trim($_POST['content']),
-                'user_id' => $_SESSION['user_id'],
-                'title_error' => '',
-                'content_error' => '',
-            ];
-
-            //Validate 
-            if(empty($data['title']))
-            {
-                $data['title_error'] = 'Veuillez saisir le titre';
-            } 
-            if(empty($data['content']))
-            {
-                $data['content_error'] = 'Veuillez saisir le contenu';
-            }
-
-            //If no errors
-            if(empty($data['title_error']) && empty($data['content_error']))
-            {                
-                //Validated
-                if($this->postManager->updatePost($data))
-                {
-                    flash('post_message','Article modifié avec succès');
-                    redirect('posts');
-                }
-                else
-                {
-                    die('Une erreur est survenue quelque part!');
-                }
-            }
-            else
-            {
-                //Load view with erros
-                $this->loadView('posts/edit', $data);
-            }
-        }
-        else
-        {
-            //Get existing post from model
-            $post = $this->postManager->getPostById($id);
-
-            //Check for owner
-            if($post->user_id != $_SESSION['user_id'])
-            {
-                redirect('posts');
-            }
-
-            $data = [
-                'id' => $id,
-                'title' => $post->title,
-                'content' => $post->content
-            ];
-            $this->loadView('posts/edit',$data);
-        }
-    }
-
-    public function updateOLD($id,$login,$password,$email,$confirmation_token,$confirmed_at)
-    {        
-        $userManager = new UserManager();
-        $userAModifier = $userManager->findById($id);
-        
-        $userAModifier->setLogin($login)
-            ->setPassword($password)
-            ->setEmail($email)
-            ->setConfirmation_token($confirmation_token)
-            ->setConfirmed_at($confirmed_at);
+                    'id' => $id,
+                    'firstname' => $firstname,
+                    'lastname' => $lastname,
+                    'email' => $email,
+                    'firstname_error' => '',
+                    'lastname_error' => '',
+                    'email_error' => ''
+                ];
             
-         //require('views/editCategorieView.php');
-        //insertion en BDD via le manager en appelant sa méthode create() et en lui passant l'objet hydraté
-        $userManager = new UserManager();
-        $isUpdateOk = $userManager->update($userAModifier);
-        
-        if($isUpdateOk)
-        {
-            header('Location: index.php?action=listUsers');
-        }
-        else
-        {
-            die('Impossible de modifier un utilisateur !');
+            //Validate firstname
+            if (empty($data['firstname']))
+            {
+                $data['firstname_error'] = 'Veuiller saisir votre prénom';
+            }
+            //Validate lastname
+            if (empty($data['lastname']))
+            {
+                $data['lastname_error'] = 'Veuiller saisir votre nom';
+            }
+            //Validate email
+            if (empty($data['email']) || !(filter_var($data['email'], FILTER_VALIDATE_EMAIL)))
+            {
+                $data['email_error'] = 'Veuiller saisir un email valide';
+            }            
+            
+            /*Check if that email exists in db valable en registration
+            Kugisubiramwo kuko sino on est obligé de créer un email yindi!!!!
+            if($this->userManager->findByEmail($email))
+            {
+               //User found duplicate error else continue
+               $data['email_error'] = 'Email déja utilisé !'; 
+            }
+            */
+            
+            //If all errors are empty
+            if (empty($data['firstname_error']) && empty($data['lastname_error'])
+            && empty($data['email_error']))
+            {             
+                //Validate
+                
+                //Get user to update from Manager
+                $userToUpdate = $this->userManager->findById($id);                      
+                //Assign values to the new user to create
+                $userToUpdate->setFirstname($data['firstname'])
+                            ->setLastname($data['lastname'])
+                            ->setEmail($data['email']);
+                                     
+                //insert into db using manager's create method
+                $this->userManager->update($userToUpdate);                
+            
+                header('Location: '. URL_PATH.'user/index');
+            } else {
+                //Reload view with errors
+                $this->loadView('admin/editUser',$data);
+            }            
+        } else {
+            //Get existing user from Manager
+            $user = $this->userManager->findById($id);
 
+            //Check for ownership
+            if ($user->getId() != $_SESSION['user_id']){
+                //TO BE USED FOR posts
+                header('Location: '. URL_PATH.'user/index');                    
+            }
+            //Initialize data for edit form
+            $data = [
+                'id' => $id, 
+                'firstname' => $user->getFirstname(),
+                'lastname' => $user->getlastname(),
+                'email' => $user->getEmail(),
+                'firstname_error' => '',
+                'lastname_error' => '',            
+                'email_error' => ''                
+            ];
+            //Load view
+            $this->loadView('admin/editUser',$data);
         }
-        
     }
 
     public function delete($id)
@@ -390,14 +378,11 @@ class UserController extends Controller
         //On supprime alors cet objet en appelant la méthode du manager et en lui passant l'objet en question
         $isDeleteOk = $userManager->delete($user);
 
-        if(!$isDeleteOk)
+        if (!$isDeleteOk)
         {
             die('Impossible de supprimer l\'élémént!');
 
-        }
-        
-        else
-        {
+        } else {
             header('Location: index.php?action=listUsers');
         }
 

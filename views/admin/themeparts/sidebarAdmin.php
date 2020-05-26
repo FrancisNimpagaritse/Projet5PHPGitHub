@@ -30,8 +30,7 @@
             <a href="accueilAdmin" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
               <p>
-                Accueil
-                <span class="right badge badge-danger">New</span>
+                Accueil                
               </p>
             </a>
           </li>
@@ -45,27 +44,44 @@
             </a>
             <ul class="nav nav-treeview">
             <li class="nav-item">
-                <a href="<?php echo URL_PATH ;?>user/list" class="nav-link">
+                <a href="<?php echo URL_PATH ;?>user/index" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Liste des admins</p>
                 </a>
               </li>              
               <li class="nav-item">
-                <a href="<?php echo URL_PATH ;?>user/new" class="nav-link">
+                <a href="<?php echo URL_PATH ;?>user/add" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Ajouter admin</p>
                 </a>
-              </li>
-              <li class="nav-item">
-                <a href="<?php echo URL_PATH ;?>user/edit" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Modifier admin</p>
-                </a>
-              </li>
+              </li>              
               <li class="nav-item">
                 <a href="../charts/chartjs.html" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Changer mot de passe</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-layer-group"></i>
+              <p>
+                Catégorie
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="../charts/chartjs.html" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>                  
+                  <p>Ajouter une catégorie</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="../charts/flot.html" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Modifier une catégorie</p>
                 </a>
               </li>
             </ul>

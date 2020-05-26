@@ -49,7 +49,7 @@
           <span class="invalid-feedback"><?php echo $data['password_error']; ?></span> 
         </div>
         <div class="row">
-          <div class="col-8">
+          <div class="col-7">
             <div class="icheck-primary">
               <input type="checkbox" id="remember">
               <label for="remember">
@@ -58,30 +58,38 @@
             </div>
           </div>
           <!-- /.col -->
-          <div class="col-4">
+          <div class="col-5">
             <button type="submit" class="btn btn-primary btn-block">Connecter</button>
           </div>
+          
           <!-- /.col -->
+          <div class="col">
+            <p></p>
+            <a href="<?php echo URL_PATH; ?>user/register" class="btn btn-danger btn-block">Pas inscrit? S'inscrire
+            </a>
+          </div>
         </div>
       </form>
 
       <div class="social-auth-links text-center mb-3">
         <p>- OU -</p>
+        
         <a href="#" class="btn btn-block btn-primary">
           <i class="fab fa-facebook mr-2"></i> Connexion avec Facebook
         </a>
-        <a href="#" class="btn btn-block btn-danger">
-          <i class="fab fa-google-plus mr-2"></i> Connexion avec Google+
-        </a>
+        
+        
       </div>
       <!-- /.social-auth-links -->
 
-      <p class="mb-1">
-        <a href="<?php echo URL_PATH ?>user/forgotpassword">Mot de passe oublié</a>
-      </p>
-      <p class="mb-0">
-        <a href="<?php echo URL_PATH ?>user/new" class="text-center">Créer un nouvel utilisateur</a>
-      </p>
+      <div class="row">
+        <div class="col-6">
+          <a href="<?php echo URL_PATH ?>user/forgotpassword" class="btn btn-light mt-2">Password oublié</a>
+        </div>
+        <div class="col-6">
+          <a href="<?php echo URL_PATH; ?>" class="btn btn-light mt-2 text-left"><i class="fa fa-backward"></i>Retour blog</a>
+        </div>
+      </div>
     </div>
     <!-- /.login-card-body -->
   </div>

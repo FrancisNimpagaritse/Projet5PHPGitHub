@@ -11,7 +11,7 @@ require_once(APPROOT_REQUIRE.'/controllers/Controller.php');
 //Test if Url is supplied. If not redirect to home page
 if(!isset($_GET['uc']))
 {
-    $url[0] = "accueil";
+    $url[0] = "home";
 }
 else
 {
@@ -41,15 +41,11 @@ else
             if($id==null)
             {                
                 $controller->$action(); 
-            }
-            else 
-            {
+            } else {
                 $id=(int)$id;                
                 $controller->$action($id);
             }            
-        }         
-        else
-        { 
+        } else { 
             http_response_code(404);
             echo "<h1>Erreur 404</h1>";
             echo "L'action demandée n'existe pas"; 

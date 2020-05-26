@@ -31,7 +31,7 @@
         <a href="#" class="nav-link" style="color:blue;"> <strong>Bienvenue <?php echo $_SESSION['user_firstname']  ?></strong></a>
         </li>
         <li class="nav-item">
-        <a href="<?php echo URL_PATH ;?>" class="nav-link text-danger"><i class="fas fa-user-times"></i> Logout</a>
+        <a href="<?php echo URL_PATH ;?>user/logout" class="nav-link text-danger"><i class="fas fa-user-times"></i> Logout</a>
         </li>
       <?php else : ?>
         <li class="nav-item">

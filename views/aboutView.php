@@ -5,7 +5,7 @@ $title='Contact';
  require('header.php');
  ob_start();
  ?>
-<body>        
+       
 <div class="cont"> 
     <h1><?php echo $abouts; ?></h1>     
     <!--================Home Banner Area =================-->
@@ -78,10 +78,9 @@ $title='Contact';
     </section>
     <!--================Contact Area =================-->
     
- 
+</div> 
 
     <?php $content = ob_get_clean(); ?>
 
     <?php require('template.php'); ?>
 
-</div> 

@@ -18,25 +18,7 @@ abstract class Controller
         if(file_exists(APPROOT_REQUIRE.'views/'.$view.'View.php'))
         {
             require_once(APPROOT_REQUIRE.'views/'.$view.'View.php');
-        }
-        else
-        {
-            http_response_code(404);
-            echo "<h1>Erreur 404</h1>";
-            echo "Page introuvable!"; 
-        }
-    }
-
-    //Load view and pass data from controller to it
-    public function loadAdminView(string $view, array $data = [])
-    {
-        extract($data);
-        if(file_exists(APPROOT_REQUIRE.'views/admin/'.$view.'View.php'))
-        {
-            require_once(APPROOT_REQUIRE.'views/admin/'.$view.'View.php');
-        }
-        else
-        {
+        } else {
             http_response_code(404);
             echo "<h1>Erreur 404</h1>";
             echo "Page introuvable!"; 
