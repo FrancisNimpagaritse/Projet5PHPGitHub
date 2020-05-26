@@ -4,6 +4,7 @@ class Article
 {
     private $id;
     private $title;
+    private $category;
     private $chapo;
     private $content;
     private $authorId;
@@ -134,6 +135,26 @@ class Article
     public function setStatus($status)
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of category
+     */ 
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+    /**
+     * Set the value of category
+     *
+     * @return  self
+     */ 
+    public function setCategory($category)
+    {
+        $this->category = $category;
 
         return $this;
     }
