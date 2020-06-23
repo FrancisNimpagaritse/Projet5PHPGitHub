@@ -9,7 +9,8 @@ class Post
     private $content;
     private $authorId;
     private $updatedAt;
-    private $status;    
+    private $postImage;
+    private $status;   
 
     /**
      * Get the value of id
@@ -114,7 +115,7 @@ class Post
      */ 
     public function setUpdatedAt($updatedAt)
     {
-        $this->updatedAt = $updatedAt;
+        $this->updatedAt = new DateTime($updatedAt);
 
         return $this;
     }
@@ -158,4 +159,25 @@ class Post
 
         return $this;
     }
+
+    /**
+     * Get the value of postImage
+     */ 
+    public function getPostImage()
+    {
+        return $this->postImage;
+    }
+
+    /**
+     * Set the value of postImage
+     *
+     * @return  self
+     */ 
+    public function setPostImage($postImage)
+    {
+        $this->postImage = $postImage;
+
+        return $this;
+    }
+    
 }

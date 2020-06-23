@@ -15,8 +15,7 @@ abstract class Controller
     public function loadView(string $view, array $data = [])
     {
         extract($data);
-        if(file_exists(APPROOT_REQUIRE.'views/'.$view.'View.php'))
-        {
+        if (file_exists(APPROOT_REQUIRE.'views/'.$view.'View.php')) {
             require_once(APPROOT_REQUIRE.'views/'.$view.'View.php');
         } else {
             http_response_code(404);

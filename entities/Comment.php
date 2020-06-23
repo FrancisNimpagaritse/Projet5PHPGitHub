@@ -4,9 +4,8 @@ class Comment
 {
     private $id;
     private $postId;
-    private $comment;
+    private $Message;
     private $authorId;
-    private $authorEmail;
     private $createAt;
     private $status;
 
@@ -42,21 +41,21 @@ class Comment
     }
 
     /**
-     * Get the value of comment
+     * Get the value of message
      */ 
-    public function getComment()
+    public function getMessage()
     {
-        return $this->comment;
+        return $this->message;
     }
 
     /**
-     * Set the value of comment
+     * Set the value of message
      *
      * @return  self
      */ 
-    public function setComment($comment)
+    public function setMessage($message)
     {
-        $this->comment = $comment;
+        $this->message = $message;
 
         return $this;
     }
@@ -79,27 +78,7 @@ class Comment
         $this->authorId = $authorId;
 
         return $this;
-    }
-
-    /**
-     * Get the value of authorEmail
-     */ 
-    public function getAuthorEmail()
-    {
-        return $this->authorEmail;
-    }
-
-    /**
-     * Set the value of authorEmail
-     *
-     * @return  self
-     */ 
-    public function setAuthorEmail($authorEmail)
-    {
-        $this->authorEmail = $authorEmail;
-
-        return $this;
-    }
+    }    
 
     /**
      * Get the value of createAt

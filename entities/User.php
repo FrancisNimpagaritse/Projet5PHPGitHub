@@ -8,8 +8,9 @@ class User
     private $email;
     private $password;
     private $profile;
-    private $newPwd;
+    private $newpwd;
     private $updatedAt;
+    private $token;
 
     
 
@@ -105,21 +106,21 @@ class User
     }
 
     /**
-     * Get the value of newPwd
+     * Get the value of newpwd
      */ 
-    public function getNewPwd()
+    public function getNewpwd()
     {
-        return $this->newPwd;
+        return $this->newpwd;
     }
 
     /**
-     * Set the value of newPwd
+     * Set the value of newpwd
      *
      * @return  self
      */ 
-    public function setNewPwd($newPwd)
+    public function setNewpwd($newpwd)
     {
-        $this->newPwd = $newPwd;
+        $this->newpwd = $newpwd;
 
         return $this;
     }
@@ -160,6 +161,26 @@ class User
     public function setProfile($profile)
     {
         $this->profile = $profile;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of token
+     */ 
+    public function getToken()
+    {
+        return $this->token;
+    }
+
+    /**
+     * Set the value of token
+     *
+     * @return  self
+     */ 
+    public function setToken($token)
+    {
+        $this->token = $token;
 
         return $this;
     }
