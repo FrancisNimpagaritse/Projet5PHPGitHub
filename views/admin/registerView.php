@@ -29,7 +29,7 @@
     <div class="card-body login-card-body">
       <p class="login-box-msg">Veuillez remplir le formulaire pour vous inscrire</p>
 
-      <form action="<?php echo URL_PATH ?>user/add" method="post">
+      <form action="<?php echo URL_PATH ?>user/register" method="post">
         <div class="input-group mb-3">
           <input type="text" id="firstname" name="firstname" class="form-control <?php echo (!empty($data['firstname_error'])) ? 'is-invalid' : ''; ?>" value="<?php echo $data['firstname'] ?>" placeholder="Prénom">
             <div class="input-group-append">
