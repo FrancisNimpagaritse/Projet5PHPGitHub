@@ -1,0 +1,97 @@
+<?php
+
+class HomeController extends Controller
+{    
+    public function __construct()
+    {
+
+    }
+    public function index()
+    {
+         //Initialize data for blank form
+         $data = [
+            'name' => '',
+            'email' => '',
+            'subject' => '',
+            'message' => '',
+            'result' => '',
+            'name_error' => '',
+            'email_error' => '',
+            'subject_error' => '',
+            'message_error' => ''
+         ];   
+        $this->loadView('home',$data);
+    }
+
+    //Send a message for contact
+    public function send()
+    {
+        //Avoid data send by GET method
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            //Pocess form
+            
+           //Sanitize POST data
+           $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+           //Initialize data posted
+           $name = trim(htmlspecialchars($_POST['name']));
+           $email = trim(htmlspecialchars($_POST['email']));
+           $subject = trim(htmlspecialchars($_POST['subject']));
+           $message = trim(htmlspecialchars($_POST['message']));
+           //$result = "";
+           //Initialize data
+           $data = [
+                   'name' => $name,
+                   'email' => $email,
+                   'subject' => $subject,
+                   'message' => $message,
+                   //'result' => $result,
+                   'name_error' => '',
+                   'email_error' => '',
+                   'subject_error' => '',
+                   'message_error' => ''
+               ];
+           
+           //Validate firstname
+           if (empty($data['name'])) {
+               $data['name_error'] = 'Veuiller saisir votre nom et prénom';
+           }
+
+           //Validate email
+           if (empty($data['email']) || !(filter_var($data['email'], FILTER_VALIDATE_EMAIL))) {
+            $data['email_error'] = 'Veuiller saisir un email valide';
+            }
+
+           //Validate subject
+           if (empty($data['subject'])) {
+               $data['subject_error'] = 'Veuiller saisir l\'objet du message';
+           }
+
+           //Validate message
+           if (empty($data['message'])) {
+            $data['message_error'] = 'Veuiller saisir le message';
+            }
+           
+           //If all errors are empty
+           if (empty($data['name_error']) && empty($data['email_error'])
+           && empty($data['subject_error']) && empty($data['message_error'])) { 
+        
+                $headers = [
+                    'Content-Type' => 'text/plain',
+                    'charset' => 'utf-8',
+                    'From' => $email
+                ];
+
+                if (mail('franimpa@yahoo.fr', $subject, $message, $headers)) {
+                    $result = 'Votre message a été envoyé le: ' . date("Y-m-d H:i:s");
+                    header('Location: '. URL_PATH.'home');
+                } else {
+                    $data['result'] = 'Votre message n\'a pas été envoyé !';
+                    
+                    //Reload view with errors                    
+                    $this->loadView('home', $data);
+                }
+            }
+        }
+    }
+}

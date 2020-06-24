@@ -8,7 +8,7 @@ abstract class Controller
         require_once(APPROOT_REQUIRE.'models/'.$model.'.php');
         
         //Instantiate model class
-        return new $model();       
+        return new $model();
     }
 
     //Load view and pass data from controller to it

@@ -29,7 +29,7 @@ class UserController extends Controller
                 //Initialize data posted
                 $firstname=trim($_POST['firstname']);
                 $lastname=trim($_POST['lastname']);
-                $email=trim($_POST['email']);            
+                $email=trim($_POST['email']);
                 $pass=trim($_POST['password']);
                 $pass_confirm=trim($_POST['confirm_password']);
     
@@ -38,7 +38,7 @@ class UserController extends Controller
                     'firstname' => $firstname,
                     'lastname' => $lastname,
                     'email' => $email,
-                    'password' => $pass,                
+                    'password' => $pass,
                     'confirm_password' => $pass_confirm,
                     'firstname_error' => '',
                     'lastname_error' => '',
@@ -49,7 +49,7 @@ class UserController extends Controller
                 
                 //Validate firstname
                 if (empty($data['firstname'])) {
-                    $data['firstname_error'] = 'Veuiller saisir votre prénom';                    
+                    $data['firstname_error'] = 'Veuiller saisir votre prénom';
                 }
                 //Validate lastname
                 if (empty($data['lastname'])) {
@@ -92,7 +92,7 @@ class UserController extends Controller
                     //Password hash
                     $pass_hash = password_hash($pass, PASSWORD_DEFAULT);
                     
-                    $user = new User();                       
+                    $user = new User();
                     //Assign values to the new user to create
                     $user->setFirstname($firstname)
                             ->setLastname($lastname)
@@ -115,10 +115,10 @@ class UserController extends Controller
                 'password' => '',
                 'confirm_password' => '', 
                 'firstname_error' => '',
-                'lastname_error' => '',           
+                'lastname_error' => '',
                 'email_error' => '',
                 'password_error' => '',
-                'confirm_password_error' => ''                
+                'confirm_password_error' => '' 
             ];
             //Load view
             $this->loadView('admin/register',$data);
@@ -145,7 +145,7 @@ class UserController extends Controller
             //Initialize data posted
             $firstname=trim($_POST['firstname']);
             $lastname=trim($_POST['lastname']);
-            $email=trim($_POST['email']);            
+            $email=trim($_POST['email']);
             $pass=trim($_POST['password']);
             $pass_confirm=trim($_POST['confirm_password']);
 
@@ -154,7 +154,7 @@ class UserController extends Controller
                 'firstname' => $firstname,
                 'lastname' => $lastname,
                 'email' => $email,
-                'password' => $pass,                
+                'password' => $pass,
                 'confirm_password' => $pass_confirm,
                 'firstname_error' => '',
                 'lastname_error' => '',
@@ -202,7 +202,7 @@ class UserController extends Controller
             //If all errors are empty
             if (empty($data['firstname_error']) && empty($data['lastname_error'])
             && empty($data['email_error']) && empty($data['password_error']) 
-            && empty($data['confirm_password_error'])) {             
+            && empty($data['confirm_password_error'])) {
                 //Validate
                 
                 //Password hash
@@ -216,13 +216,13 @@ class UserController extends Controller
                         ->setPassword($pass_hash);
                                         
                 //insert into db using manager's create method
-                $this->userManager->create($user);                
+                $this->userManager->create($user);
             
                 header('Location: '. URL_PATH.'user/index');
             } else {
                 //Reload view with errors
                 $this->loadView('admin/addUser',$data);
-            }            
+            }
         } else {
             //Initialize data for blank form
             $data = [  
@@ -232,15 +232,15 @@ class UserController extends Controller
                 'password' => '',
                 'confirm_password' => '',
                 'firstname_error' => '',
-                'lastname_error' => '',            
+                'lastname_error' => '', 
                 'email_error' => '',
                 'password_error' => '',
-                'confirm_password_error' => ''                
+                'confirm_password_error' => ''
             ];
             //Load view
             $this->loadView('admin/addUser',$data);
-        }        
-    }    
+        }
+    }
     
     public function edit($id)
     {
@@ -282,24 +282,15 @@ class UserController extends Controller
             //Validate email
             if (empty($data['email']) || !(filter_var($data['email'], FILTER_VALIDATE_EMAIL))) {
                 $data['email_error'] = 'Veuiller saisir un email valide';
-            }            
-            
-            /*Check if that email exists in db valable en registration
-            Kugisubiramwo kuko sino on est obligé de créer un email yindi!!!!
-            if($this->userManager->findByEmail($email))
-            {
-               //User found duplicate error else continue
-               $data['email_error'] = 'Email déja utilisé !'; 
             }
-            */
-            
+                        
             //If all errors are empty
             if (empty($data['firstname_error']) && empty($data['lastname_error'])
-            && empty($data['email_error'])) {             
+            && empty($data['email_error'])) {
                 //Validate
                 
                 //Get user to update from Manager
-                $userToUpdate = $this->userManager->findById($id);                      
+                $userToUpdate = $this->userManager->findById($id); 
                 //Assign values to the new user to create
                 $userToUpdate->setFirstname($data['firstname'])
                             ->setLastname($data['lastname'])
@@ -307,13 +298,13 @@ class UserController extends Controller
                             ->setUpdatedAt(date("Y-m-d H:i:s"));
                                  
                 //insert into db using manager's create method
-                $this->userManager->update($userToUpdate);                
+                $this->userManager->update($userToUpdate);     
             
                 header('Location: '. URL_PATH.'user/index');
             } else {
                 //Reload view with errors
                 $this->loadView('admin/editUser',$data);
-            }            
+            }
         } else {
             //Get existing user from Manager
             $user = $this->userManager->findById($id);
@@ -330,8 +321,8 @@ class UserController extends Controller
                 'lastname' => $user->getlastname(),
                 'email' => $user->getEmail(),
                 'firstname_error' => '',
-                'lastname_error' => '', 
-                'email_error' => '' 
+                'lastname_error' => '',
+                'email_error' => ''
             ];
             //Load view
             $this->loadView('admin/editUser',$data);
