@@ -18,7 +18,7 @@ $title='Accueil';
                             <a href="single-blog.html">MSBI</a>
                             <a href="single-blog.html">Informatica</a>
                             <a href="single-blog.html">Tableau & QlikView</a>
-                            <a href="single-blog.html">C#/.NET/.NET Core</a>                            
+                            <a href="single-blog.html">C#/.NET/.NET Core</a>
                             <a href="single-blog.html">PHP/Symfony</a>
                         </div>
                     </div>
@@ -59,7 +59,7 @@ $title='Accueil';
                         </blockquote>
                         <p>Contrairement à de nombreux éléments de la spécification d'un poste, comme un diplôme universitaire, quasiment tout le monde peut apprendre à coder. Cela ne prend pas plusieurs années ou coûte des milliers. En fait, cela peut à peu près se faire en ligne et dans le confort de votre propre maison, et peut être appris de manière flexible autour de vos autres engagements.</p>
                         
-                    </div>                                     
+                    </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="blog_right_sidebar">
@@ -75,10 +75,10 @@ $title='Accueil';
                                     <div class="cat p-1">
                                         <a class="cat_btn mb-2" href="#">Le développeur multi-compétent</a>
                                         <a class="blog_btn mt-2 pb-0" href="<?php echo URL_PATH; ?>views/admin/myImage/CV_François_Nimpagaritse.pdf" target="_blank">Voir mon CV</a>
-                                    </div>                                    
+                                    </div>
                                 </div>
 							</div>
-                        </aside>                                    
+                        </aside>
                         
                     </div>
                 </div>
@@ -122,12 +122,12 @@ $title='Accueil';
                         <div class="form-group">
                             <input type="text" class="form-control" id="subject" name="subject" placeholder="L'objet du message" value="<?=$data['subject'];?>" required>
                         </div>
-                        <div class="form-group">                            
+                        <div class="form-group">
                             <p><?=$data['result'];?></p>
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="form-group">                            
+                        <div class="form-group">
                             <textarea class="form-control" id="message" name="message" rows="1" placeholder="Votre Message"><?=$data['message'];?></textarea>
                         </div>
                     </div>
