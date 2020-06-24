@@ -44,21 +44,15 @@
             </a>
             <ul class="nav nav-treeview">
             <li class="nav-item">
-                <a href="<?php echo URL_PATH ;?>user/index" class="nav-link">
+                <a href="<?=URL_PATH;?>user/index" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Liste des admins</p>
+                  <p>Liste des utilisateurs</p>
                 </a>
               </li>              
               <li class="nav-item">
-                <a href="<?php echo URL_PATH ;?>user/add" class="nav-link">
+                <a href="<?=URL_PATH;?>user/add" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Ajouter admin</p>
-                </a>
-              </li>              
-              <li class="nav-item">
-                <a href="../charts/chartjs.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Changer mot de passe</p>
                 </a>
               </li>
             </ul>
@@ -78,12 +72,6 @@
                   <p>Ajouter une catégorie</p>
                 </a>
               </li>
-              <li class="nav-item">
-                <a href="../charts/flot.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Modifier une catégorie</p>
-                </a>
-              </li>
             </ul>
           </li>
           <li class="nav-item has-treeview">
@@ -96,17 +84,17 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="../charts/chartjs.html" class="nav-link">
+                <a href="<?=URL_PATH;?>posts/list" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Ajouter un post</p>
+                  <p>Liste des posts</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="../charts/flot.html" class="nav-link">
+                <a href="<?=URL_PATH;?>posts/add" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Modifier un post</p>
+                  <p>Créer un post</p>
                 </a>
-              </li>
+              </li>               
             </ul>
           </li>
           <li class="nav-item has-treeview">
@@ -118,24 +106,12 @@
               </p>
             </a>
             <ul class="nav nav-treeview">
-            <li class="nav-item">
-                <a href="login" class="nav-link">
+              <li class="nav-item">
+                <a href="<?=URL_PATH;?>comment/index" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Liste commentaires</p>
                 </a>
-              </li>              
-              <li class="nav-item">
-                <a href="login" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Logout</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="../charts/chartjs.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Changer mot de passe</p>
-                </a>
-              </li>
+              </li> 
             </ul>
           </li>
          
