@@ -35,9 +35,9 @@
                             <h6 class="footer_title">Me suivre</h6>
                             <p>Soyons sociables</p>
                             <div class="f_social">
-                            	<a href="#"><i class="fa fa-facebook"></i></a>
+                            	<a target="_blank" href="https://www.facebook.com/francis.nimpagaritse"><i class="fa fa-facebook"></i></a>
 								<a href="#"><i class="fa fa-twitter"></i></a>
-								<a href="https://www.linkedin.com/feed/"><i class="fa fa-linkedin"></i></a>
+								<a target="_blank" href="https://www.linkedin.com/in/fran%C3%A7ois-nimpagaritse-39004ab6/"><i class="fa fa-linkedin"></i></a>
                             </div>
                         </div>
                     </div>

@@ -47,9 +47,9 @@
 								<?php endif ; ?>
 							</ul>
 							<ul class="nav navbar-nav navbar-right header_social ml-auto">
-								<li class="nav-item"><a target="blank" href="#"><i class="fa fa-facebook"></i></a></li>
+								<li class="nav-item"><a target="_blank" href="https://www.facebook.com/francis.nimpagaritse"><i class="fa fa-facebook"></i></a></li>
 								<li class="nav-item"><a href="#"><i class="fa fa-twitter"></i></a></li>
-								<li class="nav-item"><a href="#"><i class="fa fa-linkedin"></i></a></li>
+								<li class="nav-item"><a target="_blank" href="https://www.linkedin.com/in/fran%C3%A7ois-nimpagaritse-39004ab6/"><i class="fa fa-linkedin"></i></a></li>
 							</ul>
 						</div> 
 					</div>
