@@ -1,15 +1,14 @@
 <?php
 
-$title='Contact';
+$title='About';
 
- require('header.php');
  ob_start();
  ?>
        
 <div class="cont"> 
-    <h1><?php echo $abouts; ?></h1>     
+    
     <!--================Home Banner Area =================-->
-    <section class="banner_area">
+    <section class="banner_area pt-4">
         <div class="container">
             <div class="row banner_inner">
                 <div class="col-lg-5"></div>
