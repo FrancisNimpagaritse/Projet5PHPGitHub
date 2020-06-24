@@ -59,6 +59,6 @@
 				<div class="container">
 					<a class="logo" href="#"><img src="<?=URL_PATH;?>public/visitor/img/monblog_logo.png" alt=""></a>
 				</div>
-			</div>		
+			</div>
 		</header>
 		<!--================Header Menu Area =================-->
