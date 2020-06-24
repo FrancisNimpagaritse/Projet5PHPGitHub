@@ -2,7 +2,7 @@
 
   if(!isset($_SESSION['user_id']))
   {
-    header('Location: '. URL_PATH.'user/login');    
+    header('Location: '. URL_PATH.'authentication/login');    
       exit();
   }
 ?>
@@ -64,7 +64,7 @@
          
           <div class="card">
             <div class="card-header">
-              <h3 class="card-title">Nos administrateurs</h3>
+              <h3 class="card-title">Utilisateurs inscrits</h3>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
@@ -85,19 +85,19 @@
                 
                     <?php foreach($data['users'] as $user) : ?>
                         <tr>
-                            <td><?php echo $user->getId(); ?></td>
-                            <td><?php echo $user->getFirstname(); ?></td>
-                            <td><?php echo $user->getLastname(); ?></td>
-                            <td><?php echo $user->getEmail(); ?></td>
-                            <td><?php echo $user->getProfile(); ?></td>
-                            <td><?php echo $user->new_pwd; ?></td>                            
-                            <td><?php echo $user->updated_at; ?></td>
+                            <td><?=$user->getId();?></td>
+                            <td><?=$user->getFirstname();?></td>
+                            <td><?=$user->getLastname();?></td>
+                            <td><?=$user->getEmail();?></td>
+                            <td><?=$user->getProfile();?></td>
+                            <td><?=$user->getNewpwd();?></td>
+                            <td><?=date_format(new DateTime($user->getUpdatedAt()),"d-m-Y H:i:s");?></td>
                             <td>
-                            <a href="<?php echo URL_PATH; ?>user/edit/<?php echo $user->getId(); ?>" class="btn btn-primary mb-2"><i class="fas fa-pencil-alt"></i></a> 
-                            <a href="<?php echo URL_PATH; ?>user/delete/<?php echo $user->getId(); ?>" class="btn btn-danger mb-2"><i class="far fa-trash-alt"></i></a>
+                            <a href="<?=URL_PATH; ?>user/edit/<?=$user->getId() . '&token=' . $_SESSION['user']['token'];?>" class="btn btn-primary mb-2"><i class="fas fa-pencil-alt"></i></a> 
+                            <a href="<?=URL_PATH; ?>user/delete/<?=$user->getId() . '&token=' . $_SESSION['user']['token'];?>" class="btn btn-danger mb-2"><i class="far fa-trash-alt"></i></a>
                             </td>
-                        </tr> 
-                    <?php endforeach ; ?>               
+                        </tr>
+                    <?php endforeach ; ?>
                 </tbody>
                 <tfoot>
                 <tr>
