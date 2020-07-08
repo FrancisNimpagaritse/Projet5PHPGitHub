@@ -45,41 +45,47 @@ class AuthenticationController extends Controller
             }
             //If all errors are empty
             if (empty($data['email_error']) && empty($data['password_error'])) {
-                //Validate
-                 
-                //Check and set logged in User
+                //Validate 
+
                 $loggedInUser = $this->userManager->login($email, $pass);
-               
-                if ($loggedInUser) {  
-                        //Session cookies
-                        if (isset($_POST['remember'])) {
-                            setcookie('email', $email, time() + 36000,null,null,false,true);
-                            setcookie('password', $pass, time() + 36000,null,null,false,true);                            
-                        } else {
-                            setcookie('email', '');
-                            setcookie('password', '');
-                        }
-                    //Create session
-                    $_SESSION['user_id']        = $loggedInUser->getId();
-                    $_SESSION['user_email']     = $loggedInUser->getEmail();
-                    $_SESSION['user_firstname'] = $loggedInUser->getFirstname();
-                    $_SESSION['user_lastname']  = $loggedInUser->getLastname();
-                    $_SESSION['profile']         = $loggedInUser->getProfile();
-                    $_SESSION['user']['token']   = hash("sha512", microtime().rand(0,999999));
-                                        
+            }
+
+            //Check and set logged in User
+            $loggedInUser = $this->userManager->login($email, $pass);               
+
+            if ($loggedInUser) {  
+                    
+                //Create session
+                $_SESSION['user_id']        = $loggedInUser->getId();
+                $_SESSION['user_email']     = $loggedInUser->getEmail();
+                $_SESSION['user_firstname'] = $loggedInUser->getFirstname();
+                $_SESSION['user_lastname']  = $loggedInUser->getLastname();
+                $_SESSION['profile']         = $loggedInUser->getProfile();
+                $_SESSION['user']['token']   = hash("sha512", microtime().rand(0,999999));
+                
+                //Session cookies
+                if (isset($_POST['remember'])) {
+                    setcookie('user_id', $_SESSION['user_id'], time()+3600,'/','localhost',false,true);
+                    setcookie('user_firstname', $_SESSION['user_firstname'], time()+3600,'/','localhost',false,true);
+
                     if ($_SESSION['profile'] == 'admin') {
                         header('Location: '. URL_PATH.'homeAdmin');
                     } else {                            
                         header('Location: '. URL_PATH.'posts');
                     }
                 } else {
+                    if ($_SESSION['profile'] == 'admin') {
+                        header('Location: '. URL_PATH.'homeAdmin');
+                    } else {                            
+                        header('Location: '. URL_PATH.'posts');
+                    }
+                }
+            } else {
                     $data['password_error'] = "Mot de passe invalid";
                     //Reload view with errors
                     $this->loadView('admin/login',$data);
-                }
-            }  else {
-                $this->loadView('admin/login', $data);
             }
+                
         } else {
             //Initialize data 
             $data =[    
@@ -93,7 +99,9 @@ class AuthenticationController extends Controller
     }
     
     public function logout()
-    {  
+    {
+        setcookie('user_id','',time()-3600);
+        setcookie('user_firstname','',time()-3600);
         unset($_SESSION['user_id']);
         unset($_SESSION['user_firstname']);
         unset($_SESSION['user_lastname']);

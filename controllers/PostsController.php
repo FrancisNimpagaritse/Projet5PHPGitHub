@@ -142,13 +142,16 @@ class PostsController extends Controller
         $this->postManager->unPublishOne($postToUnpublish);
         $message = "Post retiré avec success.";
         $posts = $this->postManager->findAll();
-        //header('Location: '. URL_PATH.'posts/list',['message' => $message]);
+        
         $this->loadView('admin/postsAdmin',['posts' => $posts, 'message' => $message]);
-        //header('Location: '. URL_PATH.'posts/list');
     }
     
     public function edit($id)
-    {        
+    {
+        if (isset($_GET['token']) && ($_GET['token'] != $_SESSION['user']['token']) || empty($_GET['token'])) {
+            exit("Token périmé!");
+        }
+
         //Avoid data send by GET method
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
              //Pocess form
