@@ -14,7 +14,6 @@ class HomeAdminController extends Controller
         $posts = $this->postManager->countAllPosts();
         $comments = $this->commentManager->countAllComments();
         $users = $this->userManager->countAllUsers();
-        //$visitors = $this->visitorManager->countAllVisitors();
 
         $this->loadView('admin/homeAdmin',['posts'=>$posts, 'comments'=>$comments, 'users'=>$users]);
     }
