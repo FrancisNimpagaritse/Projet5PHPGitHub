@@ -42,12 +42,12 @@ if (file_exists('controllers/'.ucfirst(strtolower($url[0])).'Controller.php')) {
     } else { 
         http_response_code(404);
         echo "<h1>Erreur 404</h1>";
-        echo "L'action demandée n'existe pas"; 
+        echo "La page recherchée n'existe pas"; 
     } 
 }
 else
 {
     http_response_code(404);
     echo "<h1>Erreur 404</h1>";
-    echo "Le contrôleur demandé n'existe pas"; 
+    echo "La page recherchée n'existe pas"; 
 } 

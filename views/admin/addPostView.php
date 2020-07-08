@@ -2,7 +2,7 @@
 
 if(!isset($_SESSION['user_id']))
   {
-    header('Location: '. URL_PATH.'user/login');    
+    header('Location: '. URL_PATH.'authentication/login');    
       exit();
   }
 ?>
