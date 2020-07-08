@@ -17,7 +17,6 @@ $title='Posts';
                         <div class="item">
                             <div class="blog_text">
                                 <div class="cat">
-                                    
                                     <a class="cat_btn" href="#">New</a>
                                     <a href="#"><i class="fa fa-calendar" aria-hidden="true"></i> <?='Par '.$newPost->firstname.', '. date_format(new DateTime($newPost->updatedAt),"d-m-Y H:i:s");?></a>
                                     <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i> <?= "Commentaires: ". $newPost->nbrComments;?></a>

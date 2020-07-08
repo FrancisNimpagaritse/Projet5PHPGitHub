@@ -110,8 +110,8 @@
                               <?php } ?>
                              </td>                              
                             <td>
-                              <a href="<?=URL_PATH;?>posts/edit/<?=$post->id;?>" class="btn btn-xs btn-primary mb-2"><i class="fas fa-pencil-alt"></i></a> 
-                              <a href="<?=URL_PATH;?>posts/delete/<?=$post->id;?>" class="btn btn-xs btn-danger mb-2"><i class="far fa-trash-alt"></i></a>
+                              <a href="<?=URL_PATH;?>posts/edit/<?=$post->id . '&token=' . $_SESSION['user']['token'];?>" class="btn btn-xs btn-primary mb-2"><i class="fas fa-pencil-alt"></i></a> 
+                              <a href="<?=URL_PATH;?>posts/delete/<?=$post->id . '&token=' . $_SESSION['user']['token'];?>" class="btn btn-xs btn-danger mb-2"><i class="far fa-trash-alt"></i></a>
                             </td>
                         </tr> 
                     <?php endforeach ; ?>               

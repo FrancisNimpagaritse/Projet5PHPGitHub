@@ -1,10 +1,14 @@
 <?php
 
-  if(!isset($_SESSION['user_id']))
+  //print_r($_COOKIE); die();
+  if(!isset($_SESSION['user_id']) && !isset($_COOKIE['user_firstname']))
   {
-    header('Location: '. URL_PATH.'user/login');    
+    header('Location: '. URL_PATH.'authentication/login');
       exit();
   }
+  
+  $_SESSION['user_firstname'] = (isset($_COOKIE['user_firstname']) && !empty($_COOKIE['user_firstname'])) ? $_COOKIE['user_firstname'] : $_SESSION['user_firstname'];
+  
 ?>
 
 <!DOCTYPE html>
@@ -57,8 +61,8 @@
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Dashboard v1</li>
+              <li class="breadcrumb-item"><a href="#">Accueil</a></li>
+              <li class="breadcrumb-item active">Dashboard</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
