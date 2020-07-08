@@ -27,7 +27,7 @@
                with font-awesome or any other icon font library -->
          
           <li class="nav-item">
-            <a href="accueilAdmin" class="nav-link">
+            <a href="<?=URL_PATH;?>homeAdmin" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
               <p>
                 Accueil                
