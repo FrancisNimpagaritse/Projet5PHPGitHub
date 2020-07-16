@@ -108,18 +108,13 @@ ob_start();
                                     <textarea class="form-control mb-10" rows="5" name="message" placeholder="Votre commentaire" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Votre commentaire'" required></textarea>
                                 </div>
                                 <?php 
-                                $url = $_GET['uc'];
-                                $postid = substr_replace($url,'',0,11);
-                                
                                 if (isset($_SESSION['user_id']))
                                 { ?>  
                                     <input type="hidden" class="form-control" name="postid" id="postid" value="<?=$postid;?>">                                  
                                     <button type="submit" class="primary-btn submit_btn">Poster Commentaire</button>
                                     <!-- Button trigger modal -->
-                                <?php } else { ?>
-                                    <button type="button" class="primary-btn submit_btn" data-toggle="modal" data-target="#exampleModal">
-                                        Connectez-vous pour commenter
-                                    </button> 
+                                <?php } else { ?>                                    
+                                    <a class="btn btn-dark" href="<?=URL_PATH;?>authentication/login">Connectez-vous pour commenter</a>
                                 <?php } ?>
                                 	
                             </form>
@@ -148,51 +143,7 @@ ob_start();
                     </div>
                 </div>
             </div> 
-            <?php
-                //Hold url value for modal
-                $url = $_GET['uc'];
-                                              
-            ?>
-             <!-- Modal -->
-            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Connectez-vous</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                    <!-- LOGIN FORM -->
-                        <!-- /.login-logo -->
-                    <div class="card">
-                        <div class="card-body login-card-body">
-
-                        <form action="<?=URL_PATH;?>login/standardlogin" method="post">
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">Email</label>
-                                <input type="text" class="form-control" id="url" name="url" aria-describedby="url" value="<?=$url;?>">
-                                <input type="email" name='email' class="form-control" id="email" aria-describedby="emailHelp" >
-                                <span class="invalid-feedback"><?=$data['email_error'];?></span>                                
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleInputPassword1">Mot de passe</label>
-                                <input type="password" name='password' class="form-control" id="password" >
-                                <span class="invalid-feedback"><?=$data['password_error'];?></span>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary">Connexion</button>
-                            </div>
-                        </form>
-                            <!-- END LOGIN FORM -->
-                    </div>
-                    
-                    </div>
-                </div>
-            </div>
-               
-            <!--END MODAL -->
+                       
         </section>
        
         <!--================Blog Area =================-->

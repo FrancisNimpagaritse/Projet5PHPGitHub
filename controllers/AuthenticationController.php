@@ -69,13 +69,13 @@ class AuthenticationController extends Controller
                     setcookie('user_firstname', $_SESSION['user_firstname'], time()+3600,'/','localhost',false,true);
 
                     if ($_SESSION['profile'] == 'admin') {
-                        header('Location: '. URL_PATH.'homeAdmin');
+                        header('Location: '. URL_PATH.'HomeAdmin');
                     } else {                            
                         header('Location: '. URL_PATH.'posts');
                     }
                 } else {
                     if ($_SESSION['profile'] == 'admin') {
-                        header('Location: '. URL_PATH.'homeAdmin');
+                        header('Location: '. URL_PATH.'HomeAdmin');
                     } else {                            
                         header('Location: '. URL_PATH.'posts');
                     }
