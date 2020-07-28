@@ -140,16 +140,15 @@ class AuthenticationController extends Controller
                 if ($user) { 
                     //Generate a random token
                     $token = uniqid();
-                    $url = URL_PATH."authentication/resetStart?token=".$token;
+                    $url = 'http://monblog.franimpa.fr' . URL_PATH . "authentication/resetStart?token=".$token;
                     
                     //Email data
                     $message = "Bonjour, voici le lien pour réinitialiser votre mot de passe. Cliquez-le: ". $url;
-                    //$headers = 'Content-Type: text/plain; charset="utf-8"'." ";
-                    $headers = [
-                        'Content-Type' => 'text/plain',
-                        'charset' => 'utf-8',
-                        'From' => 'franimpa@yahoo.fr'
-                    ];                    
+                
+                    $headers = 'From: webmaster@example.com' . "\r\n" .
+                            'Reply-To: ' . $email . "\r\n" .
+                            'X-Mailer: PHP/' . phpversion();
+
                     if (mail($email, 'Mot de passe oublié', $message, $headers)) {
                         $user->setToken($token)
                             ->setUpdatedAt(date("Y-m-d H:i:s"));
@@ -194,7 +193,8 @@ class AuthenticationController extends Controller
         }
     }
     public function resetPassword()
-    {        
+    {      
+        
         //Avoid data send by GET method
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
              //Pocess form
@@ -213,9 +213,11 @@ class AuthenticationController extends Controller
                     'email' => $email,
                     'password' => $password,
                     'confirm_password' => $confirm_password,
+                    'token' => $_POST['token'],
                     'email_error' => '',
                     'password_error' => '',
-                    'confirm_password_error' => ''
+                    'confirm_password_error' => '',
+                    'token_error'   => ''
                 ];
                 
             //Validate email
@@ -237,7 +239,7 @@ class AuthenticationController extends Controller
                 
             //If all errors are empty
             if (empty($data['email_error']) && empty($data['password_error'])
-            && empty($data['confirm_password_error'])) {
+            && empty($data['confirm_password_error']) && empty($data['token_error'])) {
                 
                 //Check if user with that token exists in db
                 $userToUpdate = $this->userManager->findByToken($data['token']); 
@@ -246,15 +248,20 @@ class AuthenticationController extends Controller
                     //User not found
                     $data['token_error'] = 'Le lien fourni n\'a pa été reconnu!'; 
                 } else {
+                    $data['token'] = '';
+                    //Password hash
+                    $pass_hash = password_hash($data['password'], PASSWORD_DEFAULT);
+                   
                     //Validate
-                    $userToUpdate->setPassword($data['password'])
-                                    ->setToken($data[''])
-                                    ->setUpdatedAt(date("Y-m-d H:i:s"));;
+                    $userToUpdate->setPassword($pass_hash)
+                                    ->setToken($data['token'])
+                                    ->setUpdatedAt(date("Y-m-d H:i:s"));
                         
-                    //update paswword in db using
-                    $this->userManager->updatePassword($userToUpdate);  
-                
-                    header('Location: '. URL_PATH.'authentication/login');
+                    //update paswword & token in db
+                    $this->userManager->updatePassword($userToUpdate);
+                    $this->userManager->updateToken($userToUpdate);
+                    
+                   header('Location: ' . URL_PATH . 'authentication/login');
                 }
             } else {
                 //Reload view with errors

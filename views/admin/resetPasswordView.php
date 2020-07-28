@@ -29,7 +29,7 @@
     <div class="card-body login-card-body">
       <p class="login-box-msg">Veuillez remplir le formulaire pour réinitialiser votre mot de passe</p>
 
-      <form action="<?=URL_PATH;?>user/resetPassword" method="post">        
+      <form action="<?=URL_PATH;?>authentication/resetPassword" method="post">        
         <div class="input-group mb-3">
           <input type="email" id="email" name="email" class="form-control <?=(!empty($data['email_error'])) ? 'is-invalid' : ''; ?>" value="<?=$data['email'] ?>" placeholder="Email">
             <div class="input-group-append">
@@ -57,7 +57,7 @@
             </div>
           <span class="invalid-feedback"><?=$data['password_error']; ?></span> 
         </div>
-        <input type="hidden" name="token" value="<?=$token;?>"
+        <div><input type="hidden" name="token" value="<?=$token;?>"></div>
         <div class="row">
           <div class="col">
             <button type="submit" class="btn btn-success btn-block">Valider</button>

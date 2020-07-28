@@ -51,7 +51,7 @@ class HomeController extends Controller
                    'subject_error' => '',
                    'message_error' => ''
                ];
-           
+          
            //Validate firstname
            if (empty($data['name'])) {
                $data['name_error'] = 'Veuiller saisir votre nom et prénom';
@@ -75,18 +75,19 @@ class HomeController extends Controller
            //If all errors are empty
            if (empty($data['name_error']) && empty($data['email_error'])
            && empty($data['subject_error']) && empty($data['message_error'])) { 
-        
-                $headers = [
-                    'Content-Type' => 'text/plain',
-                    'charset' => 'utf-8',
-                    'From' => $email
-                ];
+            
+                $to = 'franimpagaritse@gmail.com';
 
-                if (mail('franimpa@yahoo.fr', $subject, $message, $headers)) {
-                    $result = 'Votre message a été envoyé le: ' . date("Y-m-d H:i:s");
-                    header('Location: '. URL_PATH.'home');
+                $headers = 'From: webmaster@example.com' . "\r\n" .
+                            'Reply-To: ' . $email . "\r\n" .
+                            'X-Mailer: PHP/' . phpversion();
+
+                if (mail($to, $subject, $message, $headers)) {
+                    $data['result'] = '<div class="alert alert-success"> Votre message a été envoyé. </div>';
+                    
+                    $this->loadView('home', $data);
                 } else {
-                    $data['result'] = 'Votre message n\'a pas été envoyé !';
+                    $data['result'] = '<div class="alert alert-danger"> Votre message n\'a pas été envoyé !</div>';
                     
                     //Reload view with errors                    
                     $this->loadView('home', $data);
