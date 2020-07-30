@@ -6,7 +6,7 @@ $title='Détails Post';
 ob_start();
 
  ?>
-<div class="cont"> 
+<div class="container-fluid"> 
         <!--================Home Banner Area =================-->
         <section class="banner_area">
         	<div class="container">
@@ -147,8 +147,8 @@ ob_start();
         </section>
        
         <!--================Blog Area =================-->
-</div>    
+   
 
-<?php $content = ob_get_clean(); ?>
+    <?php $content = ob_get_clean(); ?>
 
-<?php require('template.php'); ?>
+    <?php require('template.php'); ?>
