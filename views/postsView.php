@@ -76,7 +76,7 @@ $title='Posts';
                                         <a href="#"><i class="fa fa-calendar" aria-hidden="true"></i> <?='Par '.$popularOne->firstname.', '. date_format(new DateTime($popularOne->updatedAt),"d-m-Y H:i:s");?></a>
                                         <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i>  <?= "Commentaires: ". $popularOne->nbrComments;?></a>
                                     </div>
-                                    <a href="#"><h4><a href="#"><h4><?=$popularOne->title;?></h4></a></h4></a>
+                                    <a href="#"><h4><?=$popularOne->title;?></h4></a>
                                     <p><?=$popularOne->content;?></p>
                                     <a class="blog_btn" href="<?=URL_PATH;?>posts/show/<?=$popularOne->id;?>">Lire la suite</a>
                                 </div>

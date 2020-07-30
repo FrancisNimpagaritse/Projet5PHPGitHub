@@ -1,4 +1,4 @@
-        <div class="container">   <!--================ start Header Area  =================-->	
+ <!-- <div class="container">   ================ start Header Area  =================-->	
             <?php require_once('header.php'); ?>
             <!--================ End Header Area  =================-->
             
