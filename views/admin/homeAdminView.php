@@ -124,7 +124,7 @@
             <!-- small box -->
             <div class="small-box bg-info">
               <div class="inner">
-                <h3><?=$posts->nbPosts;?></h3>
+                <h3><?=$publishedPosts->nbPosts;?></h3>
 
                 <p>Posts publiés</p>
               </div>
@@ -139,7 +139,7 @@
             <!-- small box -->
             <div class="small-box bg-success">
               <div class="inner">
-                <h3><?=$comments->nbComments;?><sup style="font-size: 20px"></sup></h3>
+                <h3><?=$approvedComments->nbComments;?><sup style="font-size: 20px"></sup></h3>
 
                 <p>Commentaires publiés</p>
               </div>
@@ -170,7 +170,7 @@
             <!-- small box -->
             <div class="small-box bg-info">
               <div class="inner">
-                <h3><?=$posts->nbPosts;?></h3>
+                <h3><?=$unpublishedPosts->nbPosts;?></h3>
 
                 <p>Posts en attente</p>
               </div>
@@ -185,7 +185,7 @@
             <!-- small box -->
             <div class="small-box bg-success">
               <div class="inner">
-                <h3><?=$comments->nbComments;?><sup style="font-size: 20px"></sup></h3>
+                <h3><?=$unapprovedComments->nbComments;?><sup style="font-size: 20px"></sup></h3>
 
                 <p>Commentaires en attente</p>
               </div>
