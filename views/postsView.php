@@ -5,9 +5,10 @@ $title='Posts';
  ob_start();
  ?>
 
-<div class="cont">    
+<div class="container-fluid">    
 
         <!--================Home Banner Area =================-->
+        
     <section class="home_banner_area">
         <div class="container pt-2">
             <div class="row">
@@ -21,7 +22,7 @@ $title='Posts';
                                     <a href="#"><i class="fa fa-calendar" aria-hidden="true"></i> <?='Par '.$newPost->firstname.', '. date_format(new DateTime($newPost->updatedAt),"d-m-Y H:i:s");?></a>
                                     <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i> <?= "Commentaires: ". $newPost->nbrComments;?></a>
                                 </div>
-                                <a href="#"><h4><a href="#"><h4><?=$newPost->title;?></h4></a></h4></a>
+                                <a href="#"><h4><?=$newPost->title;?></h4></a>
                                 <p><?=$newPost->content;?></p>
                                 <a class="blog_btn" href="<?=URL_PATH;?>posts/show/<?=$newPost->id;?>">Lire la suite</a>
                             </div>
@@ -56,7 +57,7 @@ $title='Posts';
         </div>
     </section>
     <!--================End Home Banner Area =================-->
-    
+
     <!--================Blog Area =================-->
     <section class="blog_area p_120">
         <div class="container">
@@ -212,10 +213,8 @@ $title='Posts';
     </section>
     <!--================Blog Area =================-->
 
-</div>
+    <?php $content = ob_get_clean(); ?>
 
-<?php $content = ob_get_clean(); ?>
-
-<?php require('template.php'); ?>
+    <?php require('template.php'); ?>
 
 

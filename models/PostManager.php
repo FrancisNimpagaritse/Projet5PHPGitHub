@@ -68,6 +68,34 @@ class PostManager extends Model
         return $result;
     }
 
+    //count all posts
+    public function countAllPublishedPosts()
+    {
+        $pdo = $this->getPdo();
+        
+        $this->pdoStmt = $pdo->query('SELECT COUNT(*) as nbPosts FROM posts WHERE status="publié"');
+
+        $result = $this->pdoStmt->fetch(PDO::FETCH_OBJ);
+        if ($result == null) {
+            return [];
+        }
+        return $result;
+    }
+
+    //count all posts
+    public function countAllUnPublishedPosts()
+    {
+        $pdo = $this->getPdo();
+        
+        $this->pdoStmt = $pdo->query('SELECT COUNT(*) as nbPosts FROM posts where status="attente"');
+
+        $result = $this->pdoStmt->fetch(PDO::FETCH_OBJ);
+        if ($result == null) {
+            return [];
+        }
+        return $result;
+    }
+
     //Find all posts
     public function findAllPublished()
     {        

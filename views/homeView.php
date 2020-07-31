@@ -5,6 +5,7 @@
  ob_start();
  
  ?>
+ <div class="container-fluid"> 
     <!--================Home Banner Area =================-->
     <section class="banner_area pt-3">
         <div class="container">
@@ -62,14 +63,12 @@
                     </div>
                 </div>
                 <div class="col-lg-4">
-                    <div class="blog_right_sidebar">
-                        
+                    <div class="blog_right_sidebar">                        
                         <aside class="single_sidebar_widget author_widget text-center">
                             <img class="author_img img-fluid rounded center-block" src="<?php echo URL_PATH; ?>views/admin/myImage/francis-01.png" style="width:310px; height:320px;" alt="">
                             <div class="text-center">
                                 <h4>François Nimpagaritse</h4>
-                            </div>
-                            
+                            </div>                            
                             <div class="blog_text p-1 text-center">
                                 <div class="blog_text_inner ">
                                     <div class="cat p-1">
@@ -78,8 +77,7 @@
                                     </div>
                                 </div>
 							</div>
-                        </aside>
-                        
+                        </aside>                        
                     </div>
                 </div>
             </div>

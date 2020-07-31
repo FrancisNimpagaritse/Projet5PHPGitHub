@@ -5,7 +5,7 @@ $title='About';
  ob_start();
  ?>
        
-<div class="cont"> 
+<div class="container-fluid"> 
     
     <!--================Home Banner Area =================-->
     <section class="banner_area pt-4">
@@ -73,11 +73,9 @@ $title='About';
                     </form>
                 </div>
             </div>
-        </div>
+        
     </section>
-    <!--================Contact Area =================-->
-    
-</div> 
+    <!--================Contact Area =================--> 
 
     <?php $content = ob_get_clean(); ?>
 

@@ -1,8 +1,7 @@
 <?php
 
   //print_r($_COOKIE); die();
-  if(!isset($_SESSION['user_id']) && !isset($_COOKIE['user_firstname']))
-  {
+  if(!isset($_SESSION['user_id']) && !isset($_COOKIE['user_firstname'])) {
     header('Location: '. URL_PATH.'authentication/login');
       exit();
   }
@@ -118,30 +117,14 @@
               </div>
               <a href="<?=URL_PATH;?>user/index" class="small-box-footer">voir <i class="fas fa-arrow-circle-right"></i></a>
             </div>
-          </div>
-          <!-- ./col -->
-          <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-danger">
-              <div class="inner">
-                <h3>65</h3>
-
-                <p>Visiteurs</p>
-              </div>
-              <div class="icon">
-                <i class="ion ion-pie-graph"></i>
-              </div>
-              <a href="#" class="small-box-footer">voir <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
-          <!-- ./col -->
+          </div>          
         </div>
         <div class="row">
           <div class="col-lg-3 col-6">
             <!-- small box -->
             <div class="small-box bg-info">
               <div class="inner">
-                <h3><?=$posts->nbPosts;?></h3>
+                <h3><?=$publishedPosts->nbPosts;?></h3>
 
                 <p>Posts publiés</p>
               </div>
@@ -156,7 +139,7 @@
             <!-- small box -->
             <div class="small-box bg-success">
               <div class="inner">
-                <h3><?=$comments->nbComments;?><sup style="font-size: 20px"></sup></h3>
+                <h3><?=$approvedComments->nbComments;?><sup style="font-size: 20px"></sup></h3>
 
                 <p>Commentaires publiés</p>
               </div>
@@ -180,30 +163,14 @@
               </div>
               <a href="<?=URL_PATH;?>user/index" class="small-box-footer">voir <i class="fas fa-arrow-circle-right"></i></a>
             </div>
-          </div>
-          <!-- ./col -->
-          <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-danger">
-              <div class="inner">
-                <h3>65</h3>
-
-                <p>Visiteurs</p>
-              </div>
-              <div class="icon">
-                <i class="ion ion-pie-graph"></i>
-              </div>
-              <a href="#" class="small-box-footer">voir <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
-          <!-- ./col -->
+          </div>          
         </div>
         <div class="row">
           <div class="col-lg-3 col-6">
             <!-- small box -->
             <div class="small-box bg-info">
               <div class="inner">
-                <h3><?=$posts->nbPosts;?></h3>
+                <h3><?=$unpublishedPosts->nbPosts;?></h3>
 
                 <p>Posts en attente</p>
               </div>
@@ -218,7 +185,7 @@
             <!-- small box -->
             <div class="small-box bg-success">
               <div class="inner">
-                <h3><?=$comments->nbComments;?><sup style="font-size: 20px"></sup></h3>
+                <h3><?=$unapprovedComments->nbComments;?><sup style="font-size: 20px"></sup></h3>
 
                 <p>Commentaires en attente</p>
               </div>
@@ -243,55 +210,7 @@
               <a href="<?=URL_PATH;?>user/index" class="small-box-footer">voir <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>         
-        </div>
-        <!-- /.row -->
-        <!-- Main row -->
-        <div class="row">
-          <!-- Left col -->
-          <section class="col-lg-7 connectedSortable">
-           
-            <!-- Calendar -->
-            <div class="card bg-gradient-success">
-              <div class="card-header border-0">
-
-                <h3 class="card-title">
-                  <i class="far fa-calendar-alt"></i>
-                  Calendar
-                </h3>
-                <!-- tools card -->
-                <div class="card-tools">
-                  <!-- button with a dropdown -->
-                  <div class="btn-group">
-                    <button type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown">
-                      <i class="fas fa-bars"></i></button>
-                    <div class="dropdown-menu float-right" role="menu">
-                      <a href="#" class="dropdown-item">Add new event</a>
-                      <a href="#" class="dropdown-item">Clear events</a>
-                      <div class="dropdown-divider"></div>
-                      <a href="#" class="dropdown-item">View calendar</a>
-                    </div>
-                  </div>
-                  <button type="button" class="btn btn-success btn-sm" data-card-widget="collapse">
-                    <i class="fas fa-minus"></i>
-                  </button>
-                  <button type="button" class="btn btn-success btn-sm" data-card-widget="remove">
-                    <i class="fas fa-times"></i>
-                  </button>
-                </div>
-                <!-- /. tools -->
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body pt-0">
-                <!--The calendar -->
-                <div id="calendar" style="width: 100%"></div>
-              </div>
-              <!-- /.card-body -->
-            </div>
-            <!-- /.card -->
-          </section>
-          <!-- right col -->
-        </div>
-        <!-- /.row (main row) -->
+        </div>        
       </div><!-- /.container-fluid -->
     </section>
     <!-- /.content -->

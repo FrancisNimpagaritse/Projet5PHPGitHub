@@ -61,6 +61,34 @@ class CommentManager extends Model
         return $result;
     }
 
+    //count all comments
+    public function countAllApprovedComments()
+    {
+        $pdo = $this->getPdo();
+        
+        $this->pdoStmt = $pdo->query('SELECT COUNT(*) as nbComments FROM comments WHERE status="publié"');
+
+        $result = $this->pdoStmt->fetch(PDO::FETCH_OBJ);
+        if ($result == null) {
+            return [];
+        }
+        return $result;
+    }
+
+    //count all approved comments
+    public function countAllUnApprovedComments()
+    {
+        $pdo = $this->getPdo();
+        
+        $this->pdoStmt = $pdo->query('SELECT COUNT(*) as nbComments FROM comments WHERE status="attente"');
+
+        $result = $this->pdoStmt->fetch(PDO::FETCH_OBJ);
+        if ($result == null) {
+            return [];
+        }
+        return $result;
+    }
+
     //Find all posts
     public function findAllPublished()
     {        
@@ -78,14 +106,14 @@ class CommentManager extends Model
         } 
     }
 
-    
+    //Only published comment
     public function findCommentsByPost($id)
     {
         $pdo = $this->getPdo();
 
         $this->pdoStmt = $pdo->prepare('SELECT c.id, c.postid, c.authorId, c.message, c.createdAt, c.status, u.firstname, u.lastname FROM posts p 
         INNER JOIN comments c ON p.id = c.postid INNER JOIN users u ON c.authorId = u.id
-        WHERE c.postid = :id AND c.status IN("attente","publié")
+        WHERE c.postid = :id AND c.status="publié"
         ORDER BY c.createdAt DESC');
         
         $this->pdoStmt->bindValue(':id', $id, PDO::PARAM_INT);

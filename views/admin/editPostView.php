@@ -3,16 +3,15 @@
 if(!isset($_SESSION['user_id']))
   {
     header('Location: '. URL_PATH.'authentication/login');    
-      exit();
+    exit();
   }
-
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title><?php echo WEBSITENAME; ?> | Modifier post</title>
+  <title><?=WEBSITENAME;?> | Modifier post</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
 

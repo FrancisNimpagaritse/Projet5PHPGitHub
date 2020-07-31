@@ -6,7 +6,7 @@ $title='Détails Post';
 ob_start();
 
  ?>
-<div class="cont"> 
+<div class="container-fluid"> 
         <!--================Home Banner Area =================-->
         <section class="banner_area">
         	<div class="container">
@@ -55,7 +55,7 @@ ob_start();
        						<p><?=$post->content;?></p>
 							<div class="news_d_footer">
       							<a href="#"><i class="lnr lnr lnr-heart"></i><?="0".$post->nbrComments;?> Visites</a>
-      							<a class="justify-content-center ml-auto" href="#"><i class="lnr lnr lnr-bubble"></i><?="0".$post->nbrComments;?> Commentaires</a>
+      							<a class="justify-content-center ml-auto" href="#"><i class="lnr lnr lnr-bubble"></i><?="0".$post->nbrComments;?> Commentaires au total</a>
       							<div class="news_socail ml-auto">
 									<a href="#"><i class="fa fa-facebook"></i></a>
 									<a href="#"><i class="fa fa-twitter"></i></a>
@@ -64,7 +64,7 @@ ob_start();
       						</div>
        					</div>       					
                         <div class="comments-area">
-                            <h4><?="0".$post->nbrComments;?> Commentaires</h4>
+                            <h4>Commentaires publiés</h4>
                             <div class="comment-list">
                                 <?php if(!$comments==null)
                                 {
@@ -82,10 +82,7 @@ ob_start();
                                                         <?=$comment->message;?>
                                                     </p>
                                                 </div>
-                                            </div>
-                                            <div class="reply-btn">
-                                                   <a href="" class="btn-reply text-uppercase">Répondre</a> 
-                                            </div>
+                                            </div>                                            
                                         </div>
                                       </br>
                                     <?php endforeach;
@@ -147,8 +144,8 @@ ob_start();
         </section>
        
         <!--================Blog Area =================-->
-</div>    
+   
 
-<?php $content = ob_get_clean(); ?>
+    <?php $content = ob_get_clean(); ?>
 
-<?php require('template.php'); ?>
+    <?php require('template.php'); ?>
