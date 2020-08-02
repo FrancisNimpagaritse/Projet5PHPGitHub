@@ -23,8 +23,12 @@ class CommentController extends Controller
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
             
             //Initialize data posted
-            $postid=trim(htmlspecialchars($_POST['postid']));
-            $message=trim(htmlspecialchars($_POST['message']));
+            if (isset($_POST['postid'])) {
+                $postid=htmlspecialchars($_POST['postid']);
+            }
+            if (isset($_POST['message'])) {
+                $message=htmlspecialchars($_POST['message']);
+            }
 
             //Initialize data
             $data = [

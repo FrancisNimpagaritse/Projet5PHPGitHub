@@ -1,6 +1,6 @@
 Installation
 Etape 1 : Transférer les fichiers dans le dossier web de votre serveur web (en général "www/").
-Etape 2 : Créer une base données sur votre SGDB (MySQL) et importer le fichier myblog.sql pour générer la base de données et les jeux de données de test.
+Etape 2 : Créer une base données sur votre SGDB (MySQL) et importer le fichier myblog.sql situé à la racine du projet pour générer la base de données et les jeux de données de test.
 Etape 3 : Remplir le fichier Config/config.php selon les valeurs de votre environnement.
 Veillez à bien remplir tout les paramètres comme suit : 
 ‘DBHOST’, ‘Ici vous mettez le nom de votre host’

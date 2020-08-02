@@ -1,5 +1,6 @@
 <?php
 
+
 class AuthenticationController extends Controller
 {
     public function __construct()
@@ -16,8 +17,12 @@ class AuthenticationController extends Controller
             //Sanitize POST data
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
             //Initialize data posted
-            $email=htmlspecialchars($_POST['email']);
-            $pass=htmlspecialchars($_POST['password']);
+            if (isset($_POST['email'])) {
+                $email = htmlspecialchars($_POST['email']);
+            }
+            if (isset($_POST['password'])) {
+                $pass = htmlspecialchars($_POST['password']);
+            }
             
             //Initialize error message
             $data = [
@@ -199,9 +204,16 @@ class AuthenticationController extends Controller
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
             //Initialize data posted
-            $email=trim(htmlspecialchars($_POST['email'])); 
-            $password=trim(htmlspecialchars($_POST['password']));
-            $confirm_password=trim(htmlspecialchars($_POST['confirm_password']));
+            if (isset($_POST['email'])) {
+                $email=htmlspecialchars($_POST['email']);
+            }
+            if (isset($_POST['password'])) {
+                $password=htmlspecialchars($_POST['password']);                
+            } 
+            if (isset($_POST['confirm_password'])) {
+                $confirm_password=htmlspecialchars($_POST['confirm_password']);
+                
+            }
             
 
             //Initialize data

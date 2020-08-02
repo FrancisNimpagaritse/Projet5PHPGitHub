@@ -4,3 +4,4 @@
 /config/*
 composer.json
 composer.lock
+myblog.sql
