@@ -55,9 +55,9 @@
 					</div>
 				</nav>
 			</div>
-			<div class="logo_part mb-2">
+			<div class="logo_part mb-3">
 				<div class="container">
-					<a class="logo" href="#"><img src="<?=URL_PATH;?>public/visitor/img/monblog_logo.png" alt=""></a>
+					<a class="logo" href="#"><img src="<?=URL_PATH;?>public/visitor/img/monblog_logo.png" alt="Logo du site"></a>
 				</div>
 			</div>
 		</header>

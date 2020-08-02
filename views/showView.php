@@ -6,7 +6,7 @@ $title='Détails Post';
 ob_start();
 
  ?>
-<div class="container-fluid"> 
+<div class="container-fluid pt-3"> 
         <!--================Home Banner Area =================-->
         <section class="banner_area">
         	<div class="container">

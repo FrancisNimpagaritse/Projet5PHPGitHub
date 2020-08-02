@@ -62,10 +62,8 @@ class UserController extends Controller
                 //Validate password
                 if (empty($data['password'])) {
                     $data['password_error'] = 'Veuiller saisir un mot de passe';
-                } else {
-                    if (strlen($data['password']) < 6) {
-                        $data['password_error'] = 'Le mot de passe doit avoir au moins 6 caractères';
-                    }
+                } else if (strlen($data['password']) < 6) {
+                    $data['password_error'] = 'Le mot de passe doit avoir au moins 6 caractères';                    
                 }
     
                 //Validate confirmed password

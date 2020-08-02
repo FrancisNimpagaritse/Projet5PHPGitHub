@@ -3,7 +3,7 @@
 session_start();
 
 //Load Config file
-require_once('config/config.php');
+require_once 'config/config.php';
 
 //Load the front controller
 require_once(APPROOT_REQUIRE.'/controllers/Controller.php');

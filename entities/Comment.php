@@ -4,7 +4,7 @@ class Comment
 {
     private $id;
     private $postId;
-    private $Message;
+    private $message;
     private $authorId;
     private $createAt;
     private $status;
