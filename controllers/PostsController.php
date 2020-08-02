@@ -43,11 +43,11 @@ class PostsController extends Controller
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
             //Initialize data posted
-            $title=trim(htmlspecialchars($_POST['title']));
-            $chapo=trim(htmlspecialchars($_POST['chapo']));
-            $category=trim(htmlspecialchars($_POST['category']));
-            $content=trim(htmlspecialchars($_POST['content']));
-            $postImage=trim(htmlspecialchars($_POST['postImage']));
+            $title=htmlspecialchars($_POST['title']);
+            $chapo=htmlspecialchars($_POST['chapo']);
+            $category=htmlspecialchars($_POST['category']);
+            $content=htmlspecialchars($_POST['content']);
+            $postImage=htmlspecialchars($_POST['postImage']);
 
             //Initialize data
             $data = [

@@ -12,16 +12,16 @@ if(!isset($_SESSION['user_id']))
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title><?php echo WEBSITENAME; ?> | edit</title>
+  <title><?=WEBSITENAME; ?> | edit</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="<?php echo URL_PATH ;?>public/admin/plugins/fontawesome-free/css/all.min.css">
+  <link rel="stylesheet" href="<?=URL_PATH ;?>public/admin/plugins/fontawesome-free/css/all.min.css">
   <!-- Ionicons -->
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
   <!-- Theme style -->
-  <link rel="stylesheet" href="<?php echo URL_PATH ;?>public/admin/dist/css/adminlte.min.css">
+  <link rel="stylesheet" href="<?=URL_PATH ;?>public/admin/dist/css/adminlte.min.css">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 </head>
@@ -66,32 +66,32 @@ if(!isset($_SESSION['user_id']))
               </div>
               <!-- /.card-header -->
               <!-- form start -->
-              <form role="form" action="<?php echo URL_PATH ?>user/add" method="post">
+              <form role="form" action="<?=URL_PATH ?>user/add" method="post">
                 <div class="card-body">
                   <div class="form-group">
                     <label for="firstname">Prénom <sup>*</sup></label>
-                    <input type="text" id="firstname" name="firstname" class="form-control <?php echo (!empty($data['firstname_error'])) ? 'is-invalid' : ''; ?>" value="<?php echo $data['firstname'] ?>" placeholder="Prénom">
-                    <span class="invalid-feedback"><?php echo $data['firstname_error']; ?></span>
+                    <input type="text" id="firstname" name="firstname" class="form-control <?=(!empty($data['firstname_error'])) ? 'is-invalid' : ''; ?>" value="<?=$data['firstname'] ?>" placeholder="Prénom">
+                    <span class="invalid-feedback"><?=$data['firstname_error']; ?></span>
                   </div>
                   <div class="form-group">
                     <label for="lastname">Nom <sup>*</sup></label>
-                    <input type="text" id="lastname" name="lastname" class="form-control <?php echo (!empty($data['lastname_error'])) ? 'is-invalid' : ''; ?>" value="<?php echo $data['lastname'] ?>" placeholder="Nom">
-                    <span class="invalid-feedback"><?php echo $data['lastname_error']; ?></span>
+                    <input type="text" id="lastname" name="lastname" class="form-control <?=(!empty($data['lastname_error'])) ? 'is-invalid' : ''; ?>" value="<?=$data['lastname'] ?>" placeholder="Nom">
+                    <span class="invalid-feedback"><?=$data['lastname_error']; ?></span>
                   </div>
                   <div class="form-group">
                     <label for="email">Adresse email <sup>*</sup></label>
-                    <input type="email" id="email" name="email" class="form-control <?php echo (!empty($data['email_error'])) ? 'is-invalid' : ''; ?>" value="<?php echo $data['email'] ?>" placeholder="Adresse email">            
-                    <span class="invalid-feedback"><?php echo $data['email_error']; ?></span>
+                    <input type="email" id="email" name="email" class="form-control <?=(!empty($data['email_error'])) ? 'is-invalid' : ''; ?>" value="<?=$data['email'] ?>" placeholder="Adresse email">            
+                    <span class="invalid-feedback"><?=$data['email_error']; ?></span>
                   </div>
                   <div class="form-group">
                     <label for="password">Mot de passe <sup>*</sup></label>
-                    <input type="password" id="password" name="password" class="form-control <?php echo (!empty($data['password_error'])) ? 'is-invalid' : ''; ?>" value="<?php echo $data['password'] ?>" placeholder="Mot de passe">
-                    <span class="invalid-feedback"><?php echo $data['password_error']; ?></span>
+                    <input type="password" id="password" name="password" class="form-control <?=(!empty($data['password_error'])) ? 'is-invalid' : ''; ?>" value="<?=$data['password'] ?>" placeholder="Mot de passe">
+                    <span class="invalid-feedback"><?=$data['password_error']; ?></span>
                   </div>
                   <div class="form-group">
                     <label for="confirm_password">Confirmer mot de passe <sup>*</sup></label>
-                    <input type="password" id="confirm_password" name="confirm_password" class="form-control <?php echo (!empty($data['confirm_password_error'])) ? 'is-invalid' : ''; ?>" value="<?php echo $data['confirm_password'] ?>" placeholder="Confirmer mot de passe">
-                    <span class="invalid-feedback"><?php echo $data['confirm_password_error']; ?></span>              
+                    <input type="password" id="confirm_password" name="confirm_password" class="form-control <?=(!empty($data['confirm_password_error'])) ? 'is-invalid' : ''; ?>" value="<?=$data['confirm_password'] ?>" placeholder="Confirmer mot de passe">
+                    <span class="invalid-feedback"><?=$data['confirm_password_error']; ?></span>              
                   </div>
                 </div>
                 <!-- /.card-body -->
@@ -127,15 +127,15 @@ if(!isset($_SESSION['user_id']))
 <!-- ./wrapper -->
 
 <!-- jQuery -->
-<script src="<?php echo URL_PATH ;?>public/admin/plugins/jquery/jquery.min.js"></script>
+<script src="<?=URL_PATH ;?>public/admin/plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
-<script src="<?php echo URL_PATH ;?>public/admin/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="<?=URL_PATH ;?>public/admin/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- bs-custom-file-input -->
-<script src="<?php echo URL_PATH ;?>public/admin/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
+<script src="<?=URL_PATH ;?>public/admin/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
 <!-- AdminLTE App -->
-<script src="<?php echo URL_PATH ;?>public/admin/dist/js/adminlte.min.js"></script>
+<script src="<?=URL_PATH ;?>public/admin/dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
-<script src="<?php echo URL_PATH ;?>public/admin/dist/js/demo.js"></script>
+<script src="<?=URL_PATH ;?>public/admin/dist/js/demo.js"></script>
 <script type="text/javascript">
 $(document).ready(function () {
   bsCustomFileInput.init();

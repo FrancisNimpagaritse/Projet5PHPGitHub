@@ -9,7 +9,7 @@ Veillez à bien remplir tout les paramètres comme suit :
 ‘DB_PASSWORD’, ‘Ici vous mettez le mot de passe de l’administrateur  si vous l’avez défini’
 ‘WEBSITENAME’, ’Ici vous définissez un titre pour votre site’
 
-Dans fichier controllers/AuthentificationController.php et pensez à changer l'adresse email de la variable $to
+Dans fichier controllers/AuthentificationController.php et pensez à changer l'adresse email de la variable $sendTo
 
 Etape 4 : Votre blog est désormais fonctionnel ! Vous pouvez y créer un compte dans l'onglet "Inscription" sans oublier de cliquer sur le lien de validation de votre email. Ensuite, dans votre base de données et dans la table "users", modifier la colonne "profil" de l'utilisateur que vous venez de créer et mettez y la valeur admin. Enregistrer, vous disposez désormais d'un compte administrateur qui vous permet de gérer votre blog via l’interface d’administration.
 

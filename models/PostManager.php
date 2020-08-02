@@ -23,13 +23,7 @@ class PostManager extends Model
 
         if ($isExecuteOk==false) {
             return false;
-        } else {
-            //Get the last inserted Id
-            $id = $pdo->LastInsertId();
-
-            //Find the last inserted user by his Id
-            $user = $this->findById($id);
-
+        } else { 
             return true;
         }
     }

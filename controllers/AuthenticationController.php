@@ -16,8 +16,8 @@ class AuthenticationController extends Controller
             //Sanitize POST data
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
             //Initialize data posted
-            $email=trim(htmlspecialchars($_POST['email']));
-            $pass=trim($_POST['password']);
+            $email=htmlspecialchars($_POST['email']);
+            $pass=htmlspecialchars($_POST['password']);
             
             //Initialize error message
             $data = [
@@ -37,12 +37,8 @@ class AuthenticationController extends Controller
             }
              
             //Check if that email exists in db valable en registration
-            if ($this->userManager->findByEmail($email)) {
-                //User found ok continue 
-            } else {
-                //User not found
-                $data['email_error'] = 'Email non trouvé!'; 
-            }
+            $this->userManager->findByEmail($email) ?  : $data['email_error'] = 'Email non trouvé!'; 
+            
             //If all errors are empty
             if (empty($data['email_error']) && empty($data['password_error'])) {
                 //Validate 
@@ -132,7 +128,7 @@ class AuthenticationController extends Controller
              
             if (isset($_POST['email'])) {
                 //Initialize data posted
-                $email=trim(htmlspecialchars($_POST['email']));
+                $email=htmlspecialchars($_POST['email']);
                               
                 //Verify if that email is known
                 $user = $this->userManager->findByEmail($email);

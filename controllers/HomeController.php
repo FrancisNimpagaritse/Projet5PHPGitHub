@@ -76,13 +76,13 @@ class HomeController extends Controller
            if (empty($data['name_error']) && empty($data['email_error'])
            && empty($data['subject_error']) && empty($data['message_error'])) { 
             
-                $to = 'franimpagaritse@gmail.com';
+                $sendTo = 'franimpagaritse@gmail.com';
 
                 $headers = 'From: webmaster@example.com' . "\r\n" .
                             'Reply-To: ' . $email . "\r\n" .
                             'X-Mailer: PHP/' . phpversion();
 
-                if (mail($to, $subject, $message, $headers)) {
+                if (mail($sendTo, $subject, $message, $headers)) {
                     $data['result'] = '<div class="alert alert-success"> Votre message a été envoyé. </div>';
                     
                     $this->loadView('home', $data);
