@@ -34,10 +34,18 @@ class HomeController extends Controller
            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
            //Initialize data posted
-           $name = trim(htmlspecialchars($_POST['name']));
-           $email = trim(htmlspecialchars($_POST['email']));
-           $subject = trim(htmlspecialchars($_POST['subject']));
-           $message = trim(htmlspecialchars($_POST['message']));
+           if (isset($_POST['name'])) {
+               $name = htmlspecialchars($_POST['name']);
+           }
+           if (isset($_POST['email'])) {
+               $email = htmlspecialchars($_POST['email']);
+           }
+           if (isset($_POST['subject'])) {
+               $subject = htmlspecialchars($_POST['subject']);
+           }
+           if (isset($_POST['message'])) {
+               $message = htmlspecialchars($_POST['message']);
+           }
            //$result = "";
            //Initialize data
            $data = [

@@ -99,7 +99,7 @@
 
       <div class="row">        
         <div class="col-6">
-          <a href="<?php echo URL_PATH; ?>" class="btn btn-light mt-2 text-left"><i class="fa fa-backward"></i>Retour blog</a>
+          <a href="<?=URL_PATH;?>" class="btn btn-light mt-2 text-left"><i class="fa fa-backward"></i>Retour blog</a>
         </div>
       </div>
     </div>
@@ -109,11 +109,11 @@
 <!-- /.login-box -->
 
 <!-- jQuery -->
-<script src="<?php echo URL_PATH; ?>public/admin/plugins/jquery/jquery.min.js"></script>
+<script src="<?=URL_PATH;?>public/admin/plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
-<script src="<?php echo URL_PATH; ?>public/admin/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="<?=URL_PATH;?>public/admin/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
-<script src="<?php echo URL_PATH; ?>public/admin/dist/js/adminlte.min.js"></script>
+<script src="<?=URL_PATH; ?>public/admin/dist/js/adminlte.min.js"></script>
 
 </body>
 </html>
