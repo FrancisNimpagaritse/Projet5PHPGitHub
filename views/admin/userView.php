@@ -49,8 +49,8 @@
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">User</a></li>
-              <li class="breadcrumb-item active">list</li>
+              <li class="breadcrumb-item"><a href="#">Utilisateurs</a></li>
+              <li class="breadcrumb-item active">liste</li>
             </ol>
           </div>
         </div>
