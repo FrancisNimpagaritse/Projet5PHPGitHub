@@ -1,37 +1,6 @@
-<?php
+<?php $title = "Ajouter un blog post"; ?>
 
-if(!isset($_SESSION['user_id']))
-  {
-    header('Location: '. URL_PATH.'authentication/login');    
-      exit();
-  }
-?>
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title><?=htmlentities(WEBSITENAME);?> | ajout post</title>
-  <!-- Tell the browser to be responsive to screen width -->
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="<?=htmlentities(URL_PATH);?>public/admin/plugins/fontawesome-free/css/all.min.css">
-  <!-- Ionicons -->
-  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="<?=htmlspecialchars(URL_PATH);?>public/admin/dist/css/adminlte.min.css">
-  <!-- Google Font: Source Sans Pro -->
-  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
-</head>
-<body class="hold-transition sidebar-mini">
-<div class="wrapper">
-  <!-- Navbar -->
-  <?php require_once('themeparts/topmenuAdmin.php'); ?>
-  <!-- /.navbar -->
-
-  <!-- Main Sidebar Container -->
-  <?php require_once('themeparts/sidebarAdmin.php'); ?>
+<?php ob_start(); ?>
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -119,31 +88,6 @@ if(!isset($_SESSION['user_id']))
   </div>
   <!-- /.content-wrapper -->
   
-  <?php require_once('themeparts/footerAdmin.php'); ?>
+<?php $content = ob_get_clean(); ?>
 
-
-  <!-- Control Sidebar -->
-  <aside class="control-sidebar control-sidebar-dark">
-    <!-- Control sidebar content goes here -->
-  </aside>
-  <!-- /.control-sidebar -->
-</div>
-<!-- ./wrapper -->
-
-<!-- jQuery -->
-<script src="<?=htmlspecialchars(URL_PATH);?>public/admin/plugins/jquery/jquery.min.js"></script>
-<!-- Bootstrap 4 -->
-<script src="<?=htmlspecialchars(URL_PATH);?>public/admin/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- bs-custom-file-input -->
-<script src="<?=htmlspecialchars(URL_PATH);?>public/admin/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
-<!-- AdminLTE App -->
-<script src="<?=htmlspecialchars(URL_PATH);?>public/admin/dist/js/adminlte.min.js"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="<?=htmlspecialchars(URL_PATH);?>public/admin/dist/js/demo.js"></script>
-<script type="text/javascript">
-$(document).ready(function () {
-  bsCustomFileInput.init();
-});
-</script>
-</body>
-</html>
+<?php require_once 'admin_template.php'; ?>
