@@ -95,4 +95,4 @@
 
 <?php $content = ob_get_clean(); ?>
 
-<?php require_once 'template.php'; ?>
+<?php require_once 'admin_template.php'; ?>

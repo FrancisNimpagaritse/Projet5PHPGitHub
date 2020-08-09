@@ -49,24 +49,7 @@
                 </a>
               </li>
             </ul>
-          </li>
-          <li class="nav-item has-treeview">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-layer-group"></i>
-              <p>
-                Catégorie
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="../charts/chartjs.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>                  
-                  <p>Ajouter une catégorie</p>
-                </a>
-              </li>
-            </ul>
-          </li>
+          </li>          
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-address-card"></i>
