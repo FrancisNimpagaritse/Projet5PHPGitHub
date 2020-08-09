@@ -45,7 +45,7 @@ INSERT INTO `comments` (`id`, `postid`, `message`, `authorId`, `createdAt`, `sta
 (1, 1, 'Tr?s bon article qui m\'a appris beaucoup de chose', 1, '2020-05-27 12:25:32', 'publi?'),
 (2, 1, 'Post int?rressant pour d?buter', 1, '2020-05-27 12:28:34', 'attente'),
 (3, 1, 'PHP est super int?rressant ', 2, '2020-05-27 12:28:35', 'attente'),
-(4, 3, 'J\'ai hâte d?couvrie Symfony après cette brève introduction. Merci ? l\'auteur', 1, '2020-05-27 12:28:35', 'attente'),
+(4, 3, 'J\'ai hâte découvrir Symfony après cette brève introduction. Merci ? l\'auteur', 1, '2020-05-27 12:28:35', 'attente'),
 (5, 4, 'Ca ne me plait pas du tout', 2, '2020-05-27 12:28:35', 'attente'),
 (6, 2, 'On aimerai voir la suite de cet article plus d?taill?e', 2, '2020-05-27 12:41:28', 'publi?'),
 (7, 2, 'Bravo travail bie accompli', 2, '2020-05-27 12:42:18', 'attente'),
