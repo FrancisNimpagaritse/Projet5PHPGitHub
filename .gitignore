@@ -1,7 +1,6 @@
 # Ignoring some folders and file
 /public/*
 /vendor/*
-/config/*
 composer.json
 composer.lock
 myblog.sql
