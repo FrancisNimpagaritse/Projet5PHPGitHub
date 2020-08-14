@@ -1,6 +1,6 @@
 <?php
 
-require_once('Model.php');
+require_once('core/Model.php');
 require_once('entities/User.php');
 
 class UserManager extends Model

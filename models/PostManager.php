@@ -1,6 +1,6 @@
 <?php
 
-require_once('Model.php');
+require_once('core/Model.php');
 require_once('entities/Post.php');
 
 class PostManager extends Model
@@ -40,12 +40,11 @@ class PostManager extends Model
         
         $this->pdoStmt->execute();
         $posts = $this->pdoStmt->fetchAll(PDO::FETCH_OBJ);
-    
-        if (!$posts) {            
+        if (!$posts) {
             return null;
         } else {
             return $posts;
-        } 
+        }
     }
 
     //count all posts
@@ -102,7 +101,6 @@ class PostManager extends Model
         
         $this->pdoStmt->execute();
         $posts = $this->pdoStmt->fetchAll(PDO::FETCH_OBJ);
-    
         if (!$posts) {            
             return null;
         } else {
