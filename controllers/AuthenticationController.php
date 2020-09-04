@@ -5,7 +5,8 @@ class AuthenticationController extends Controller
 {
     public function __construct()
     {
-       $this->userManager = $this->loadModel("UserManager");
+        parent::__construct();
+        $this->userManager = $this->loadModel("UserManager");
     }
 
     public function login()
@@ -84,7 +85,7 @@ class AuthenticationController extends Controller
             } else {
                     $data['password_error'] = "Mot de passe invalid";
                     //Reload view with errors
-                    $this->loadView('admin/login',$data);
+                    $this->render('admin/login',$data);
             }
                 
         } else {
@@ -95,7 +96,7 @@ class AuthenticationController extends Controller
                 'email_error' => '',
                 'password_error' => ''
             ];
-            $this->loadView('admin/login',$data);     
+            $this->render('admin/login',$data);     
         }
     }
     
@@ -119,7 +120,7 @@ class AuthenticationController extends Controller
         $data = [
         ];
         //Load view
-        $this->loadView('admin/forgotPassword',$data);
+        $this->render('admin/forgotPassword',$data);
     }
 
     public function requestPassword()
@@ -185,7 +186,7 @@ class AuthenticationController extends Controller
             ];
 
             //Load reset password view
-            $this->loadView('admin/resetPassword', $data);
+            $this->render('admin/resetPassword', $data);
             } else {
             //Link not found
             echo '<p><h4 style="color:red;">Le lien fourni n\'a pa été reconnu!
@@ -273,7 +274,7 @@ class AuthenticationController extends Controller
                 }
             } else {
                 //Reload view with errors
-                $this->loadView('admin/resetPassword',$data);
+                $this->render('admin/resetPassword',$data);
             }           
         } else {
             //Initialize data
@@ -286,7 +287,7 @@ class AuthenticationController extends Controller
                 'confirm_password_error' => ''
             ];
             //Load view with errors
-            $this->loadView('admin/resetPassword',$data);
+            $this->render('admin/resetPassword',$data);
         }
     }
 }

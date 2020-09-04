@@ -5,11 +5,12 @@ class AboutController extends Controller
     
     public function __construct()
     {
+        parent::__construct();
 
     }
     public function index()
     {        
-       $this->loadView('about',[]);
+       $this->render('about',[]);
     }
 
 }

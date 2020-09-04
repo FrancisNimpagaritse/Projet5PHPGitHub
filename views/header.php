@@ -5,7 +5,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link rel="icon" href="<?=URL_PATH;?>public/visitor/img/favicon.png" type="image/png">
-        <title><?=WEBSITENAME?></title>
+        <title><?=WEBSITENAME . ' - '. $title;?></title>
         <!-- Bootstrap CSS -->
        <link rel="stylesheet" href="<?=URL_PATH;?>public/visitor/css/bootstrap.css">
         <link rel="stylesheet" href="<?=URL_PATH;?>public/visitor/vendors/linericon/style.css">

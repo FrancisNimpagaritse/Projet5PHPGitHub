@@ -16,38 +16,27 @@ if (!isset($_GET['uc'])) {
     $url = explode('/',filter_var($_GET['uc'],FILTER_SANITIZE_URL));
     
 }
-//Check if the first par of Url correspond to an existing controller file
-if (file_exists('controllers/'.ucfirst(strtolower($url[0])).'Controller.php')) {
+try {    
+    //Check if the first par of Url corresponds to an existing controller file
+    if (!file_exists('controllers/'.ucfirst(strtolower($url[0])).'Controller.php')) {
+        throw new Exception('Page non trouvée ! ');
+    }
+
     $controller = ucfirst(strtolower($url[0]).'Controller');
-    
-    $action = isset($url[1]) ? $url[1] : "index";
-    
     //Require the controller
-    require_once('controllers/'.$controller.'.php');   
+    require_once('controllers/'.$controller.'.php');
     
-        
-        //Instantiate the controller class
-    $controller = new $controller();                  
+    //Instantiate the controller class
+    $controller = new $controller();
+    $action = $url[1] ?? "index";
+
+    //Check if second Url parameter corresponds to an action/methd of the controller
+    if (!method_exists($controller,$action)) {
+        throw new Exception('Page non trouvée ! ');
+    }
     
-//Check if second Url parameter corresponds to an action/methd of the controller
-    if (method_exists($controller,$action)) {
-        $id = isset($url[2]) ? $url[2] : "";
-        
-        if ($id==null) {                
-            $controller->$action(); 
-        } else {
-            $id=(int)$id;                
-            $controller->$action($id);
-        }            
-    } else { 
-        http_response_code(404);
-        echo "<h1>Erreur 404</h1>";
-        echo "La page recherchée n'existe pas"; 
-    } 
+    $controller->$action();
+
+} catch(Exception $e) {    
+    header('Location: '. URL_PATH.'home/page404');
 }
-else
-{
-    http_response_code(404);
-    echo "<h1>Erreur 404</h1>";
-    echo "La page recherchée n'existe pas"; 
-} 

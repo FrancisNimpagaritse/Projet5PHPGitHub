@@ -4,6 +4,7 @@ class PostsController extends Controller
 {    
     public function __construct()
     {
+        parent::__construct();
         $this->postManager = $this->loadModel("PostManager");
         $this->userManager = $this->loadModel('UserManager');
         $this->commentManager = $this->loadModel('CommentManager');
@@ -17,20 +18,29 @@ class PostsController extends Controller
        $catstat = $this->postManager->countPostsByCategory();
        $newPost = $this->postManager->findNew();
        
-       $this->loadView('posts',['posts'=>$posts, 'popularOne'=>$popularOne, 'categorystats'=>$catstat, 'newPost'=>$newPost]);
+       $this->render('posts',['posts'=>$posts, 'popularOne'=>$popularOne, 'categorystats'=>$catstat, 'newPost'=>$newPost]);
     }
 
     public function list()
     {        
         $posts = $this->postManager->findAll();
-        $this->loadView('admin/postsAdmin',['posts'=> $posts]);
+        $this->render('admin/postsAdmin',['posts'=> $posts]);
     }
 
-    public function show($id)
+    public function show()
     {
-        $post = $this->postManager->showOneById($id);
-        $comments = $this->commentManager->findCommentsByPost($id);
-        $this->loadView('show',['post'=>$post, 'comments'=>$comments]);
+        if(!$this->id) { 
+            throw new Exception("L'identifiant du post est invalide !", 404);
+        }
+
+        $post = $this->postManager->showOneById($this->id);
+        if (!$post) {
+            header('Location: '. URL_PATH.'home/page404');
+        }
+
+        $comments = $this->commentManager->findCommentsByPost($this->id);
+        $this->render('show',['post'=>$post, 'comments'=>$comments]);
+        
     }
     
     public function add()
@@ -111,7 +121,7 @@ class PostsController extends Controller
                 header('Location: '. URL_PATH.'post/list');
             } else {
                 //Reload view with errors
-                $this->loadView('admin/addPost',$data);
+                $this->render('admin/addPost',$data);
             }
         } else {
             //Initialize data for blank form
@@ -128,7 +138,7 @@ class PostsController extends Controller
                 'postImage_error' => ''         
             ];
             //Load view
-            $this->loadView('admin/addPost',$data);
+            $this->render('admin/addPost',$data);
         }
     }
     
@@ -141,7 +151,7 @@ class PostsController extends Controller
         $message = "Post publié avec success";
         $posts = $this->postManager->findAll();
         //header('Location: '. URL_PATH.'posts/list',['message' => $message]);
-        $this->loadView('admin/postsAdmin',['posts' => $posts, 'message' => $message]);
+        $this->render('admin/postsAdmin',['posts' => $posts, 'message' => $message]);
     }
 
     public function unPublish($id)
@@ -153,10 +163,10 @@ class PostsController extends Controller
         $message = "Post retiré avec success.";
         $posts = $this->postManager->findAll();
         
-        $this->loadView('admin/postsAdmin',['posts' => $posts, 'message' => $message]);
+        $this->render('admin/postsAdmin',['posts' => $posts, 'message' => $message]);
     }
     
-    public function edit($id)
+    public function edit()
     {
         if (isset($_GET['token']) && ($_GET['token'] != $_SESSION['user']['token']) || empty($_GET['token'])) {
             exit("Token périmé!");
@@ -188,7 +198,7 @@ class PostsController extends Controller
 
             //Initialize data
             $data = [
-                    'id' => $id,
+                    'id' => $this->id,
                     'title' => $title,
                     'category' => $category,
                     'chapo' => $chapo,
@@ -223,7 +233,7 @@ class PostsController extends Controller
                 //Validate
                 
                 //Get post to update from Manager
-                $postToUpdate = $this->postManager->findById($id);                      
+                $postToUpdate = $this->postManager->findById($this->id);                      
                 //Assign values to the post to edit
                 $postToUpdate->settitle($data['title'])
                             ->setchapo($chapo)
@@ -238,21 +248,21 @@ class PostsController extends Controller
                 header('Location: '. URL_PATH.'posts/list');
             } else {
                 //Reload view with errors
-                $this->loadView('admin/editPost',$data);
+                $this->render('admin/editPost',$data);
             }            
         } else {
             //Get existing post & author from db
-            $post = $this->postManager->findById($id);
+            $post = $this->postManager->findById($this->id);
             $user = $this->userManager->findById($post->getAuthorId());
 
             //Check for ownership
             if ($user->getId() != $_SESSION['user_id']) {
                 //TO BE USED FOR posts
-                header('Location: '. URL_PATH.'post/list');    
+                header('Location: '. URL_PATH.'post/list');
             }
             //Initialize data for edit form
             $data = [
-                'id' => $id,
+                'id' => $this->id,
                 'title' => $post->getTitle(),
                 'category' => $post->getCategory(),
                 'chapo' => $post->getChapo(),
@@ -265,7 +275,7 @@ class PostsController extends Controller
                 'postImage_error' => ''
             ];
             //Load view
-            $this->loadView('admin/editPost',$data);
+            $this->render('admin/editPost',$data);
         }
     }
 }
