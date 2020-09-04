@@ -159,7 +159,6 @@ class PostManager extends Model
 
          if ($isExecuteOk) {
             $post = $this->pdoStmt->fetchObject('Post');
-
             if ($post==false) {
                 return null;
             } else {
@@ -183,12 +182,17 @@ class PostManager extends Model
 
         $this->pdoStmt->execute();
         $result = $this->pdoStmt->fetch(PDO::FETCH_OBJ);
-  
-        if (!$result) {            
+        //echo getenv("QUERY_STRING");
+        //var_dump($_SERVER['QUERY_STRING']);
+        //die();
+        return $result;
+
+       /* 
+        if ($result == false) {
             return null;
         } else {
             return $result;
-        }
+        } */
     }
 
     public function countPostsByCategory()

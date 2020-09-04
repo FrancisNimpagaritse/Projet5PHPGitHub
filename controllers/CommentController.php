@@ -3,14 +3,15 @@
 class CommentController extends Controller
 {
     public function __construct()
-    {  
-       $this->commentManager = $this->loadModel('CommentManager');
+    {
+        parent::__construct();
+        $this->commentManager = $this->loadModel('CommentManager');
     }
 
     public function index()
     {        
         $comments = $this->commentManager->findAll();
-        $this->loadView('admin/commentAdmin',['comments'=> $comments]);
+        $this->render('admin/commentAdmin',['comments'=> $comments]);
     }
 
     public function add()
@@ -74,24 +75,24 @@ class CommentController extends Controller
                 'message_error' => ''
             ];
             //Load view
-            $this->loadView('post',$data);
+            $this->render('post',$data);
         }        
     }
     
-    public function publish($id)
+    public function publish()
     {  
         //Get post to publish from db
-        $commentToPublish = $this->commentManager->findById($id);
+        $commentToPublish = $this->commentManager->findById($this->id);
         //publish into db
         $this->commentManager->publishOne($commentToPublish);
         
         header('Location: '. URL_PATH.'comment/index');
     }
 
-    public function unPublish($id)
+    public function unPublish()
     {
         //Get post to unPublish from db
-        $commentToUnpublish = $this->commentManager->findById($id);
+        $commentToUnpublish = $this->commentManager->findById($this->id);
         //publish into db
         $this->commentManager->unPublishOne($commentToUnpublish);
         

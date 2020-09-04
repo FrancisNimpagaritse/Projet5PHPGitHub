@@ -4,6 +4,7 @@ class HomeadminController extends Controller
 {
     public function __construct()
     {
+        parent::__construct();
         $this->postManager = $this->loadModel("PostManager");
         $this->commentManager = $this->loadModel("CommentManager");
         $this->userManager = $this->loadModel('UserManager');
@@ -20,8 +21,13 @@ class HomeadminController extends Controller
         $unapprovedComments = $this->commentManager->countAllUnApprovedComments();
         $users = $this->userManager->countAllUsers();
 
-        $this->loadView('admin/homeAdmin',['posts'=>$posts,'publishedPosts'=>$publishedPosts,
-        'unpublishedPosts'=>$unpublishedPosts, 'comments'=>$comments,'approvedComments'=>$approvedComments,
-        'unapprovedComments'=>$unapprovedComments, 'users'=>$users]);
+        $this->render('admin/homeAdmin',[
+            'posts'=>$posts,
+            'publishedPosts'=>$publishedPosts,
+            'unpublishedPosts'=>$unpublishedPosts, 
+            'comments'=>$comments,
+            'approvedComments'=>$approvedComments,
+            'unapprovedComments'=>$unapprovedComments, 
+            'users'=>$users]);
     }
 }

@@ -4,8 +4,14 @@ class HomeController extends Controller
 {    
     public function __construct()
     {
-
+        parent::__construct();
     }
+
+    public function page404()
+    {
+        $this->render('404',$data=[]);
+    }
+
     public function index()
     {
          //Initialize data for blank form
@@ -20,7 +26,7 @@ class HomeController extends Controller
             'subject_error' => '',
             'message_error' => ''
          ];   
-        $this->loadView('home',$data);
+        $this->render('home',$data);
     }
 
     //Send a message for contact
@@ -93,12 +99,12 @@ class HomeController extends Controller
                 if (mail($sendTo, $subject, $message, $headers)) {
                     $data['result'] = '<div class="alert alert-success"> Votre message a été envoyé. </div>';
                     
-                    $this->loadView('home', $data);
+                    $this->render('home', $data);
                 } else {
                     $data['result'] = '<div class="alert alert-danger"> Votre message n\'a pas été envoyé !</div>';
                     
-                    //Reload view with errors                    
-                    $this->loadView('home', $data);
+                    //Reload view with errors
+                    $this->render('home', $data);
                 }
             }
         }

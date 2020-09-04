@@ -4,7 +4,8 @@ class UserController extends Controller
 { 
     public function __construct()
     {
-       $this->userManager = $this->loadModel("UserManager");
+        parent::__construct();
+        $this->userManager = $this->loadModel("UserManager");
     }
 
     public function index()
@@ -13,10 +14,9 @@ class UserController extends Controller
         $data = [
                 'users' => $users
                 ];
-        $this->loadView('admin/user',$data);
+        $this->render('admin/user',$data);
     }
 
-    //Standard User register
     public function register()
     {
             //Avoid data send by GET method
@@ -102,7 +102,7 @@ class UserController extends Controller
                     header('Location: '. URL_PATH.'user/login');
                 } else {
                     //Reload view with errors
-                    $this->loadView('admin/register',$data);
+                    $this->render('admin/register',$data);
                 }            
             } else {
             //Initialize data 
@@ -119,19 +119,19 @@ class UserController extends Controller
                 'confirm_password_error' => '' 
             ];
             //Load view
-            $this->loadView('admin/register',$data);
+            $this->render('admin/register',$data);
         }
     }   
     
-    public function findById($id)
+    public function findById()
     {
         $userManager = new UserManager();
-        $user = $userManager->findById($id);
+        $user = $userManager->findById($this->id);
 
         require('views/updateUserView.php');
     }
     
-    public function edit($id)
+    public function edit()
     {
         if (isset($_GET['token']) && ($_GET['token'] != $_SESSION['user']['token']) || empty($_GET['token'])) {
             exit("Token périmé!");
@@ -151,7 +151,7 @@ class UserController extends Controller
 
             //Initialize data
             $data = [
-                    'id' => $id,
+                    'id' => $this->id,
                     'firstname' => $firstname,
                     'lastname' => $lastname,
                     'email' => $email,
@@ -179,7 +179,7 @@ class UserController extends Controller
                 //Validate
                 
                 //Get user to update from Manager
-                $userToUpdate = $this->userManager->findById($id); 
+                $userToUpdate = $this->userManager->findById($this->id); 
                 //Assign values to the new user to create
                 $userToUpdate->setFirstname($data['firstname'])
                             ->setLastname($data['lastname'])
@@ -192,11 +192,11 @@ class UserController extends Controller
                 header('Location: '. URL_PATH.'user/index');
             } else {
                 //Reload view with errors
-                $this->loadView('admin/editUser',$data);
+                $this->render('admin/editUser',$data);
             }
         } else {
             //Get existing user from Manager
-            $user = $this->userManager->findById($id);
+            $user = $this->userManager->findById($this->id);
 
             //Check for ownership
             if ($user->getId() != $_SESSION['user_id']){
@@ -205,7 +205,7 @@ class UserController extends Controller
             }
             //Initialize data for edit form
             $data = [
-                'id' => $id, 
+                'id' => $this->id, 
                 'firstname' => $user->getFirstname(),
                 'lastname' => $user->getlastname(),
                 'email' => $user->getEmail(),
@@ -214,11 +214,11 @@ class UserController extends Controller
                 'email_error' => ''
             ];
             //Load view
-            $this->loadView('admin/editUser',$data);
+            $this->render('admin/editUser',$data);
         }
     }
 
-    public function delete($id)
+    public function delete()
     {
         if (isset($_GET['token']) && ($_GET['token'] != $_SESSION['user']['token']) || empty($_GET['token'])) {
             exit("Token périmé!");
@@ -226,7 +226,7 @@ class UserController extends Controller
 
         $userManager = new UserManager();
 
-        $user = $userManager->findById($id);
+        $user = $userManager->findById($this->id);
 
         $isDeleteOk = $userManager->delete($user);
 
