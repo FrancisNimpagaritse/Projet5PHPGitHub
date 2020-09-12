@@ -8,7 +8,13 @@ $title='Posts';
 <div class="container-fluid pt-3">    
 
         <!--================Home Banner Area =================-->
-        
+        <?php               
+                if (isset($_GET['success']) && isset($_SESSION['user_id'])) {
+                  echo '<div class="col-md-6 col-md-offset-3 alert alert-success text-center">Votre commentaire a bien été enregistré</div>';
+                } else if (isset($_GET['error'])){
+                    echo '<div class="col-md-6 col-md-offset-3 alert alert-danger text-center">Votre commentaire n\'a pas été enregistré</div>';
+                }
+        ?>
     <section class="home_banner_area">
         <div class="container pt-2">
             <div class="row">
@@ -152,35 +158,16 @@ $title='Posts';
                         </aside>
                         
                         <aside class="single_sidebar_widget popular_post_widget">
-                            <h3 class="widget_title">Posts populaires</h3>
-                            <div class="media post_item">
-                                <img src="public/visitor/img/blog/popular-post/post1.jpg" alt="post">
-                                <div class="media-body">
-                                    <a href="blog-details.html"><h3>Space The Final Frontier</h3></a>
-                                    <p>02 Hours ago</p>
+                            <h3 class="widget_title">Les 5 posts populaires</h3>
+                            <?php
+                            foreach($topFivePopulars as $topFivePopular) : ?>
+                                <div class="media post_item">
+                                    <img src="public/visitor/img/blog/popular-post/post1.jpg" alt="post">
+                                    <div class="media-body">
+                                        <a href="blog-details.html"><h3><?=$topFivePopular->title?></h3></a>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="media post_item">
-                                <img src="public/visitor/img/blog/popular-post/post2.jpg" alt="post">
-                                <div class="media-body">
-                                    <a href="blog-details.html"><h3>The Amazing Hubble</h3></a>
-                                    <p>02 Hours ago</p>
-                                </div>
-                            </div>
-                            <div class="media post_item">
-                                <img src="public/visitor/img/blog/popular-post/post3.jpg" alt="post">
-                                <div class="media-body">
-                                    <a href="blog-details.html"><h3>Astronomy Or Astrology</h3></a>
-                                    <p>03 Hours ago</p>
-                                </div>
-                            </div>
-                            <div class="media post_item">
-                                <img src="public/visitor/img/blog/popular-post/post4.jpg" alt="post">
-                                <div class="media-body">
-                                    <a href="blog-details.html"><h3>Asteroids telescope</h3></a>
-                                    <p>01 Hours ago</p>
-                                </div>
-                            </div>
+                            <?php endforeach ?>                            
                             <div class="br"></div>
                         </aside>
                         <aside class="single-sidebar-widget newsletter_widget">

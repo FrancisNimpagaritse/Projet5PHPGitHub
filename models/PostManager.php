@@ -108,6 +108,25 @@ class PostManager extends Model
         } 
     }
 
+    public function findTopFivePopular()
+    {        
+        $pdo = $this->getPdo();
+
+        $this->pdoStmt = $pdo->query('SELECT p.id, p.title, p.category, p.chapo, p.content, p.authorId, p.postImage, p.updatedAt, p.status, u.firstname, COUNT(c.id) as nbrComments FROM users u
+        INNER JOIN posts p ON u.id = p.authorId INNER JOIN comments c ON p.id = c.postid
+        GROUP BY p.id, p.title, p.category, p.chapo, p.content, p.authorId, p.updatedAt, p.postImage, p.status, u.firstname
+        ORDER BY COUNT(c.id) DESC LIMIT 5');
+        
+        $this->pdoStmt->execute();
+        $results = $this->pdoStmt->fetchAll(PDO::FETCH_OBJ);
+   
+        if (!$results) {            
+            return null;
+        } else {
+            return $results;
+        } 
+    }
+
     public function findPopular()
     {        
         $pdo = $this->getPdo();
@@ -155,18 +174,14 @@ class PostManager extends Model
         
         $this->pdoStmt->bindValue(':id', $id, PDO::PARAM_INT);
 
-         $isExecuteOk = $this->pdoStmt->execute();
+        $isExecuteOk = $this->pdoStmt->execute();
 
-         if ($isExecuteOk) {
+        if ($isExecuteOk) {
             $post = $this->pdoStmt->fetchObject('Post');
-            if ($post==false) {
-                return null;
-            } else {
-                return $post;
-            }
-         } else {
-            return false;
-         }     
+            return $post;
+        } else {
+            return null;
+        }     
     }
 
     public function showOneById($id)
@@ -182,17 +197,8 @@ class PostManager extends Model
 
         $this->pdoStmt->execute();
         $result = $this->pdoStmt->fetch(PDO::FETCH_OBJ);
-        //echo getenv("QUERY_STRING");
-        //var_dump($_SERVER['QUERY_STRING']);
-        //die();
+        
         return $result;
-
-       /* 
-        if ($result == false) {
-            return null;
-        } else {
-            return $result;
-        } */
     }
 
     public function countPostsByCategory()

@@ -13,99 +13,62 @@ class UserController extends Controller
         $users = $this->userManager->findAll();
         $data = [
                 'users' => $users
-                ];
-        $this->render('admin/user',$data);
+            ];
+        $this->render('admin/user', $data);
     }
 
     public function register()
     {
-            //Avoid data send by GET method
-            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-                 //Pocess form
-                 
-                //Sanitize POST data
-                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-    
-                //Initialize data posted
-                $firstname=trim($_POST['firstname']);
-                $lastname=trim($_POST['lastname']);
-                $email=trim($_POST['email']);
-                $pass=trim($_POST['password']);
-                $pass_confirm=trim($_POST['confirm_password']);
-    
-                //Initialize data
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            //Validate entries 
+            $validation = new Validator($_POST);
+            
+            //Clean validate data
+            $firstname = $validation->validate('firstname',$_POST['firstname'], 'text');
+            $lastname = $validation->validate('lastname', $_POST['lastname'], 'text'); 
+            $email = $validation->validate('email', $_POST['email'], 'email');
+            $password = $validation->validate('password', $_POST['password'], 'password');
+            $confirm_password = $validation->validate('confirm_password', $_POST['confirm_password'], 'password');
+            $validation->verifyConfirmation($password, $confirm_password);
+
+            //Check if that email exists in db valable en registration
+            $errors = $validation->getErrors();
+            if ($this->userManager->findByEmail($email)) {
+                //User found duplicate error else continue
+                $errors['email_duplic'] = 'Email déja utilisé !';
+            }
+            //If errors is empty
+            if (!$errors) {
+                //Password hash
+                $pass_hash = password_hash($password, PASSWORD_DEFAULT);
+                
+                $user = new User();
+                //Assign values to the new user to create
+                $user->setFirstname($firstname)
+                        ->setLastname($lastname)
+                        ->setEmail($email)
+                        ->setPassword($pass_hash);
+                                        
+                //insert into db using manager's create method
+                $this->userManager->create($user);
+                header('Location: '. URL_PATH.'user/login');
+            } else {                    
                 $data = [
                     'firstname' => $firstname,
                     'lastname' => $lastname,
                     'email' => $email,
-                    'password' => $pass,
-                    'confirm_password' => $pass_confirm,
-                    'firstname_error' => '',
-                    'lastname_error' => '',
-                    'email_error' => '',
-                    'password_error' => '',
-                    'confirm_password_error' => ''
+                    'firstname_error' => $errors['firstname'] ?? '',
+                    'lastname_error' => $errors['lastname'] ?? '',
+                    'email_error' => $errors['email'] ?? '',
+                    'email_duplic' => $errors['email_duplic'] ?? '',
+                    'password_error' => $errors['password'] ?? '',
+                    'confirm_password_error' => $errors['confirm_password'] ?? ''
                 ];
-                
-                //Validate firstname
-                if (empty($data['firstname'])) {
-                    $data['firstname_error'] = 'Veuiller saisir votre prénom';
-                }
-                //Validate lastname
-                if (empty($data['lastname'])) {
-                    $data['lastname_error'] = 'Veuiller saisir votre nom';
-                }
-                //Validate email
-                if (empty($data['email']) || !(filter_var($data['email'], FILTER_VALIDATE_EMAIL))) {
-                    $data['email_error'] = 'Veuiller saisir un email valide';
-                }
-                //Validate password
-                if (empty($data['password'])) {
-                    $data['password_error'] = 'Veuiller saisir un mot de passe';
-                } else if (strlen($data['password']) < 6) {
-                    $data['password_error'] = 'Le mot de passe doit avoir au moins 6 caractères';                    
-                }
-    
-                //Validate confirmed password
-                if (empty($data['confirm_password']))
-                {
-                    $data['confirm_password_error'] = 'Veuiller confirmer le mot de passe';
-                } else {
-                    if ($data['password'] != $data['confirm_password']) {
-                        $data['confirm_password_error'] = 'Les 2 mots de passe ne sont pas identiques';
-                    }
-                }
-                //Check if that email exists in db valable en registration
-                if ($this->userManager->findByEmail($email)) {
-                   //User found duplicate error else continue
-                   $data['email_error'] = 'Email déja utilisé !'; 
-                }
-                
-                //If all errors are empty
-                if (empty($data['firstname_error']) && empty($data['lastname_error'])
-                && empty($data['email_error']) && empty($data['password_error']) 
-                && empty($data['confirm_password_error'])) {             
-                    //Validate
-                    
-                    //Password hash
-                    $pass_hash = password_hash($pass, PASSWORD_DEFAULT);
-                    
-                    $user = new User();
-                    //Assign values to the new user to create
-                    $user->setFirstname($firstname)
-                            ->setLastname($lastname)
-                            ->setEmail($email)
-                            ->setPassword($pass_hash);
-                                            
-                    //insert into db using manager's create method
-                    $result = $this->userManager->create($user);
-                    header('Location: '. URL_PATH.'user/login');
-                } else {
-                    //Reload view with errors
-                    $this->render('admin/register',$data);
-                }            
-            } else {
-            //Initialize data 
+
+                $this->render('admin/register',$data);
+            }
+        } else {
+        //Initialize data for blank form load
                 $data =[    
                 'firstname' => '',
                 'lastname' => '',
@@ -115,8 +78,9 @@ class UserController extends Controller
                 'firstname_error' => '',
                 'lastname_error' => '',
                 'email_error' => '',
+                'email_duplic' => '',
                 'password_error' => '',
-                'confirm_password_error' => '' 
+                'confirm_password_error' => ''
             ];
             //Load view
             $this->render('admin/register',$data);
@@ -137,53 +101,33 @@ class UserController extends Controller
             exit("Token périmé!");
         }
 
-        //Avoid data send by GET method
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-             //Pocess form
-             
-            //Sanitize POST data
-            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-
-            //Initialize data posted
-            $firstname=trim($_POST['firstname']);
-            $lastname=trim($_POST['lastname']);
-            $email=trim($_POST['email']); 
-
-            //Initialize data
-            $data = [
-                    'id' => $this->id,
-                    'firstname' => $firstname,
-                    'lastname' => $lastname,
-                    'email' => $email,
-                    'firstname_error' => '',
-                    'lastname_error' => '',
-                    'email_error' => ''
-                ];
+            //Validate entries 
+            $validation = new Validator($_POST);
             
-            //Validate firstname
-            if (empty($data['firstname'])) {
-                $data['firstname_error'] = 'Veuiller saisir votre prénom';
+            //Clean validate data
+            $firstname = $validation->validate('firstname',$_POST['firstname'], 'text');               
+            $lastname = $validation->validate('lastname', $_POST['lastname'], 'text'); 
+            $email = $validation->validate('email', $_POST['email'], 'email');
+            $password = $validation->validate('password', $_POST['password'], 'password');
+            $confirm_password = $validation->validate('confirm_password', $_POST['confirm_password'], 'password');
+            $validation->verifyConfirmation($password, $confirm_password);
+
+            //Check if that email exists in db valable en registration
+            $errors = $validation->getErrors();
+            if ($this->userManager->findByEmail($email)) {
+                //User found duplicate error else continue
+                $errors['email_duplic'] = 'Email déja utilisé !';
             }
-            //Validate lastname
-            if (empty($data['lastname'])) {
-                $data['lastname_error'] = 'Veuiller saisir votre nom';
-            }
-            //Validate email
-            if (empty($data['email']) || !(filter_var($data['email'], FILTER_VALIDATE_EMAIL))) {
-                $data['email_error'] = 'Veuiller saisir un email valide';
-            }
-                        
-            //If all errors are empty
-            if (empty($data['firstname_error']) && empty($data['lastname_error'])
-            && empty($data['email_error'])) {
-                //Validate
+
+            if (!$errors) { 
                 
                 //Get user to update from Manager
                 $userToUpdate = $this->userManager->findById($this->id); 
                 //Assign values to the new user to create
-                $userToUpdate->setFirstname($data['firstname'])
-                            ->setLastname($data['lastname'])
-                            ->setEmail($data['email'])
+                $userToUpdate->setFirstname($firstname)
+                            ->setLastname($lastname)
+                            ->setEmail($email)
                             ->setUpdatedAt(date("Y-m-d H:i:s"));
                                  
                 //insert into db using manager's create method
@@ -191,6 +135,20 @@ class UserController extends Controller
             
                 header('Location: '. URL_PATH.'user/index');
             } else {
+                //Initialize data
+                $data = [
+                'id' => $this->id,
+                'firstname' => $firstname,
+                'lastname' => $lastname,
+                'email' => $email,
+                'firstname_error' => $errors['firstname'] ?? '',
+                'lastname_error' => $errors['lastname'] ?? '',
+                'email_error' => $errors['email'] ?? '',
+                'email_duplic' => $errors['email_duplic'] ?? '',
+                'password_error' => $errors['password'] ?? '',
+                'confirm_password_error' => $errors['confirm_password'] ?? ''
+                
+                ];            
                 //Reload view with errors
                 $this->render('admin/editUser',$data);
             }
@@ -211,7 +169,9 @@ class UserController extends Controller
                 'email' => $user->getEmail(),
                 'firstname_error' => '',
                 'lastname_error' => '',
-                'email_error' => ''
+                'email_error' => '',                
+                'password_error' => '',
+                'confirm_password_error' => '' 
             ];
             //Load view
             $this->render('admin/editUser',$data);

@@ -15,10 +15,11 @@ class PostsController extends Controller
        $posts = $this->postManager->findAllPublished();
 
        $popularOne = $this->postManager->findPopular();
+       $topFivePopulars = $this->postManager->findTopFivePopular();
        $catstat = $this->postManager->countPostsByCategory();
        $newPost = $this->postManager->findNew();
        
-       $this->render('posts',['posts'=>$posts, 'popularOne'=>$popularOne, 'categorystats'=>$catstat, 'newPost'=>$newPost]);
+       $this->render('posts',['posts'=>$posts, 'topFivePopulars'=>$topFivePopulars, 'popularOne'=>$popularOne, 'categorystats'=>$catstat, 'newPost'=>$newPost]);
     }
 
     public function list()
@@ -37,75 +38,30 @@ class PostsController extends Controller
         if (!$post) {
             header('Location: '. URL_PATH.'home/page404');
         }
-
         $comments = $this->commentManager->findCommentsByPost($this->id);
         $this->render('show',['post'=>$post, 'comments'=>$comments]);
-        
+               
     }
     
+    //Add post with data filled via form if any error reload form with input data and display error messages
     public function add()
     {
-        //Avoid data send by GET method
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-             //Pocess form
-             
-            //Sanitize POST data
-            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-
-            //Initialize data posted
-            if (isset($_POST['title'])) {
-                $title=htmlspecialchars($_POST['title']);
-            }
-            if (isset($_POST['chapo'])) {
-                $chapo=htmlspecialchars($_POST['chapo']);
-            }
-            if (isset($_POST['category'])) {
-                $category=htmlspecialchars($_POST['category']);
-            }
-            if (isset($_POST['content'])) {
-                $content=htmlspecialchars($_POST['content']);
-            }
-            if (isset($_POST['postImage'])) {
-                $postImage=htmlspecialchars($_POST['postImage']);
-            }
-
-            //Initialize data
-            $data = [
-                'title' => $title,
-                'chapo' => $chapo,
-                'category' => $category,
-                'content' => $content,
-                'postImage' => $postImage,
-                'title_error' => '',
-                'chapo_error' => '',
-                'category_error' => '',
-                'content_error' => '',
-                'postImage_error' => ''
-            ];
+            //Validate entries 
+            $validation = new Validator($_POST);
             
-            //Validate title
-            if (empty($data['title'])) {
-                $data['title_error'] = 'Veuiller saisir un titre';
-            }
-            //Validate chapo
-            if (empty($data['chapo'])) {
-                $data['chapo_error'] = 'Veuiller saisir un chapô';
-            }
-            //Validate category
-            if (empty($data['category'])) {
-                $data['category_error'] = 'Veuiller choisir un category valide';
-            }
+            //Clean validate data
+            $title = $validation->validate('title',$_POST['title'], 'textarea');
+            $chapo = $validation->validate('chapo', $_POST['chapo'], 'textarea'); 
+            $category = $validation->validate('category', $_POST['category'], 'textarea');
+            $content = $validation->validate('content', $_POST['content'], 'textarea');
+            $postImage = $validation->validate('postImage', $_POST['postImage'], 'textarea');
             
-            //Validate content
-            if (empty($data['content'])) {
-                $data['content_error'] = 'Veuiller saisir un contenu';
-            }
-                        
-            //If all errors are empty
-            if (empty($data['title_error']) && empty($data['chapo_error'])
-            && empty($data['category_error']) && empty($data['content_error'])) {             
+            $errors = $validation->getErrors();
+            
+            //If errors is empty
+            if (!$errors) {
                 //Validate
-                
                 $post = new Post();
                 //Assign values to the new user to create
                 $post->settitle($title)
@@ -118,9 +74,22 @@ class PostsController extends Controller
                 //insert into db using manager's create method
                 $this->postManager->create($post);
             
-                header('Location: '. URL_PATH.'post/list');
+                header('Location: '. URL_PATH.'posts/list?success');
+
             } else {
-                //Reload view with errors
+                $data = [
+                    'title' => $title,
+                    'chapo' => $chapo,
+                    'category' => $category,
+                    'content' => $content,
+                    'postImage' => $postImage,
+                    'title_error' => $errors['title'] ?? '',
+                    'chapo_error' => $errors['chapo'] ?? '',
+                    'category_error' => $errors['category'] ?? '',
+                    'content_error' => $errors['content'] ?? '',
+                    'postImage_error' => $errors['postImage'] ?? ''
+                ];
+                
                 $this->render('admin/addPost',$data);
             }
         } else {
@@ -135,35 +104,31 @@ class PostsController extends Controller
                 'chapo_error' => '',
                 'category_error' => '',
                 'content_error' => '',
-                'postImage_error' => ''         
+                'postImage_error' => ''
             ];
             //Load view
             $this->render('admin/addPost',$data);
         }
     }
     
-    public function publish($id)
+    public function publish()
     {  
         //Get post to publish from db
-        $postToPublish = $this->postManager->findById($id);
-        //publish into db
+        $postToPublish = $this->postManager->findById($this->id);
+        
         $this->postManager->publishOne($postToPublish);
-        $message = "Post publié avec success";
-        $posts = $this->postManager->findAll();
-        //header('Location: '. URL_PATH.'posts/list',['message' => $message]);
-        $this->render('admin/postsAdmin',['posts' => $posts, 'message' => $message]);
+
+        header('Location: '. URL_PATH.'posts/list?success');
     }
 
-    public function unPublish($id)
+    public function unPublish()
     {
         //Get post to unPublish from db
-        $postToUnpublish = $this->postManager->findById($id);
-        //publish into db
+        $postToUnpublish = $this->postManager->findById($this->id);
+
         $this->postManager->unPublishOne($postToUnpublish);
-        $message = "Post retiré avec success.";
-        $posts = $this->postManager->findAll();
-        
-        $this->render('admin/postsAdmin',['posts' => $posts, 'message' => $message]);
+
+        header('Location: '. URL_PATH.'posts/list?success');
     }
     
     public function edit()
@@ -174,90 +139,57 @@ class PostsController extends Controller
 
         //Avoid data send by GET method
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-             //Pocess form
-             
-            //Sanitize POST data
-            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-
-            //Initialize data posted
-            if (isset($_POST['title'])) {
-                $title=htmlspecialchars($_POST['title']);
-            }
-            if (isset($_POST['chapo'])) {
-                $chapo=htmlspecialchars($_POST['chapo']);
-            }
-            if (isset($_POST['category'])) {
-                $category=htmlspecialchars($_POST['category']);
-            }
-            if (isset($_POST['content'])) {
-                $content=htmlspecialchars($_POST['content']);
-            }
-            if (isset($_POST['postImage'])) {
-                $postImage=htmlspecialchars($_POST['postImage']);
-            }
-
-            //Initialize data
-            $data = [
-                    'id' => $this->id,
-                    'title' => $title,
-                    'category' => $category,
-                    'chapo' => $chapo,
-                    'content' => $content,
-                    'postImage' => $postImage,
-                    'title_error' => '',
-                    'chapo_error' => '',
-                    'category_error' => '',
-                    'postImage_error' => ''
-                ];
+            ///Validate entries 
+            $validation = new Validator($_POST);
             
-            //Validate title
-            if (empty($data['title'])) {
-                $data['title_error'] = 'Veuiller saisir le titre';
-            }
-            //Validate chapo
-            if (empty($data['chapo'])) {
-                $data['chapo_error'] = 'Veuiller saisir un chapo';
-            }
-            //Validate category
-            if (empty($data['category'])) {
-                $data['category_error'] = 'Veuiller saisir une catégorie';
-            }
-            //Validate content
-            if (empty($data['content'])) {
-                $data['content_error'] = 'Veuiller saisir un contenu';
-            } 
+            //Clean validate data
+            $title = $validation->validate('title',$_POST['title'], 'textarea');
+            $chapo = $validation->validate('chapo', $_POST['chapo'], 'textarea'); 
+            $category = $validation->validate('category', $_POST['category'], 'textarea');
+            $content = $validation->validate('content', $_POST['content'], 'textarea');
+            $postImage = $validation->validate('postImage', $_POST['postImage'], 'textarea');
             
-            //If all errors are empty
-            if (empty($data['title_error']) && empty($data['chapo_error'])
-            && empty($data['category_error']) && empty($data['content_error'])) {             
-                //Validate
-                
+            $errors = $validation->getErrors();
+            
+            //If errors is empty
+            if (!$errors) {            
                 //Get post to update from Manager
                 $postToUpdate = $this->postManager->findById($this->id);                      
                 //Assign values to the post to edit
-                $postToUpdate->settitle($data['title'])
+                $postToUpdate->settitle($title)
                             ->setchapo($chapo)
                             ->setcategory($category)
                             ->setcontent($content)
                             ->setAuthorId($_SESSION['user_id'])
                             ->setPostImage($postImage);
-                                     
-                //insert into db
-                $this->postManager->update($postToUpdate);                
-            
-                header('Location: '. URL_PATH.'posts/list');
+
+                $this->postManager->update($postToUpdate);
+                     
+                header('Location: '. URL_PATH.'posts/list?success');
+
             } else {
+                $data = [
+                    'title' => $title,
+                    'chapo' => $chapo,
+                    'category' => $category,
+                    'content' => $content,
+                    'postImage' => $postImage,
+                    'title_error' => $errors['title'] ?? '',
+                    'chapo_error' => $errors['chapo'] ?? '',
+                    'category_error' => $errors['category'] ?? '',
+                    'content_error' => $errors['content'] ?? '',
+                    'postImage_error' => $errors['postImage'] ?? ''
+                ];
                 //Reload view with errors
                 $this->render('admin/editPost',$data);
             }            
-        } else {
+        } else { //Initial load view for update
             //Get existing post & author from db
             $post = $this->postManager->findById($this->id);
             $user = $this->userManager->findById($post->getAuthorId());
 
             //Check for ownership
             if ($user->getId() != $_SESSION['user_id']) {
-                //TO BE USED FOR posts
                 header('Location: '. URL_PATH.'post/list');
             }
             //Initialize data for edit form

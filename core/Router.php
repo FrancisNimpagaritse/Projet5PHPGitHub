@@ -4,6 +4,7 @@ session_start();
 
 //Load Config file
 require_once 'config/config.php';
+require_once 'Validator.php';
 
 //Load base controller
 require_once(APPROOT_REQUIRE.'core/Controller.php');

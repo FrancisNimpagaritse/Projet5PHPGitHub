@@ -1,6 +1,5 @@
 <?php
-if (isset($_SESSION['']))
-session_destroy();
+
 $title='Détails Post';
 
 ob_start();
@@ -102,13 +101,13 @@ ob_start();
                                   </div>
                                 </div>
                                 <div class="form-group">
-                                    <textarea class="form-control mb-10" rows="5" name="message" placeholder="Votre commentaire" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Votre commentaire'" required></textarea>
+                                    <textarea class="form-control mb-10" rows="5" name="message" class="form-control <?=(!empty($data['message_error'])) ? 'is-invalid' : '';?>" value="<?=$data['message'];?>" placeholder="Votre commentaire" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Votre commentaire'" required></textarea>
                                 </div>
-                                <?php 
-                                if (isset($_SESSION['user_id']))
-                                { ?>  
-                                    <input type="hidden" class="form-control" name="postid" id="postid" value="<?=$postid;?>">                                  
-                                    <button type="submit" class="primary-btn submit_btn">Poster Commentaire</button>
+                                <span class="invalid-feedback"><?=$data['message_error'];?></span>
+                                <?php
+                                    if (isset($_SESSION['user_id'])) { ?>  
+                                        <input type="hidden" class="form-control" name="postid" id="postid" value="<?=$post->id;?>">                                  
+                                        <button type="submit" class="primary-btn submit_btn">Poster Commentaire</button>
                                     <!-- Button trigger modal -->
                                 <?php } else { ?>                                    
                                     <a class="btn btn-dark" href="<?=URL_PATH;?>authentication/login">Connectez-vous pour commenter</a>

@@ -29,13 +29,14 @@
             <span class="invalid-feedback"><?=$data['lastname_error']; ?></span>
         </div>
         <div class="input-group mb-3">
-          <input type="email" id="email" name="email" class="form-control <?=(!empty($data['email_error'])) ? 'is-invalid' : '';?>" value="<?=$data['email'];?>" placeholder="Email">
+        <input type="email" id="email" name="email" class="form-control <?=(!empty($data['email_error']) || !empty($data['email_duplic'])) ? 'is-invalid' : '';?>" value="<?=$data['email'];?>" placeholder="Email">
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-envelope"></span>
               </div>
             </div>
-            <span class="invalid-feedback"><?=$data['email_error'];?></span>
+            <span class="invalid-feedback"><?=$data['email_error'];?></span>            
+            <span class="invalid-feedback"><?=$data['email_duplic'];?></span>
         </div>
         <div class="input-group mb-3">
           <input type="password" id="password" name="password" class="form-control <?=(!empty($data['password_error'])) ? 'is-invalid' : '';?>" value="<?=$data['password'];?>" placeholder="Mot de passe">

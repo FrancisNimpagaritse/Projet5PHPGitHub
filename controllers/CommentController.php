@@ -18,84 +18,60 @@ class CommentController extends Controller
     {
         //Avoid data send by GET method
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-             //Pocess form
-             
-            //Sanitize POST data
-            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+            //Validate entries 
+            $validation = new Validator($_POST);
             
-            //Initialize data posted
-            if (isset($_POST['postid'])) {
-                $postid=htmlspecialchars($_POST['postid']);
-            }
-            if (isset($_POST['message'])) {
-                $message=htmlspecialchars($_POST['message']);
-            }
-
-            //Initialize data
-            $data = [
-                'postid' => $postid,
-                'message' => $message,
-                'postid_error' => '',
-                'message_error' => '',
-            ];
+            //Clean validate data
+            $message = $validation->validate('message',$_POST['message'], 'textarea');
+            $postid = $validation->validate('postid', $_POST['postid'], 'int'); 
             
-            //Validate postid
-            if (empty($data['postid'])) {
-                $data['postid_error'] = 'Post invalide';
-            }
-            //Validate comment
-            if (empty($data['message'])) {
-                $data['message_error'] = 'Veuiller saisir un commentaire';
-            }                      
-                  
-            //If all errors are empty
-            if (empty($data['postid_error']) && empty($data['message_error'])) {             
-                //Validate                
-                
+            $errors = $validation->getErrors();
+            //print_r($errors); die();
+            //If errors is empty
+            if (!$errors) {                
                 $comment = new Comment();
                 //Assign values to the new user to create
                 $comment->setPostId($postid)
                         ->setMessage($message)
                         ->setAuthorId($_SESSION['user_id']);
-                                        
-                //insert into db using manager's create method
+
                 $this->commentManager->create($comment);
-            
-                header('Location: '. URL_PATH.'posts/index');
+                //$this->render('posts/index',['resultMessage' => $resultMessage]);
+                header('Location: '. URL_PATH.'posts/index?success');
             } else {
-                //Reload view with errors
-                echo 'Une erreur est survenue..';
-            }            
-        } else {
-            //Initialize data for blank form
-            $data = [  
-                'postid' => '',
-                'message' => '',
-                'postid_error' => '',
-                'message_error' => ''
-            ];
-            //Load view
-            $this->render('post',$data);
-        }        
+                header('Location: '. URL_PATH.'posts/index?error');
+            }
+        }
     }
     
     public function publish()
-    {  
-        //Get post to publish from db
+    {
         $commentToPublish = $this->commentManager->findById($this->id);
-        //publish into db
+        $message = "Commentaire publié avec success";
         $this->commentManager->publishOne($commentToPublish);
         
-        header('Location: '. URL_PATH.'comment/index');
+        $comments = $this->commentManager->findAll();
+        $this->render('admin/commentAdmin',['comments'=> $comments, 'message' => $message]);
     }
 
     public function unPublish()
     {
         //Get post to unPublish from db
         $commentToUnpublish = $this->commentManager->findById($this->id);
-        //publish into db
+        $message = "Commentaire retiré de la publication avec success";
         $this->commentManager->unPublishOne($commentToUnpublish);
         
-        header('Location: '. URL_PATH.'comment/index');
+        $comments = $this->commentManager->findAll();
+        $this->render('admin/commentAdmin',['comments'=> $comments, 'message' => $message]);
+    }
+
+    public function delete()
+    {
+        $commentToDelete = $this->commentManager->findById($this->id);
+        $message = "Commentaire supprimé avec success";
+        $this->commentManager->delete($commentToDelete);
+
+        $comments = $this->commentManager->findAll();
+        $this->render('admin/commentAdmin',['comments'=> $comments, 'message' => $message]);
     }
 }

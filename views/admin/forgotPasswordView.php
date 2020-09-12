@@ -14,12 +14,16 @@
 
       <form action="<?=URL_PATH;?>authentication/requestPassword" method="post">
         <div class="input-group mb-3">
-          <input type="email" name="email" class="form-control" placeholder="Email">
+          <input type="email" name="email" class="form-control <?=(!empty($data['email_error']) || !empty($data['email_unknown'])) ? 'is-invalid' : ''; ?>" placeholder="Email">
           <div class="input-group-append">
             <div class="input-group-text">
-              <span class="fas fa-envelope"></span>
+              <div>
+                <span class="fas fa-envelope"></span>
+              </div>
             </div>
           </div>
+          <span class="invalid-feedback"><?=$data['email_error'];?></span>
+          <span class="invalid-feedback"><?=$data['email_unknown'];?></span>
         </div>
         <div class="row">
           <div class="col-12">

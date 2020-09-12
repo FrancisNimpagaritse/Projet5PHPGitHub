@@ -19,7 +19,7 @@ class UserManager extends Model
          
         $isExecuteOk = $this->pdoStmt->execute();
 
-        if ($isExecuteOk==false) {
+        if (!$isExecuteOk) {
             return false;
         } else {
             //Get the last inserted Id
@@ -72,19 +72,14 @@ class UserManager extends Model
         
         $this->pdoStmt->bindValue(':id', $id, PDO::PARAM_INT);
 
-         $isExecuteOk = $this->pdoStmt->execute();
+        $isExecuteOk = $this->pdoStmt->execute();
 
-         if ($isExecuteOk) {
-            $user = $this->pdoStmt->fetchObject('User');
-
-            if ($user==false) {
-                return null;
-            } else {
-                return $user;
-            }
-         } else {
-             return false;
-         }        
+        if ($isExecuteOk) {
+            $user = $this->pdoStmt->fetchObject('User');            
+            return $user;
+        } else {
+             return null;
+        }
     }
 
     public function findByEmail($email)
@@ -97,17 +92,12 @@ class UserManager extends Model
 
          $isExecuteOk = $this->pdoStmt->execute();
 
-         if ($isExecuteOk) {
+        if ($isExecuteOk) {
             $user = $this->pdoStmt->fetchObject('User');
-
-            if ($user==false) {
-                return null;
-            } else {
-                return $user;
-            }
-         } else {
-             return false;
-         }        
+            return $user;
+        } else {
+            return null;
+        }
     }
 
     public function findByToken($token)
@@ -122,14 +112,9 @@ class UserManager extends Model
         
          if ($isExecuteOk) {
             $user = $this->pdoStmt->fetchObject('User');
-            
-            if ($user==null) {
-                return false;
-            } else {
-                return $user;
-            }
+            return $user;
          } else {
-             return false;
+            return null;
          }        
     }
 
