@@ -11,52 +11,21 @@ class AuthenticationController extends Controller
 
     public function login()
     {
-        //Avoid data send by GET method
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-             //Pocess form
-             
-            //Sanitize POST data
-            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-            //Initialize data posted
-            if (isset($_POST['email'])) {
-                $email = htmlspecialchars($_POST['email']);
-            }
-            if (isset($_POST['password'])) {
-                $pass = htmlspecialchars($_POST['password']);
+            //Validate entries 
+            $validation = new Validator($_POST);
+
+            $email = $validation->validate('email', $_POST['email'], 'email');
+            $pass = $validation->validate('password', $_POST['password'], 'password');
+            
+            $errors = $validation->getErrors();
+            
+            $loggedInUser = $this->userManager->login($email, $pass);
+            if (!$loggedInUser) {
+                $errors['password_incorrect_error'] = 'L\'email ou le mot de passe est invalide';
             }
             
-            //Initialize error message
-            $data = [
-                'email' => $email,
-                'password' => $pass,
-                'email_error' => '',
-                'password_error' => ''
-            ];
-            
-            //Validate email
-            if (empty($email)) {
-                $data['email_error'] = 'Veuiller saisir un email valide';
-            }
-            //Validate password
-            if (empty($pass)) {
-                $data['password_error'] = 'Veuiller saisir un mot de passe';
-            }
-             
-            //Check if that email exists in db valable en registration
-            $this->userManager->findByEmail($email) ?  : $data['email_error'] = 'Email non trouvé!'; 
-            
-            //If all errors are empty
-            if (empty($data['email_error']) && empty($data['password_error'])) {
-                //Validate 
-
-                $loggedInUser = $this->userManager->login($email, $pass);
-            }
-
-            //Check and set logged in User
-            $loggedInUser = $this->userManager->login($email, $pass);               
-
-            if ($loggedInUser) {  
-                    
+            if (!$errors) {
                 //Create session
                 $_SESSION['user_id']        = $loggedInUser->getId();
                 $_SESSION['user_email']     = $loggedInUser->getEmail();
@@ -65,29 +34,30 @@ class AuthenticationController extends Controller
                 $_SESSION['profile']         = $loggedInUser->getProfile();
                 $_SESSION['user']['token']   = hash("sha512", microtime().rand(0,999999));
                 
-                //Session cookies
+                    //Session cookies
                 if (isset($_POST['remember'])) {
                     setcookie('user_id', $_SESSION['user_id'], time()+3600,'/','localhost',false,true);
                     setcookie('user_firstname', $_SESSION['user_firstname'], time()+3600,'/','localhost',false,true);
-
-                    if ($_SESSION['profile'] == 'admin') {
-                        header('Location: '. URL_PATH.'Homeadmin');
-                    } else {                            
-                        header('Location: '. URL_PATH.'posts');
-                    }
-                } else {
-                    if ($_SESSION['profile'] == 'admin') {
-                        header('Location: '. URL_PATH.'Homeadmin');
-                    } else {                            
-                        header('Location: '. URL_PATH.'posts');
-                    }
                 }
+
+                if ($_SESSION['profile'] == 'admin') {
+                    header('Location: '. URL_PATH.'Homeadmin');
+                } else {                            
+                    header('Location: '. URL_PATH.'posts');
+                }                
             } else {
-                    $data['password_error'] = "Mot de passe invalid";
-                    //Reload view with errors
-                    $this->render('admin/login',$data);
-            }
                 
+                //Initialize error message
+                $data = [
+                    'email' => $email,
+                    'password' => $pass,
+                    'email_error' => $errors['email'] ?? '',
+                    'password_error' => $errors['password'] ?? '',
+                    'password_incorrect_error' => $errors['password_incorrect_error'] ?? ''
+                ]; 
+                //Reload view with errors
+                $this->render('admin/login',$data);
+            }                
         } else {
             //Initialize data 
             $data =[    
@@ -96,6 +66,7 @@ class AuthenticationController extends Controller
                 'email_error' => '',
                 'password_error' => ''
             ];
+
             $this->render('admin/login',$data);     
         }
     }
@@ -127,42 +98,51 @@ class AuthenticationController extends Controller
     { 
         //Avoid data send by GET method
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-              //Pocess form
-        
-             //Sanitize POST data
-            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-             
-            if (isset($_POST['email'])) {
-                //Initialize data posted
-                $email=htmlspecialchars($_POST['email']);
-                              
-                //Verify if that email is known
-                $user = $this->userManager->findByEmail($email);
-                
-                if ($user) { 
-                    //Generate a random token
-                    $token = uniqid();
-                    $url = 'http://monblog.franimpa.fr' . URL_PATH . "authentication/resetStart?token=".$token;
-                    
-                    //Email data
-                    $message = "Bonjour, voici le lien pour réinitialiser votre mot de passe. Cliquez-le: ". $url;
-                
-                    $headers = 'From: webmaster@example.com' . "\r\n" .
-                            'Reply-To: ' . $email . "\r\n" .
-                            'X-Mailer: PHP/' . phpversion();
+            //Validate entries 
+            $validation = new Validator($_POST);
 
-                    if (mail($email, 'Mot de passe oublié', $message, $headers)) {
-                        $user->setToken($token)
-                            ->setUpdatedAt(date("Y-m-d H:i:s"));
-                                     
-                        //update token in db
-                        $this->userManager->updateToken($user);
-                        
-                        header('Location: ' . URL_PATH . 'authentication/login');
-                    } else {
-                        echo 'Une erreur est survenue!';
-                    }
+            $email = $validation->validate('email', $_POST['email'], 'email');
+             
+            $errors = $validation->getErrors();            
+            
+                //Verify if that email is known
+            $user = $this->userManager->findByEmail($email);
+            if (!$user) {
+                $errors['email_notfound'] = 'L\'email que vous avez fourni n\'est pas reconnu';
+            }
+            
+            if(!$errors) { 
+                //Generate a random token
+                $token = uniqid();
+                $url = 'http://monblog.franimpa.fr' . URL_PATH . "authentication/resetStart?token=".$token;
+                
+                //Email data
+                $message = "Bonjour, voici le lien pour réinitialiser votre mot de passe. Cliquez-le: ". $url;
+            
+                $headers = 'From: webmaster@example.com' . "\r\n" .
+                        'Reply-To: ' . $email . "\r\n" .
+                        'X-Mailer: PHP/' . phpversion();
+
+                if (mail($email, 'Mot de passe oublié', $message, $headers)) {
+                    $user->setToken($token)
+                        ->setUpdatedAt(date("Y-m-d H:i:s"));
+                                    
+                    //update token in db
+                    $this->userManager->updateToken($user);
+                    
+                    header('Location: ' . URL_PATH . 'authentication/login');
+                } else {
+                    echo 'Une erreur est survenue!';
                 }
+            } else {
+                //Initialize error message
+                $data = [
+                    'email' => $email,
+                    'email_error' => $errors['email'] ?? '',
+                    'email_unknown' => $errors['email_notfound'] ?? ''
+                ];
+                
+                $this->render('admin/forgotPassword', $data);
             }
         }
     }
@@ -199,80 +179,51 @@ class AuthenticationController extends Controller
         
         //Avoid data send by GET method
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-             //Pocess form
-             
-            //Sanitize POST data
-            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-
-            //Initialize data posted
-            if (isset($_POST['email'])) {
-                $email=htmlspecialchars($_POST['email']);
-            }
-            if (isset($_POST['password'])) {
-                $password=htmlspecialchars($_POST['password']);                
-            } 
-            if (isset($_POST['confirm_password'])) {
-                $confirm_password=htmlspecialchars($_POST['confirm_password']);
+            //Validate entries 
+            $validation = new Validator($_POST);
                 
-            }
-            
+            //Clean validate data
+            $email = $validation->validate('email', $_POST['email'], 'email');
+            $password = $validation->validate('password', $_POST['password'], 'password');
+            $confirm_password = $validation->validate('confirm_password', $_POST['confirm_password'], 'password');
+            $validation->verifyConfirmation($password, $confirm_password);
 
-            //Initialize data
-            $data = [
+            //Check if that email exists in db valable en registration
+            $errors = $validation->getErrors();            
+            
+            $userToUpdate = $this->userManager->findByToken($_POST['token']); 
+                
+            if (!$userToUpdate) {
+                //User not found
+                $errors['token_error'] = 'Le lien fourni n\'a pa été reconnu!'; 
+            } 
+                //If errors is empty
+            if (!$errors) {
+                //Password hash
+                $pass_hash = password_hash($password, PASSWORD_DEFAULT);
+                
+                //Validate
+                $userToUpdate->setPassword($pass_hash)
+                                ->setToken($_POST['token'])
+                                ->setUpdatedAt(date("Y-m-d H:i:s"));
+                    
+                //update paswword & token in db
+                $this->userManager->updatePassword($userToUpdate);
+                $this->userManager->updateToken($userToUpdate);
+                
+                header('Location: ' . URL_PATH . 'authentication/login');
+            } else {
+                //Initialize data
+                $data = [
                     'email' => $email,
                     'password' => $password,
                     'confirm_password' => $confirm_password,
                     'token' => $_POST['token'],
-                    'email_error' => '',
-                    'password_error' => '',
-                    'confirm_password_error' => '',
-                    'token_error'   => ''
+                    'email_error' => $errors['email'] ?? '',
+                    'password_error' => $errors['password'] ?? '',
+                    'confirm_password_error' => $errors['confirm_password'] ?? '',
+                    'token_error'   => $errors['token'] ?? ''
                 ];
-                
-            //Validate email
-            if (empty($data['email']) || !(filter_var($data['email'], FILTER_VALIDATE_EMAIL))) {
-                $data['email_error'] = 'Veuiller saisir un email valide';
-            }
-            //Validate confirm_password
-            if (empty($data['password'])) {
-                $data['password_error'] = 'Veuiller saisir mot de passe';
-            }   
-            //Validate password
-            if (empty($data['confirm_password'])) {
-                $data['confirm_password_error'] = 'Veuiller confirmer le mot de passe';
-            } else {
-                if ($data['password'] != $data['confirm_password']) {
-                    $data['confirm_password_error'] = 'Les 2 mots de passe ne sont pas identiques';
-                }
-            }
-                
-            //If all errors are empty
-            if (empty($data['email_error']) && empty($data['password_error'])
-            && empty($data['confirm_password_error']) && empty($data['token_error'])) {
-                
-                //Check if user with that token exists in db
-                $userToUpdate = $this->userManager->findByToken($data['token']); 
-                
-                if (!$userToUpdate) {
-                    //User not found
-                    $data['token_error'] = 'Le lien fourni n\'a pa été reconnu!'; 
-                } else {
-                    $data['token'] = '';
-                    //Password hash
-                    $pass_hash = password_hash($data['password'], PASSWORD_DEFAULT);
-                   
-                    //Validate
-                    $userToUpdate->setPassword($pass_hash)
-                                    ->setToken($data['token'])
-                                    ->setUpdatedAt(date("Y-m-d H:i:s"));
-                        
-                    //update paswword & token in db
-                    $this->userManager->updatePassword($userToUpdate);
-                    $this->userManager->updateToken($userToUpdate);
-                    
-                   header('Location: ' . URL_PATH . 'authentication/login');
-                }
-            } else {
                 //Reload view with errors
                 $this->render('admin/resetPassword',$data);
             }           
@@ -286,7 +237,7 @@ class AuthenticationController extends Controller
                 'password_error' => '',
                 'confirm_password_error' => ''
             ];
-            //Load view with errors
+            //Load view for intitial password reset
             $this->render('admin/resetPassword',$data);
         }
     }

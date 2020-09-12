@@ -9,13 +9,16 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h4>Gestion des posts</h4>
-            
-                <?php
+            <h4>Gestion des posts</h4>            
+                <?php                
+              /*  if (isset($message)) {
+                } elseif (isset($_GET['success'])){ */
+                  if(isset($_GET['success'])) {                  
+                  echo '<div class="col-md-6 col-md-offset-3 alert alert-success text-center">Post mis à jour avec succès</div>';
                 
-                if (isset($message)) {
-                  echo '<div class="col-md-6 col-md-offset-3 alert alert-success text-center">' . $message . '</div>';
+
                 }
+
                 ?>
           </div>
           <div class="col-sm-6">
@@ -74,8 +77,7 @@
                               <?php } ?>
                              </td>                              
                             <td>
-                              <a href="<?=URL_PATH;?>posts/edit/<?=$post->id . '&token=' . $_SESSION['user']['token'];?>" class="btn btn-xs btn-primary mb-2"><i class="fas fa-pencil-alt"></i></a> 
-                              <a href="<?=URL_PATH;?>posts/delete/<?=$post->id . '&token=' . $_SESSION['user']['token'];?>" class="btn btn-xs btn-danger mb-2"><i class="far fa-trash-alt"></i></a>
+                              <a href="<?=URL_PATH;?>posts/edit/<?=$post->id . '&token=' . $_SESSION['user']['token'];?>" class="btn btn-xs btn-primary mb-2"><i class="fas fa-pencil-alt"></i></a>
                             </td>
                         </tr> 
                     <?php endforeach ; ?>               

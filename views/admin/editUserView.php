@@ -48,17 +48,18 @@
                   </div>
                   <div class="form-group">
                     <label for="email">Adresse email <sup>*</sup></label>
-                    <input type="email" id="email" name="email" class="form-control <?=(!empty($data['email_error'])) ? 'is-invalid' : ''; ?>" value="<?=$data['email'] ?>" placeholder="Adresse email">            
+                    <input type="email" id="email" name="email" class="form-control <?=(!empty($data['email_error']) || !empty($data['email_duplic'])) ? 'is-invalid' : '';?>" value="<?=$data['email'];?>" placeholder="Email">
                     <span class="invalid-feedback"><?=$data['email_error'];?></span>
+                    <span class="invalid-feedback"><?=$data['email_duplic'];?></span>
                   </div>
                   <div class="form-group">
                     <label for="password">Mot de passe <sup>*</sup></label>
-                    <input type="password" id="password" name="password" class="form-control <?=(!empty($data['password_error'])) ? 'is-invalid' : ''; ?>" value="<?=$data['password'] ?>" placeholder="Mot de passe">
+                    <input type="password" id="password" name="password" class="form-control <?=(!empty($data['password_error'])) ? 'is-invalid' : ''; ?>" value="<?=$data['password'] ?? '';?>" placeholder="Mot de passe">
                     <span class="invalid-feedback"><?=$data['password_error'];?></span>
                   </div>
                   <div class="form-group">
                     <label for="confirm_password">Confirmer mot de passe <sup>*</sup></label>
-                    <input type="password" id="confirm_password" name="confirm_password" class="form-control <?=(!empty($data['confirm_password_error'])) ? 'is-invalid' : ''; ?>" value="<?=$data['confirm_password'] ?>" placeholder="Confirmer mot de passe">
+                    <input type="password" id="confirm_password" name="confirm_password" class="form-control <?=(!empty($data['confirm_password_error'])) ? 'is-invalid' : ''; ?>" value="<?=$data['confirm_password'] ?? ''; ?>" placeholder="Confirmer mot de passe">
                     <span class="invalid-feedback"><?=$data['confirm_password_error']; ?></span>              
                   </div>
                 </div>

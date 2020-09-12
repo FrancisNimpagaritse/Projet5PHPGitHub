@@ -30,6 +30,11 @@
           <div class="card">
             <div class="card-header">
               <h3 class="card-title">Liste des commentaires</h3>
+              <?php                
+                if (isset($message)) {
+                  echo '<div class="col-md-6 col-md-offset-3 alert alert-success text-center">' . $message . '</div>';
+                }
+                ?>
             </div>
             <!-- /.card-header -->
             <div class="card-body">

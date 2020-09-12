@@ -1,6 +1,5 @@
 <?php
 
-  //print_r($_COOKIE); die();
   if(!isset($_SESSION['user_id']) && !isset($_COOKIE['user_firstname'])) {
     header('Location: '. URL_PATH.'authentication/login');
       exit();

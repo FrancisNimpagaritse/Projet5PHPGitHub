@@ -37,9 +37,9 @@
                 <span class="fas fa-lock"></span>
               </div>
             </div>
-          <span class="invalid-feedback"><?=$data['password_error']; ?></span> 
+          <span class="invalid-feedback"><?=$data['password_error']?></span> 
         </div>
-        <div><input type="hidden" name="token" value="<?=$token;?>"></div>
+        <div><input type="hidden" name="token" value="<?=$token?>"></div>
         <div class="row">
           <div class="col">
             <button type="submit" class="btn btn-success btn-block">Valider</button>

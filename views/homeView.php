@@ -120,7 +120,7 @@
                         <input type="text" class="form-control" id="subject" name="subject" placeholder="L'objet du message" value="<?=$data['subject'];?>" required>
                     </div>
                     <div>
-                        <p><?=$data['result'];?></p>
+                        <p><?=$data['result'] ?? '';?></p>
                     </div>
                 </div>
                 <div class="col-md-6">
