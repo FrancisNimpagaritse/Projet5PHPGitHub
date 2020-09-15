@@ -12,11 +12,23 @@ class AuthenticationController extends Controller
     public function login()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            //Validate entries 
-            $validation = new Validator($_POST);
 
-            $email = $validation->validate('email', $_POST['email'], 'email');
-            $pass = $validation->validate('password', $_POST['password'], 'password');
+            //Validate entries 
+            $validation = new Validator();
+
+            $validation->Validate($_POST,[
+                'email' => [
+                    'required' => true 
+                ],
+                'password' => [
+                    'required' => true
+                ]
+            ]);
+            //Get cleaned and validated data
+            $cleanData = $validation->getClean();
+            
+            $email = $cleanData['email'];
+            $pass = $cleanData['password'];
             
             $errors = $validation->getErrors();
             
@@ -98,16 +110,25 @@ class AuthenticationController extends Controller
     { 
         //Avoid data send by GET method
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        
             //Validate entries 
-            $validation = new Validator($_POST);
+            $validation = new Validator();
 
-            $email = $validation->validate('email', $_POST['email'], 'email');
-             
+            $validation->Validate($_POST,[
+                'email' => [
+                    'required' => true 
+                ]
+            ]);
+            //Get cleaned and validated data
+            $cleanData = $validation->getClean();
+            
+            $email = $cleanData['email'];
+
             $errors = $validation->getErrors();            
             
                 //Verify if that email is known
             $user = $this->userManager->findByEmail($email);
-            if (!$user) {
+            if (!$user && !empty($email)) {
                 $errors['email_notfound'] = 'L\'email que vous avez fourni n\'est pas reconnu';
             }
             
@@ -175,18 +196,37 @@ class AuthenticationController extends Controller
         }
     }
     public function resetPassword()
-    {      
-        
+    {        
         //Avoid data send by GET method
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             //Validate entries 
-            $validation = new Validator($_POST);
+            $validation = new Validator();
                 
-            //Clean validate data
-            $email = $validation->validate('email', $_POST['email'], 'email');
-            $password = $validation->validate('password', $_POST['password'], 'password');
-            $confirm_password = $validation->validate('confirm_password', $_POST['confirm_password'], 'password');
-            $validation->verifyConfirmation($password, $confirm_password);
+            $validation->Validate($_POST,[
+                'email' => [
+                    'required' => true,
+                    'email' => true,
+                    'min-length' => 5,
+                    'max-length' => 250, 
+                ],
+                'password' => [
+                    'required' => true,
+                    'min-length' => 6,
+                    'max-length' => 50, 
+                ],
+                'confirm_password' => [
+                    'required' => true,
+                    'min-length' => 6,
+                    'max-length' => 50,
+                    'matches' => 'password'
+                ] 
+            ]);
+            //Get cleaned and validated data
+            $cleanData = $validation->getClean();
+            
+            $email = $cleanData['email'];
+            $password = $cleanData['password'];
+            $confirm_password = $cleanData['confirm_password'];
 
             //Check if that email exists in db valable en registration
             $errors = $validation->getErrors();            

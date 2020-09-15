@@ -47,15 +47,45 @@ class PostsController extends Controller
     public function add()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                        
             //Validate entries 
-            $validation = new Validator($_POST);
+            $validation = new Validator();
+
+            $validation->Validate($_POST,[
+                'title' => [
+                    'required' => true,
+                    'min-length' => 3,
+                    'max-length' => 50, 
+                ],
+                'chapo' => [
+                    'required' => true,
+                    'min-length' => 3,
+                    'max-length' => 50, 
+                ],
+                'category' => [
+                    'required' => true,
+                    'min-length' => 2,
+                    'max-length' => 50, 
+                ],
+                'content' => [
+                    'required' => true,
+                    'min-length' => 20,
+                    'max-length' => 500, 
+                ],
+                'postImage' => [
+                    'required' => true,
+                    'min-length' => 5,
+                    'max-length' => 50
+                ] 
+            ]);
+            //Get cleaned and validated data
+            $cleanData = $validation->getClean();
             
-            //Clean validate data
-            $title = $validation->validate('title',$_POST['title'], 'textarea');
-            $chapo = $validation->validate('chapo', $_POST['chapo'], 'textarea'); 
-            $category = $validation->validate('category', $_POST['category'], 'textarea');
-            $content = $validation->validate('content', $_POST['content'], 'textarea');
-            $postImage = $validation->validate('postImage', $_POST['postImage'], 'textarea');
+            $title = $cleanData['title'];
+            $chapo = $cleanData['chapo'];
+            $category = $cleanData['category'];
+            $content = $cleanData['content'];
+            $postImage = $cleanData['postImage'];
             
             $errors = $validation->getErrors();
             
@@ -139,15 +169,44 @@ class PostsController extends Controller
 
         //Avoid data send by GET method
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            ///Validate entries 
-            $validation = new Validator($_POST);
+            //Validate entries 
+            $validation = new Validator();
+
+            $validation->Validate($_POST,[
+                'title' => [
+                    'required' => true,
+                    'min-length' => 3,
+                    'max-length' => 50, 
+                ],
+                'chapo' => [
+                    'required' => true,
+                    'min-length' => 3,
+                    'max-length' => 50, 
+                ],
+                'category' => [
+                    'required' => true,
+                    'min-length' => 2,
+                    'max-length' => 50, 
+                ],
+                'content' => [
+                    'required' => true,
+                    'min-length' => 20,
+                    'max-length' => 500, 
+                ],
+                'postImage' => [
+                    'required' => true,
+                    'min-length' => 5,
+                    'max-length' => 50
+                ] 
+            ]);
+            //Get cleaned and validated data
+            $cleanData = $validation->getClean();
             
-            //Clean validate data
-            $title = $validation->validate('title',$_POST['title'], 'textarea');
-            $chapo = $validation->validate('chapo', $_POST['chapo'], 'textarea'); 
-            $category = $validation->validate('category', $_POST['category'], 'textarea');
-            $content = $validation->validate('content', $_POST['content'], 'textarea');
-            $postImage = $validation->validate('postImage', $_POST['postImage'], 'textarea');
+            $title = $cleanData['title'];
+            $chapo = $cleanData['chapo'];
+            $category = $cleanData['category'];
+            $content = $cleanData['content'];
+            $postImage = $cleanData['postImage'];
             
             $errors = $validation->getErrors();
             

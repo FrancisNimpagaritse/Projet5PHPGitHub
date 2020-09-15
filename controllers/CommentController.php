@@ -19,12 +19,24 @@ class CommentController extends Controller
         //Avoid data send by GET method
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             //Validate entries 
-            $validation = new Validator($_POST);
+            $validation = new Validator();
+
+            $validation->Validate($_POST,[
+                'message' => [
+                    'required' => true,
+                    'min-length' => 1,
+                    'max-length' => 50, 
+                ],
+                'postid' => [
+                    'required' => true, 
+                ]
+            ]);
+            //Get cleaned and validated data
+            $cleanData = $validation->getClean();
             
-            //Clean validate data
-            $message = $validation->validate('message',$_POST['message'], 'textarea');
-            $postid = $validation->validate('postid', $_POST['postid'], 'int'); 
-            
+            $message = $cleanData['message'];
+            $postid = $cleanData['postid'];
+
             $errors = $validation->getErrors();
             //print_r($errors); die();
             //If errors is empty
