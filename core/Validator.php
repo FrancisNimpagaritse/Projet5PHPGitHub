@@ -1,116 +1,81 @@
 <?php
-//class validator
+
 class Validator
 {
-    //Holds encountered errors
+    //holds the posted data
+    private $postData;
+    //holds encountered errors
     private $errors = [];
-    
-    public function validate($key, $data, $type)
-    {        
-        switch($type) {
-            case 'int':
-                $this->validateInt($key, $data);
-            break;
-            
-            case 'text':
-                $this->validateText($key, $data);
-            break;
 
-            case 'textarea':
-                $this->validateTextArea($key, $data);
-            break;
+    //loop through all posted fields and for each loop for all rules
+    public function validate($postData, $fields = [])
+    {
+        $this->postData = $postData;
+        $this->fieldos = $fields;
+        foreach($fields as $field => $rules) {
+            foreach($rules as $rule => $rule_value)
+            {
+                $value = $postData[$field];
 
-            case 'email':
-                $this->validateEmail($key, $data);
-            break;
+                if ($rule == 'required' && empty($value)) {                     
+                    $this->addError($field, "Le champ {$field} ne peut pas être vide !");
+                } else if (!empty($value)) {
+                    switch($rule) 
+                    {
+                        case 'min-length':
+                            if (strlen($value) < $rule_value) {
+                                $this->addError($field, "La champ doit avoir aumoins {$rule_value} caractères !");
+                            }
+                        break;
 
-            case 'password':
-                $this->validatePassword($key, $data);
-            break;
+                        case 'max-length':
+                            if (strlen($value) > $rule_value) {
+                                $this->addError($field, "La champ ne doit pas avoir plus de {$rule_value} caractères !");
+                            }
+                        break;
 
+                        case 'matches':
+                            if ($value != $postData[$rule_value]) {
+                                $this->addError($field, "{$rule_value} doit correspondrent à {$field} !");
+                            }
+                        break;
+
+                        case 'email':
+                            if (!filter_var($postData[$field], FILTER_VALIDATE_EMAIL)) {
+                                $this->addError($field, 'Votre adresse email est invalide !');
+                            }
+                        break;
+                    }
+                }
+            }
         }
-        return $data;
     }
 
-    public function verifyConfirmation($value1, $value2)
+    private function addError($key, $val)
     {
-        if ($value1 != $value2) {
-            $this->addError('confirm_password', 'Les 2 mots de passe ne sont pas identiques');
-        }
+        $this->errors[$key] = $val;
     }
 
     public function getErrors()
     {
         return $this->errors;
     }
- 
-    private function clean($data)
+
+    public function getData()
     {
-        $data = trim($data);
-        $data = stripslashes($data);
-        $data = htmlspecialchars($data);
-
-        return $data;
-    }
-
-    private function validateInt($key, $data)
-    {
-        $cleanData = $this->clean($data);
-        if (empty($cleanData) || !ctype_digit($cleanData)) {
-            $this->addError($key, 'La valeur renseigné n\'est pas numérique !');
-        }
-    }
-
-    private function validateText($key, $data)
-    {
-        $cleanData = $this->clean($data);
-
-        if (empty($cleanData)) {
-            $this->addError($key, 'Le champ ne peut pas être vide !');
-        } else {
-            if (!preg_match('/^([a-zA-Z])*$/', $cleanData)) {
-                $this->addError($key, 'Le doit contenir uniquement des caractères alphabétiques !');
-            }
-        }
-    }
-
-    private function validateTextArea($key, $data)
-    {
-        $cleanData = $this->clean($data);
-
-        if (empty($cleanData)) {
-            $this->addError($key, 'Le champ ne peut pas être vide !');
-        }
-    }
-
-    private function validateEmail($key, $data)
-    {
-        $cleanData = $this->clean($data);
-
-        if (empty($cleanData)) {
-            $this->addError($key, 'Veuiller saisir votre email');
-        } else {
-            if (!filter_var($cleanData, FILTER_VALIDATE_EMAIL)) {
-                $this->addError($key, 'Votre adresse email est invalide !');
-            }
-        }
-    }
-
-    private function validatePassword($key, $data)
-    {
-        $cleanData = $this->clean($data);
-
-        if (empty($cleanData)) {
-            $this->addError($key, 'Veuiller saisir votre mot de passe');
-        } else {
-            if (!preg_match('/^([a-zA-Z0-9]{3,10})*$/', $cleanData)) {
-                $this->addError($key, 'Le mot de passe doit contenir aumoins 6 caractères !');
-            } //{3,10} à changer {6,10}
-        }
+        return $this->postData; //renvoie des données non protégé donc pas intéressanta
     }
     
-    private function addError($key, $val)
+    public function getClean()
     {
-        $this->errors[$key] = $val;
+        foreach($this->postData as $key => $valeur)
+        {        
+            $data = trim($valeur);
+            $data = stripslashes($valeur);
+            $data = htmlspecialchars($valeur);
+
+            $cleanPost[$key] = $data;
+        }
+        return $cleanPost;
     }
 }

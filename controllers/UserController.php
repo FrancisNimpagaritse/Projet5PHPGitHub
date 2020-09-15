@@ -20,25 +20,59 @@ class UserController extends Controller
     public function register()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            //Validate entries 
-            $validation = new Validator($_POST);
             
-            //Clean validate data
-            $firstname = $validation->validate('firstname',$_POST['firstname'], 'text');
-            $lastname = $validation->validate('lastname', $_POST['lastname'], 'text'); 
-            $email = $validation->validate('email', $_POST['email'], 'email');
-            $password = $validation->validate('password', $_POST['password'], 'password');
-            $confirm_password = $validation->validate('confirm_password', $_POST['confirm_password'], 'password');
-            $validation->verifyConfirmation($password, $confirm_password);
+            //Validate entries 
+            $validation = new Validator();
 
-            //Check if that email exists in db valable en registration
+            $validation->Validate($_POST,[
+                'firstname' => [
+                    'type' => 'text',
+                    'required' => true,
+                    'min-length' => 2,
+                    'max-length' => 50, 
+                ],
+                'lastname' => [
+                    'type' => 'text',
+                    'required' => true,
+                    'min-length' => 2,
+                    'max-length' => 50, 
+                ],
+                'email' => [
+                    'required' => true,
+                    'email' => true,
+                    'min-length' => 5,
+                    'max-length' => 50, 
+                ],
+                'password' => [
+                    'required' => true,
+                    'min-length' => 6,
+                    'max-length' => 50, 
+                ],
+                'confirm_password' => [
+                    'required' => true,
+                    'min-length' => 6,
+                    'max-length' => 50,
+                    'matches' => 'password'
+                ] 
+            ]);
+            //Get cleaned and validated data
+            $cleanData = $validation->getClean();
+            
+            $firstname = $cleanData['firstname'];
+            $lastname = $cleanData['lastname'];
+            $email = $cleanData['email'];
+            $password = $cleanData['password'];
+            
             $errors = $validation->getErrors();
+        
+            //Check if that email exists in db valable en registration
             if ($this->userManager->findByEmail($email)) {
                 //User found duplicate error else continue
                 $errors['email_duplic'] = 'Email déja utilisé !';
             }
             //If errors is empty
             if (!$errors) {
+
                 //Password hash
                 $pass_hash = password_hash($password, PASSWORD_DEFAULT);
                 
@@ -102,17 +136,36 @@ class UserController extends Controller
         }
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            //Validate entries 
-            $validation = new Validator($_POST);
             
-            //Clean validate data
-            $firstname = $validation->validate('firstname',$_POST['firstname'], 'text');               
-            $lastname = $validation->validate('lastname', $_POST['lastname'], 'text'); 
-            $email = $validation->validate('email', $_POST['email'], 'email');
-            $password = $validation->validate('password', $_POST['password'], 'password');
-            $confirm_password = $validation->validate('confirm_password', $_POST['confirm_password'], 'password');
-            $validation->verifyConfirmation($password, $confirm_password);
+            //Validate entries 
+            $validation = new Validator();
 
+            $validation->Validate($_POST,[
+                'firstname' => [
+                    'required' => true,
+                    'min-length' => 2,
+                    'max-length' => 50, 
+                ],
+                'lastname' => [
+                    'required' => true,
+                    'min-length' => 2,
+                    'max-length' => 50, 
+                ],
+                'email' => [
+                    'required' => true,
+                    'email' => true,
+                    'min-length' => 5,
+                    'max-length' => 50
+                ]
+            ]);
+            //Get cleaned and validated data
+            $cleanData = $validation->getClean();
+            
+            $firstname = $cleanData['firstname'];
+            $lastname = $cleanData['lastname'];
+            $email = $cleanData['email'];
+            
+            $errors = $validation->getErrors();
             //Check if that email exists in db valable en registration
             $errors = $validation->getErrors();
             if ($this->userManager->findByEmail($email)) {

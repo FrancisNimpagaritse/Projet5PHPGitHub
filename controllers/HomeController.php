@@ -34,13 +34,37 @@ class HomeController extends Controller
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             //Validate entries 
-            $validation = new Validator($_POST);
+            $validation = new Validator();
+
+            $validation->Validate($_POST,[
+                'name' => [
+                    'required' => true,
+                    'min-length' => 1,
+                    'max-length' => 50,
+                ],
+                'email' => [
+                    'email' => true,
+                    'required' => true,
+                    'max-length' => 50,
+                ],
+                'subject' => [
+                    'required' => true,
+                    'min-length' => 3,
+                    'max-length' => 50,
+                ],
+                'message' => [
+                    'required' => true,
+                    'min-length' => 3,
+                    'max-length' => 250,
+                ], 
+            ]);
+            //Get cleaned and validated data
+            $cleanData = $validation->getClean();
             
-            //Clean validate data
-            $name = $validation->validate('name',$_POST['name'], 'text');               
-            $email = $validation->validate('email', $_POST['email'], 'email');
-            $subject = $validation->validate('subject', $_POST['subject'], 'text');
-            $message = $validation->validate('message', $_POST['message'], 'textarea');
+            $name = $cleanData['name'];
+            $email = $cleanData['email'];
+            $subject = $cleanData['subject'];
+            $message = $cleanData['message'];
             
             $errors = $validation->getErrors();
             //If errors is empty
