@@ -17,7 +17,7 @@ class CommentController extends Controller
     public function add()
     {
         //Avoid data send by GET method
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        if (isset($_POST['submit'])) {
             //Validate entries 
             $validation = new Validator();
 
