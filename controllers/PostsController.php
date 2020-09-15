@@ -46,7 +46,7 @@ class PostsController extends Controller
     //Add post with data filled via form if any error reload form with input data and display error messages
     public function add()
     {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        if (isset($_POST['submit'])) {
                         
             //Validate entries 
             $validation = new Validator();
@@ -168,7 +168,7 @@ class PostsController extends Controller
         }
 
         //Avoid data send by GET method
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        if (isset($_POST['submit'])) {
             //Validate entries 
             $validation = new Validator();
 

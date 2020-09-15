@@ -11,9 +11,9 @@ class AuthenticationController extends Controller
 
     public function login()
     {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        if (isset($_POST['submit'])) {
 
-            //Validate entries 
+            //Validate entries
             $validation = new Validator();
 
             $validation->Validate($_POST,[
@@ -109,7 +109,7 @@ class AuthenticationController extends Controller
     public function requestPassword()
     { 
         //Avoid data send by GET method
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        if (isset($_POST['submit'])) {
         
             //Validate entries 
             $validation = new Validator();
@@ -198,7 +198,7 @@ class AuthenticationController extends Controller
     public function resetPassword()
     {        
         //Avoid data send by GET method
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        if (isset($_POST['submit'])) {
             //Validate entries 
             $validation = new Validator();
                 

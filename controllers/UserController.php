@@ -19,7 +19,7 @@ class UserController extends Controller
 
     public function register()
     {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        if (isset($_POST['submit'])) {
             
             //Validate entries 
             $validation = new Validator();
@@ -135,7 +135,7 @@ class UserController extends Controller
             exit("Token périmé!");
         }
 
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        if (isset($_POST['submit'])) {
             
             //Validate entries 
             $validation = new Validator();
