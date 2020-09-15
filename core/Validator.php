@@ -71,9 +71,6 @@ class Validator
         foreach($this->postData as $key => $value)
         {        
             $data = $this->escapingData($value);
-            /* $data = trim($valeur);
-            $data = stripslashes($valeur);
-            $data = htmlspecialchars($valeur); */
 
             $cleanPost[$key] = $data;
         }
@@ -83,7 +80,6 @@ class Validator
     public static function escapingData($value)
     {
         $data = trim($value);
-        $data = stripslashes($value);
         $data = htmlspecialchars($value);
 
         return $data;
