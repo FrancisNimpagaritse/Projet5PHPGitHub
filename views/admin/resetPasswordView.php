@@ -13,13 +13,13 @@
 
       <form action="<?=URL_PATH;?>authentication/resetPassword" method="post">        
         <div class="input-group mb-3">
-          <input type="email" id="email" name="email" class="form-control <?=(!empty($data['email_error'])) ? 'is-invalid' : ''; ?>" value="<?=$data['email'] ?>" placeholder="Email">
+          <input type="email" id="email" name="email" class="form-control <?=(!empty($data['email_error'])) ? 'is-invalid' : ''; ?>" value="<?=Validator::escapingData($data['email']);?>" placeholder="Email">
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-envelope"></span>
               </div>
             </div>
-            <span class="invalid-feedback"><?=$data['email_error']; ?></span>
+            <span class="invalid-feedback"><?=Validator::escapingData($data['email_error']);?></span>
         </div>
         <div class="input-group mb-3">
           <input type="password" id="password" name="password" class="form-control <?=(!empty($data['password_error'])) ? 'is-invalid' : ''; ?>" value="<?=$data['password'] ?>" placeholder="Mot de passe">
@@ -28,16 +28,16 @@
                 <span class="fas fa-lock"></span>
               </div>
             </div>
-          <span class="invalid-feedback"><?=$data['password_error']; ?></span> 
+          <span class="invalid-feedback"><?=($data['password_error']);?></span> 
         </div>
         <div class="input-group mb-3">
-          <input type="password" id="confirm_password" name="confirm_password" class="form-control <?=(!empty($data['confirm_password_error'])) ? 'is-invalid' : ''; ?>" value="<?=$data['confirm_password'] ?>" placeholder="Confirmer mot de passe">
+          <input type="password" id="confirm_password" name="confirm_password" class="form-control <?=(!empty($data['confirm_password_error'])) ? 'is-invalid' : ''; ?>" value="<?=Validator::escapingData($data['confirm_password']);?>" placeholder="Confirmer mot de passe">
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-lock"></span>
               </div>
             </div>
-          <span class="invalid-feedback"><?=$data['password_error']?></span> 
+          <span class="invalid-feedback"><?=Validator::escapingData($data['password_error']);?></span> 
         </div>
         <div><input type="hidden" name="token" value="<?=$token?>"></div>
         <div class="row">

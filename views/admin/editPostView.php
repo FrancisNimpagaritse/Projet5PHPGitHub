@@ -34,38 +34,38 @@
               </div>
               <!-- /.card-header -->
               <!-- form start -->
-              <form role="form" action="<?=URL_PATH;?>posts/edit/<?=$data['id']. '&token=' . $_SESSION['user']['token'];?>" method="post">
+              <form role="form" action="<?=URL_PATH;?>posts/edit/<?=Validator::escapingData($data['id']). '&token=' . $_SESSION['user']['token'];?>" method="post">
                 <div class="card-body">
                   <div class="form-group">
                     <label for="title">title <sup>*</sup></label>
-                    <input type="text" id="title" name="title" class="form-control <?=(!empty($data['title_error'])) ? 'is-invalid' : ''; ?>" value="<?=$data['title'] ?>" placeholder="Titre">
-                    <span class="invalid-feedback"><?=$data['title_error'];?></span>
+                    <input type="text" id="title" name="title" class="form-control <?=(!empty($data['title_error'])) ? 'is-invalid' : ''; ?>" value="<?=Validator::escapingData($data['title']);?>" placeholder="Titre">
+                    <span class="invalid-feedback"><?=Validator::escapingData($data['title_error']);?></span>
                   </div>
                   <div class="form-group">
                     <label for="category">catégorie</label>                    
                       <select name="category" id="category">
-                        <option value="<?=$data['category']?>"><?=$data['category']?></option>
+                        <option value="<?=Validator::escapingData($data['category']);?>"><?=Validator::escapingData($data['category']);?></option>
                         <option value="C#/.Net">C#/.Net</option>
                         <option value="BI">BI</option>
                         <option value="PHP">PHP</option>
                         <option value="Symfony">Sympfony</option>                  
                       </select>                    
-                    <span class="invalid-feedback"><?=$data['category_error']; ?></span>
+                    <span class="invalid-feedback"><?=Validator::escapingData($data['category_error']);?></span>
                   </div>
                   <div class="form-group">
                     <label for="chapo">chapô <sup>*</sup></label>
-                    <input type="text" id="chapo" name="chapo" class="form-control <?=(!empty($data['chapo_error'])) ? 'is-invalid' : ''; ?>" value="<?=$data['chapo'];?>" placeholder="Chapô">            
-                    <span class="invalid-feedback"><?=$data['chapo_error'];?></span>
+                    <input type="text" id="chapo" name="chapo" class="form-control <?=(!empty($data['chapo_error'])) ? 'is-invalid' : ''; ?>" value="<?=Validator::escapingData($data['chapo']);?>" placeholder="Chapô">            
+                    <span class="invalid-feedback"><?=Validator::escapingData($data['chapo_error']);?></span>
                   </div>
                   <div class="form-group">
                     <label for="content">contenu <sup>*</sup></label>
-                    <textarea id="content" name="content" rows=4 class="form-control <?=(!empty($data['content_error'])) ? 'is-invalid' : ''; ?>" placeholder="Contenu"><?=$data['content'];?></textarea>
-                    <span class="invalid-feedback"><?=$data['content_error'];?></span>
+                    <textarea id="content" name="content" rows=4 class="form-control <?=(!empty($data['content_error'])) ? 'is-invalid' : ''; ?>" placeholder="Contenu"><?=Validator::escapingData($data['content']);?></textarea>
+                    <span class="invalid-feedback"><?=Validator::escapingData($data['content_error']);?></span>
                   </div>
                   <div class="form-group">
                     <label for="postImage">image</label>
-                    <input type="text" id="postImage" name="postImage" class="form-control <?=(!empty($data['postImage_error'])) ? 'is-invalid' : ''; ?>" value="<?=$data['postImage'] ?>" placeholder="Image">
-                    <span class="invalid-feedback"><?=$data['postImage_error']; ?></span>              
+                    <input type="text" id="postImage" name="postImage" class="form-control <?=(!empty($data['postImage_error'])) ? 'is-invalid' : ''; ?>" value="<?=Validator::escapingData($data['postImage']);?>" placeholder="Image">
+                    <span class="invalid-feedback"><?=Validator::escapingData($data['postImage_error']);?></span>              
                   </div>
                 </div>
                 <!-- /.card-body -->

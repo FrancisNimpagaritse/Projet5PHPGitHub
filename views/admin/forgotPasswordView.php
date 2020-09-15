@@ -22,8 +22,8 @@
               </div>
             </div>
           </div>
-          <span class="invalid-feedback"><?=$data['email_error'];?></span>
-          <span class="invalid-feedback"><?=$data['email_unknown'];?></span>
+          <span class="invalid-feedback"><?=Validator::escapingData($data['email_error']);?></span>
+          <span class="invalid-feedback"><?=Validator::escapingData($data['email_unknown']);?></span>
         </div>
         <div class="row">
           <div class="col-12">
