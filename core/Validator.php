@@ -68,14 +68,24 @@ class Validator
     
     public function getClean()
     {
-        foreach($this->postData as $key => $valeur)
+        foreach($this->postData as $key => $value)
         {        
-            $data = trim($valeur);
+            $data = $this->escapingData($value);
+            /* $data = trim($valeur);
             $data = stripslashes($valeur);
-            $data = htmlspecialchars($valeur);
+            $data = htmlspecialchars($valeur); */
 
             $cleanPost[$key] = $data;
         }
         return $cleanPost;
+    }
+
+    public static function escapingData($value)
+    {
+        $data = trim($value);
+        $data = stripslashes($value);
+        $data = htmlspecialchars($value);
+
+        return $data;
     }
 }

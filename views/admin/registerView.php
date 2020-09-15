@@ -13,48 +13,48 @@
 
       <form action="<?=URL_PATH ?>user/register" method="post">
         <div class="input-group mb-3">
-          <input type="text" id="firstname" name="firstname" class="form-control <?=(!empty($data['firstname_error'])) ? 'is-invalid' : '';?>" value="<?=$data['firstname'];?>" placeholder="Prénom">
+          <input type="text" id="firstname" name="firstname" class="form-control <?=(!empty($data['firstname_error'])) ? 'is-invalid' : '';?>" value="<?=Validator::escapingData($data['firstname']);?>" placeholder="Prénom">
             <div class="input-group-append">
               <div class="input-group-text">                
               </div>
             </div>
-            <span class="invalid-feedback"><?=$data['firstname_error'];?></span>
+            <span class="invalid-feedback"><?=Validator::escapingData($data['firstname_error']);?></span>
         </div>
         <div class="input-group mb-3">
-          <input type="text" id="lastname" name="lastname" class="form-control <?=(!empty($data['lastname_error'])) ? 'is-invalid' : '';?>" value="<?=$data['lastname'];?>" placeholder="Nom">
+          <input type="text" id="lastname" name="lastname" class="form-control <?=(!empty($data['lastname_error'])) ? 'is-invalid' : '';?>" value="<?=Validator::escapingData($data['lastname']);?>" placeholder="Nom">
             <div class="input-group-append">
               <div class="input-group-text">                
               </div>
             </div>
-            <span class="invalid-feedback"><?=$data['lastname_error']; ?></span>
+            <span class="invalid-feedback"><?=Validator::escapingData($data['lastname_error']); ?></span>
         </div>
         <div class="input-group mb-3">
-        <input type="email" id="email" name="email" class="form-control <?=(!empty($data['email_error']) || !empty($data['email_duplic'])) ? 'is-invalid' : '';?>" value="<?=$data['email'];?>" placeholder="Email">
+        <input type="email" id="email" name="email" class="form-control <?=(!empty($data['email_error']) || !empty($data['email_duplic'])) ? 'is-invalid' : '';?>" value="<?=Validator::escapingData($data['email']);?>" placeholder="Email">
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-envelope"></span>
               </div>
             </div>
-            <span class="invalid-feedback"><?=$data['email_error'];?></span>            
-            <span class="invalid-feedback"><?=$data['email_duplic'];?></span>
+            <span class="invalid-feedback"><?=Validator::escapingData($data['email_error']);?></span>            
+            <span class="invalid-feedback"><?=Validator::escapingData($data['email_duplic']);?></span>
         </div>
         <div class="input-group mb-3">
-          <input type="password" id="password" name="password" class="form-control <?=(!empty($data['password_error'])) ? 'is-invalid' : '';?>" value="<?=$data['password'];?>" placeholder="Mot de passe">
+          <input type="password" id="password" name="password" class="form-control <?=(!empty($data['password_error'])) ? 'is-invalid' : '';?>" value="" placeholder="Mot de passe">
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-lock"></span>
               </div>
             </div>
-          <span class="invalid-feedback"><?=$data['password_error'];?></span> 
+          <span class="invalid-feedback"><?=Validator::escapingData($data['password_error']);?></span> 
         </div>
         <div class="input-group mb-3">
-          <input type="password" id="confirm_password" name="confirm_password" class="form-control <?=(!empty($data['confirm_password_error'])) ? 'is-invalid' : '';?>" value="<?=$data['confirm_password'];?>" placeholder="Confirmer mot de passe">
+          <input type="password" id="confirm_password" name="confirm_password" class="form-control <?=(!empty($data['confirm_password_error'])) ? 'is-invalid' : '';?>" value="" placeholder="Confirmer mot de passe">
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-lock"></span>
               </div>
             </div>
-          <span class="invalid-feedback"><?=$data['password_error'];?></span> 
+          <span class="invalid-feedback"><?=Validator::escapingData($data['password_error']);?></span> 
         </div>
 
         <div class="row">

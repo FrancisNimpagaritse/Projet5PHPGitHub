@@ -111,21 +111,21 @@
             <form class="row contact_form" action="<?=URL_PATH;?>home/send" method="post" id="contactForm">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <input type="text" class="form-control" id="name" name="name" placeholder="Saisir votre nom et prénom" value="<?=$data['name'];?>" required>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="Saisir votre nom et prénom" value="<?=Validator::escapingData($data['name']);?>" required>
                     </div>
                     <div class="form-group">
-                        <input type="email" class="form-control" id="email" name="email" placeholder="Votre adresse email" value="<?=$data['email'];?>" required>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="Votre adresse email" value="<?=Validator::escapingData($data['email']);?>" required>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="subject" name="subject" placeholder="L'objet du message" value="<?=$data['subject'];?>" required>
+                        <input type="text" class="form-control" id="subject" name="subject" placeholder="L'objet du message" value="<?=Validator::escapingData($data['subject']);?>" required>
                     </div>
                     <div>
-                        <p><?=$data['result'] ?? '';?></p>
+                        <p><?=Validator::escapingData($data['result']) ?? '';?></p>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <textarea class="form-control" id="message" name="message" rows="1" placeholder="Votre Message"><?=$data['message'];?></textarea>
+                        <textarea class="form-control" id="message" name="message" rows="1" placeholder="Votre Message"><?=Validator::escapingData($data['message']);?></textarea>
                     </div>
                 </div>
                 <div class="col-md-12 text-right">                    
