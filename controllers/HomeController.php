@@ -9,7 +9,7 @@ class HomeController extends Controller
 
     public function page404()
     {
-        $this->render('404',$data=[]);
+        $this->render('404',[]);
     }
 
     public function index()
@@ -32,11 +32,11 @@ class HomeController extends Controller
     //Send a message for contact
     public function send()
     {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        if (isset($_POST['submit'])) {
             //Validate entries 
             $validation = new Validator();
 
-            $validation->Validate($_POST,[
+            $validation->Validate(HttpRequest::postData(),[
                 'name' => [
                     'required' => true,
                     'min-length' => 1,
