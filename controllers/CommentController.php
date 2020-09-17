@@ -11,17 +11,17 @@ class CommentController extends Controller
     public function index()
     {        
         $comments = $this->commentManager->findAll();
-        $this->render('admin/commentAdmin',['comments'=> $comments]);
+        $this->render('admin/commentAdmin', ['comments'=> $comments]);
     }
 
     public function add()
     {
         //Avoid data send by GET method
-        if (isset($_POST['submit'])) {
+        if (HttpRequest::method() == 'POST') {
             //Validate entries 
             $validation = new Validator();
 
-            $validation->Validate($_POST,[
+            $validation->Validate(HttpRequest::postData(), [
                 'message' => [
                     'required' => true,
                     'min-length' => 1,
@@ -63,7 +63,7 @@ class CommentController extends Controller
         $this->commentManager->publishOne($commentToPublish);
         
         $comments = $this->commentManager->findAll();
-        $this->render('admin/commentAdmin',['comments'=> $comments, 'message' => $message]);
+        $this->render('admin/commentAdmin', ['comments'=> $comments, 'message' => $message]);
     }
 
     public function unPublish()
@@ -74,16 +74,18 @@ class CommentController extends Controller
         $this->commentManager->unPublishOne($commentToUnpublish);
         
         $comments = $this->commentManager->findAll();
-        $this->render('admin/commentAdmin',['comments'=> $comments, 'message' => $message]);
+        $this->render('admin/commentAdmin', ['comments'=> $comments, 'message' => $message]);
     }
 
     public function delete()
     {
-        $commentToDelete = $this->commentManager->findById($this->id);
-        $message = "Commentaire supprimé avec success";
-        $this->commentManager->delete($commentToDelete);
+        if (Token::check('token')) {
+            $commentToDelete = $this->commentManager->findById($this->id);
+            $message = "Commentaire supprimé avec success";
+            $this->commentManager->delete($commentToDelete);
 
-        $comments = $this->commentManager->findAll();
-        $this->render('admin/commentAdmin',['comments'=> $comments, 'message' => $message]);
+            $comments = $this->commentManager->findAll();
+            $this->render('admin/commentAdmin', ['comments'=> $comments, 'message' => $message]);
+        }
     }
 }

@@ -10,15 +10,10 @@
         <div class="row mb-2">
           <div class="col-sm-6">
             <h4>Gestion des posts</h4>            
-                <?php                
-              /*  if (isset($message)) {
-                } elseif (isset($_GET['success'])){ */
-                  if(isset($_GET['success'])) {                  
+                <?php              
+                if(isset($_GET['success'])) {                  
                   echo '<div class="col-md-6 col-md-offset-3 alert alert-success text-center">Post mis à jour avec succès</div>';
-                
-
                 }
-
                 ?>
           </div>
           <div class="col-sm-6">
@@ -69,15 +64,15 @@
                             <td><?=date_format(new DateTime($post->updatedAt),"d-m-Y H:i:s");?></td>
                             <td>
                               <?=$post->status;?>
-                              <?php if ($post->status=='attente')
+                              <?php if ($post->status=='attente')  //$post->id . '&token=' . $_SESSION['user']['token'];
                               { ?>
-                              <a href="<?=URL_PATH;?>posts/publish/<?=$post->id . '&token=' . $_SESSION['user']['token'];?>" class="btn btn-xs btn-warning mb-2">publier</a> 
+                              <a href="<?=URL_PATH;?>posts/publish/<?=$post->id . '&token=' . HttpRequest::getSession('token');?>" class="btn btn-xs btn-warning mb-2">publier</a> 
                               <?php } else { ?>
-                                <a href="<?=URL_PATH;?>posts/unPublish/<?=$post->id . '&token=' . $_SESSION['user']['token'];?>" class="btn btn-xs btn-danger mb-2">retirer</a> 
+                                <a href="<?=URL_PATH;?>posts/unPublish/<?=$post->id . '&token=' . HttpRequest::getSession('token');?>" class="btn btn-xs btn-danger mb-2">retirer</a> 
                               <?php } ?>
                              </td>                              
                             <td>
-                              <a href="<?=URL_PATH;?>posts/edit/<?=$post->id . '&token=' . $_SESSION['user']['token'];?>" class="btn btn-xs btn-primary mb-2"><i class="fas fa-pencil-alt"></i></a>
+                              <a href="<?=URL_PATH;?>posts/edit/<?=$post->id . '&token=' . HttpRequest::getSession('token');?>" class="btn btn-xs btn-primary mb-2"><i class="fas fa-pencil-alt"></i></a>
                             </td>
                         </tr> 
                     <?php endforeach ; ?>               

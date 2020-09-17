@@ -4,6 +4,8 @@ session_start();
 
 //Load Config file
 require_once 'config/config.php';
+require_once 'HttpRequest.php';
+require_once 'Token.php';
 require_once 'Validator.php';
 
 //Load base controller

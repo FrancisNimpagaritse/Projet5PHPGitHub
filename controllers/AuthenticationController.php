@@ -11,12 +11,14 @@ class AuthenticationController extends Controller
 
     public function login()
     {
-        if (isset($_POST['submit'])) {
-
+        //print_r($_SERVER['REQUEST_METHOD']); die();
+        if (HttpRequest::method() == 'POST') {
+            
             //Validate entries
             $validation = new Validator();
 
-            $validation->Validate($_POST,[
+            
+            $validation->Validate(HttpRequest::postData(),[
                 'email' => [
                     'required' => true 
                 ],
@@ -38,18 +40,41 @@ class AuthenticationController extends Controller
             }
             
             if (!$errors) {
+
                 //Create session
-                $_SESSION['user_id']        = $loggedInUser->getId();
+            /*    $_SESSION['user_id']        = $loggedInUser->getId();
                 $_SESSION['user_email']     = $loggedInUser->getEmail();
                 $_SESSION['user_firstname'] = $loggedInUser->getFirstname();
                 $_SESSION['user_lastname']  = $loggedInUser->getLastname();
                 $_SESSION['profile']         = $loggedInUser->getProfile();
                 $_SESSION['user']['token']   = hash("sha512", microtime().rand(0,999999));
+            */
+            
+            HttpRequest::setSession('user_id', $loggedInUser->getId());
+            HttpRequest::setSession('user_email', $loggedInUser->getEmail());
+            HttpRequest::setSession('user_firstname', $loggedInUser->getFirstname());
+            HttpRequest::setSession('user_lastname', $loggedInUser->getLastname());
+            HttpRequest::setSession('profile', $loggedInUser->getProfile());
+            //$_SESSION['user']['token']   = hash("sha512", microtime().rand(0,999999));
+            HttpRequest::setSession('token', Token::generate());
                 
-                    //Session cookies
-                if (isset($_POST['remember'])) {
+         /*   print_r(HttpRequest::setSession('id', $loggedInUser->getId())); echo '<br>';
+
+            print_r(HttpRequest::setSession('user_email', $loggedInUser->getEmail())); echo '<br>';
+            print_r(HttpRequest::setSession('user_firstname', $loggedInUser->getFirstname())); echo '<br>';
+            print_r(HttpRequest::setSession('user_lastname', $loggedInUser->getLastname())); echo '<br>';
+            print_r(HttpRequest::setSession('profile', $loggedInUser->getProfile())); echo '<br>';
+            print_r(HttpRequest::setSession('token', Token::generate())); 
+            die();
+
+          */          //Session cookies
+                if (HttpRequest::postKeyExists('remember')) {
+                    /*
                     setcookie('user_id', $_SESSION['user_id'], time()+3600,'/','localhost',false,true);
                     setcookie('user_firstname', $_SESSION['user_firstname'], time()+3600,'/','localhost',false,true);
+                    */
+                    HttpRequest::cookieData('user_id', HttpRequest::setSession('id', $loggedInUser->getId()));
+                    HttpRequest::cookieData('user_firstname', HttpRequest::setSession('user_firstname', $loggedInUser->getFirstname()));
                 }
 
                 if ($_SESSION['profile'] == 'admin') {
@@ -109,12 +134,12 @@ class AuthenticationController extends Controller
     public function requestPassword()
     { 
         //Avoid data send by GET method
-        if (isset($_POST['submit'])) {
+        if (HttpRequest::method() == 'POST') {
         
             //Validate entries 
             $validation = new Validator();
 
-            $validation->Validate($_POST,[
+            $validation->Validate(HttpRequest::postData(),[
                 'email' => [
                     'required' => true 
                 ]
@@ -198,11 +223,11 @@ class AuthenticationController extends Controller
     public function resetPassword()
     {        
         //Avoid data send by GET method
-        if (isset($_POST['submit'])) {
+        if (HttpRequest::method() == 'POST') {
             //Validate entries 
             $validation = new Validator();
                 
-            $validation->Validate($_POST,[
+            $validation->Validate(HttpRequest::postData(), [
                 'email' => [
                     'required' => true,
                     'email' => true,

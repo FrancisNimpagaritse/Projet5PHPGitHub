@@ -19,12 +19,12 @@ class UserController extends Controller
 
     public function register()
     {
-        if (isset($_POST['submit'])) {
+        if (HttpRequest::method() == 'POST') {
             
             //Validate entries 
             $validation = new Validator();
 
-            $validation->Validate($_POST,[
+            $validation->Validate(HttpRequest::postData(), [
                 'firstname' => [
                     'type' => 'text',
                     'required' => true,
@@ -119,14 +119,6 @@ class UserController extends Controller
             //Load view
             $this->render('admin/register',$data);
         }
-    }   
-    
-    public function findById()
-    {
-        $userManager = new UserManager();
-        $user = $userManager->findById($this->id);
-
-        require('views/updateUserView.php');
     }
     
     public function edit()
@@ -140,7 +132,7 @@ class UserController extends Controller
             //Validate entries 
             $validation = new Validator();
 
-            $validation->Validate($_POST,[
+            $validation->Validate(HttpRequest::postData(),[
                 'firstname' => [
                     'required' => true,
                     'min-length' => 2,
