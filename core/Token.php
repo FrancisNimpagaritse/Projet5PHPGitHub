@@ -2,18 +2,23 @@
 
 class Token
 {
+    private $request;
+    public function __construct(HttpRequest $request)
+    {
+        $this->request = $request;
+    }
     public static function generate()
     {
        //return Session::sessionData('token', hash("sha512", microtime().rand(0,999999)));
        return hash("sha512", microtime().rand(0,999999));
     }
 
-    public static function check($token)
+    public function check($token)
     {
-        $tokenName=$_GET['token'];//check well the Config class and its get method;
+        $tokenName=$this->request->getGet('token');//check well the Config class and its get method;
 
-        if ( HttpRequest::sessionExists($token) && $tokenName == HttpRequest::getSession($token)) {
-            //HttpRequest::delete($tokenName);
+        if ( $this->request->sessionExists($token) && $tokenName == $this->request->getSession($token)) {
+            $this->request->delete($tokenName);
             return true;
         } else {
             return false;

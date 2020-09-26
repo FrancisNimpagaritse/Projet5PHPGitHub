@@ -1,6 +1,5 @@
 <?php
 
-
 class AuthenticationController extends Controller
 {
     public function __construct()
@@ -11,14 +10,14 @@ class AuthenticationController extends Controller
 
     public function login()
     {
-        //print_r($_SERVER['REQUEST_METHOD']); die();
-        if (HttpRequest::method() == 'POST') {
+        
+        if ($this->httpRequest->method() == 'POST') {
             
             //Validate entries
             $validation = new Validator();
 
             
-            $validation->Validate(HttpRequest::postData(),[
+            $validation->Validate($this->httpRequest->getPost(), [
                 'email' => [
                     'required' => true 
                 ],
@@ -40,48 +39,27 @@ class AuthenticationController extends Controller
             }
             
             if (!$errors) {
-
-                //Create session
-            /*    $_SESSION['user_id']        = $loggedInUser->getId();
-                $_SESSION['user_email']     = $loggedInUser->getEmail();
-                $_SESSION['user_firstname'] = $loggedInUser->getFirstname();
-                $_SESSION['user_lastname']  = $loggedInUser->getLastname();
-                $_SESSION['profile']         = $loggedInUser->getProfile();
-                $_SESSION['user']['token']   = hash("sha512", microtime().rand(0,999999));
-            */
             
-            HttpRequest::setSession('user_id', $loggedInUser->getId());
-            HttpRequest::setSession('user_email', $loggedInUser->getEmail());
-            HttpRequest::setSession('user_firstname', $loggedInUser->getFirstname());
-            HttpRequest::setSession('user_lastname', $loggedInUser->getLastname());
-            HttpRequest::setSession('profile', $loggedInUser->getProfile());
-            //$_SESSION['user']['token']   = hash("sha512", microtime().rand(0,999999));
-            HttpRequest::setSession('token', Token::generate());
-                
-         /*   print_r(HttpRequest::setSession('id', $loggedInUser->getId())); echo '<br>';
-
-            print_r(HttpRequest::setSession('user_email', $loggedInUser->getEmail())); echo '<br>';
-            print_r(HttpRequest::setSession('user_firstname', $loggedInUser->getFirstname())); echo '<br>';
-            print_r(HttpRequest::setSession('user_lastname', $loggedInUser->getLastname())); echo '<br>';
-            print_r(HttpRequest::setSession('profile', $loggedInUser->getProfile())); echo '<br>';
-            print_r(HttpRequest::setSession('token', Token::generate())); 
-            die();
-
-          */          //Session cookies
-                if (HttpRequest::postKeyExists('remember')) {
-                    /*
-                    setcookie('user_id', $_SESSION['user_id'], time()+3600,'/','localhost',false,true);
-                    setcookie('user_firstname', $_SESSION['user_firstname'], time()+3600,'/','localhost',false,true);
-                    */
-                    HttpRequest::cookieData('user_id', HttpRequest::setSession('id', $loggedInUser->getId()));
-                    HttpRequest::cookieData('user_firstname', HttpRequest::setSession('user_firstname', $loggedInUser->getFirstname()));
+                $this->httpRequest->setSession('user_id', $loggedInUser->getId());
+                $this->httpRequest->setSession('user_email', $loggedInUser->getEmail());
+                $this->httpRequest->setSession('user_firstname', $loggedInUser->getFirstname());
+                $this->httpRequest->setSession('user_lastname', $loggedInUser->getLastname());
+                $this->httpRequest->setSession('profile', $loggedInUser->getProfile());
+                $this->httpRequest->setSession('token', Token::generate());
+            
+                //Session cookies
+                if ($this->httpRequest->postKeyExists('remember')) {
+                    $this->httpRequest->setCookieData('user_id', $this->httpRequest->getSession('user_id'), 3600);
+                    $this->httpRequest->setCookieData('user_firstname', $this->httpRequest->getSession('user_firstname'), 3600);
                 }
 
-                if ($_SESSION['profile'] == 'admin') {
+                if ($this->httpRequest->getSession('profile') == 'admin') {
                     header('Location: '. URL_PATH.'Homeadmin');
-                } else {                            
-                    header('Location: '. URL_PATH.'posts');
-                }                
+                    return;
+                }                          
+                
+                header('Location: '. URL_PATH.'posts');
+                                
             } else {
                 
                 //Initialize error message
@@ -111,12 +89,14 @@ class AuthenticationController extends Controller
     public function logout()
     {
         setcookie('user_id','',time()-3600);
+        $this->httpRequest->setCookieData('user_id', $this->httpRequest->getSession('user_id'), -3600);
         setcookie('user_firstname','',time()-3600);
-        unset($_SESSION['user_id']);
-        unset($_SESSION['user_firstname']);
-        unset($_SESSION['user_lastname']);
-        unset($_SESSION['user_email']);
-        unset($_SESSION['message']);
+        $this->httpRequest->setCookieData('user_firstname', $this->httpRequest->getSession('user_firstname'), -3600);
+        $this->httpRequest->deleteSession('user_id');
+        $this->httpRequest->deleteSession('user_firstname');
+        $this->httpRequest->deleteSession('user_lastname');
+        $this->httpRequest->deleteSession('user_email');
+        
         session_destroy();
         
         header('Location: '. URL_PATH.'authentication/login'); 
@@ -134,12 +114,12 @@ class AuthenticationController extends Controller
     public function requestPassword()
     { 
         //Avoid data send by GET method
-        if (HttpRequest::method() == 'POST') {
+        if ($this->httpRequest->method() == 'POST') {
         
             //Validate entries 
             $validation = new Validator();
 
-            $validation->Validate(HttpRequest::postData(),[
+            $validation->Validate($this->httpRequest->getPost(),[
                 'email' => [
                     'required' => true 
                 ]
@@ -194,15 +174,15 @@ class AuthenticationController extends Controller
     }
 
     public function resetStart()
-    {        
-        if (isset($_GET['token']) && !empty($_GET['token'])) {
+    {       
+        if ($this->httpRequest->getKeyExists('token')) {
             //Check if user with that token exists in db
             $userWithToken = $this->userManager->findByToken($_GET['token']);
             
             if ($userWithToken) {
             //Initialize data
             $data = [
-                'token' =>  $_GET['token'],
+                'token' =>  $this->httpRequest->getGet('token'),
                 'email' => '',
                 'password' => '',
                 'confirm_password' => '',
@@ -223,11 +203,11 @@ class AuthenticationController extends Controller
     public function resetPassword()
     {        
         //Avoid data send by GET method
-        if (HttpRequest::method() == 'POST') {
+        if ($this->httpRequest->method() == 'POST') {
             //Validate entries 
             $validation = new Validator();
                 
-            $validation->Validate(HttpRequest::postData(), [
+            $validation->Validate($this->httpRequest->getPost(), [
                 'email' => [
                     'required' => true,
                     'email' => true,

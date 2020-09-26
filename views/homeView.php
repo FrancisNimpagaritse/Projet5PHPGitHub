@@ -12,7 +12,7 @@
             <div class="row banner_inner">
                 <div class="col-lg-5"></div>
                 <div class="col-lg-7">
-                    <div class="banner_content text-center">
+                    <div class="banner_content text-center" style="border-radius:7px;">
                         <h3>Compétences BI & Développement d'applications</h3>
                         <div class="page_link">
                             <a href="index.html">Talend</a>
@@ -120,7 +120,7 @@
                         <input type="text" class="form-control" id="subject" name="subject" placeholder="L'objet du message" value="<?=Validator::escapingData($data['subject']);?>" required>
                     </div>
                     <div>
-                        <p><?=Validator::escapingData($data['result']) ?? '';?></p>
+                        <p><?=$data['result'] ?? '';?></p>
                     </div>
                 </div>
                 <div class="col-md-6">

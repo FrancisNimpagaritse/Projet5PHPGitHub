@@ -46,12 +46,12 @@ class PostsController extends Controller
     //Add post with data filled via form if any error reload form with input data and display error messages
     public function add()
     {
-        if (HttpRequest::method() == 'POST') {
+        if ($this->httpRequest->method() == 'POST') {
                         
             //Validate entries 
             $validation = new Validator();
 
-            $validation->Validate(HttpRequest::postData(), [
+            $validation->Validate($this->httpRequest->getPost(), [
                 'title' => [
                     'required' => true,
                     'min-length' => 3,
@@ -98,7 +98,7 @@ class PostsController extends Controller
                         ->setchapo($chapo)
                         ->setcategory($category)
                         ->setcontent($content)
-                        ->setAuthorId($_SESSION['user_id'])
+                        ->setAuthorId($this->httpRequest->getSession('user_id'))
                         ->setPostImage($postImage);
                                         
                 //insert into db using manager's create method
@@ -163,15 +163,15 @@ class PostsController extends Controller
     
     public function edit()
     {
-        //if (isset($_GET['token']) && ($_GET['token'] != $_SESSION['user']['token']) || empty($_GET['token'])) {
-        if (Token::check('token')) {
+        $token = new Token($this->httpRequest);
         
-            //Avoid data send by GET method
-            if (HttpRequest::method() == 'POST') {
+        if ($token->check('token')) {
+
+           if ($this->httpRequest->method() == 'POST') {
                 //Validate entries 
                 $validation = new Validator();
-
-                $validation->Validate(HttpRequest::postData(),[
+                
+                $validation->Validate($this->httpRequest->getPost(),[
                     'title' => [
                         'required' => true,
                         'min-length' => 3,
@@ -218,7 +218,7 @@ class PostsController extends Controller
                                 ->setchapo($chapo)
                                 ->setcategory($category)
                                 ->setcontent($content)
-                                ->setAuthorId($_SESSION['user_id'])
+                                ->setAuthorId($this->httpRequest->getSession('user_id'))
                                 ->setPostImage($postImage);
 
                     $this->postManager->update($postToUpdate);
@@ -242,12 +242,11 @@ class PostsController extends Controller
                     $this->render('admin/editPost',$data);
                 }            
             } else { //Initial load view for update
-                //Get existing post & author from db
                 $post = $this->postManager->findById($this->id);
                 $user = $this->userManager->findById($post->getAuthorId());
 
                 //Check for ownership
-                if ($user->getId() != $_SESSION['user_id']) {
+                if ($user->getId() != $this->httpRequest->getSession('user_id')) {
                     header('Location: '. URL_PATH.'post/list');
                 }
                 //Initialize data for edit form

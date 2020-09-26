@@ -13,11 +13,11 @@ $title='About';
             <div class="row banner_inner">
                 <div class="col-lg-5"></div>
                 <div class="col-lg-7">
-                    <div class="banner_content text-center">
-                        <h2>Nous Contacter</h2>
+                    <div class="banner_content text-center" style="background:grey;border-radius:7px;">
+                        <h2>Ma mission</h2>
                         <div class="page_link">
-                            <a href="index.html">Accueil</a>
-                            <a href="contact.html">Nous Contacter</a>
+                            <a href="<?=URL_PATH;?>home">Accueil</a>
+                            <a href="#">Détails</a>
                         </div>
                     </div>
                 </div>
@@ -53,23 +53,16 @@ $title='About';
                     <form class="row contact_form" action="contact_process.php" method="post" id="contactForm" novalidate="novalidate">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <input type="text" class="form-control" id="name" name="name" placeholder="Saisir votre nom">
-                            </div>
-                            <div class="form-group">
-                                <input type="email" class="form-control" id="email" name="email" placeholder="Votre adresse email">
-                            </div>
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="subject" name="subject" placeholder="L'objet du message">
-                            </div>
+                                <p>Développeur passionné par le monde du Web, je réalise des missions à forte valeur ajoutée en vous permettant d'avoir une meilleure visibilité. </p>
+                                <p>Au coeur des données d'entreprise depuis plusieures années, mon savoir faire vous permet d'avoir des données fiables et je les organise et les transforme en une arme puissante pour vos prises de décisions.</p>
+                            </div>                            
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <textarea class="form-control" name="message" id="message" rows="1" placeholder="Votre Message"></textarea>
+                                <p>Je vous accompagne dès la conception et la mise en place de votre base de données, je vous garantie de bonnes performances et je valorise vos données par des applications robustes et des solutions BI de très haute qualité.</p>
+                                <p>Grâce aux technologies numériques je convertis vos rêves en réalités.</p>
                             </div>
-                        </div>
-                        <div class="col-md-12 text-right">
-                            <button type="submit" value="submit" class="btn submit_btn">Envoyer Message</button>
-                        </div>
+                        </div>                        
                     </form>
                 </div>
             </div>

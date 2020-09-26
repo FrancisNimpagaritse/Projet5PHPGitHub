@@ -20,9 +20,9 @@ class CommentManager extends Model
 
         if ($isExecuteOk==false) {
             return false;
-        } else {
-            return true;
-        }
+        } 
+        
+        return true;        
     }
 
     //Find all posts

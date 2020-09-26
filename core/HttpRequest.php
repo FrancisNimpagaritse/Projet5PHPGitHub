@@ -2,54 +2,84 @@
 
 class HttpRequest
 {
-    public static function method()
+    private $post;
+    //private $get;
+
+    public function setServer($server)
     {
-        return $_SERVER['REQUEST_METHOD'];
+        $this->server = $server;
+
+        return $this;
     }
 
-    public static function postData()
+    public function method()
     {
-        return $_POST;
+        return $this->server['REQUEST_METHOD'];
     }
 
-    public static function postKeyExists($key)
+    public function getPost()
     {
-        return isset($_POST[$key]);
+        return $this->post;
     }
 
-    public static function setSession($name, $value)
+    public function setPost($post)
+    {
+        $this->post = $post;
+
+        return $this;
+    }
+
+    public function postKeyExists($key)
+    {
+        return isset($this->post[$key]);
+    }
+
+    public function getKeyExists($key)
+    {
+        return isset($_GET[$key]);
+    }
+
+    public function getGet($key)
+    {
+        return isset($_GET[$key]) ? $_GET[$key] : null;
+    }
+
+    public function setSession($name, $value)
     {
         return $_SESSION[$name] = $value;
     }
 
-    public static function getSession($name)
+    public function getSession($name)
     {
         return $_SESSION[$name];
     }
 
-    public static function sessionExists($name)
+    public function sessionExists($name)
     {
         if (isset($_SESSION[$name]))
             return true;
         else
-            return false;   
+            return false;
     }
 
-    public static function delete($name)
+    public function deleteSession($name)
     {
-        if (self::sessionExists($name))
+        if ($this->sessionExists($name))
         {
             unset($_SESSION[$name]);
         }
     }
 
-    public static function cookieData($name, $sessionVal)
+    public function setCookieData($name, $sessionVal, $duration)
     {
-        return setcookie($name, $sessionVal, time()+3600,'/','localhost',false,true);
+        return setcookie($name, $sessionVal, time()+ $duration, '/', 'localhost', false, true);
     }
 
-    public static function cookieExists()
+    public function cookieExists($name)
     {
-
+        if (isset($_COOKIE[$name]))
+            return true;
+        else
+            return false;
     }
 }
