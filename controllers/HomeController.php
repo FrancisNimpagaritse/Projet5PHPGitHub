@@ -32,14 +32,14 @@ class HomeController extends Controller
     //Send a message for contact
     public function send()
     {
-        if (isset($_POST['submit'])) {
+        if ($this->httpRequest->method() == 'POST') {
             //Validate entries 
             $validation = new Validator();
 
-            $validation->Validate(HttpRequest::postData(),[
+            $validation->Validate($this->httpRequest->getPost(),[
                 'name' => [
                     'required' => true,
-                    'min-length' => 1,
+                    'min-length' => 2,
                     'max-length' => 50,
                 ],
                 'email' => [

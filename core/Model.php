@@ -14,7 +14,7 @@ abstract class Model
             } 
             catch (Exception $e)
             {
-                die('Erreur : ' . $e->getMessage());
+                echo 'Erreur  de connection : ' . $e->getMessage();
             }        
         }
         return self::$instance;

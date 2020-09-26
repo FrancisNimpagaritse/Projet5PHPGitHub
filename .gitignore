@@ -3,3 +3,4 @@
 /vendor/*
 composer.lock
 myblog.sql
+.env

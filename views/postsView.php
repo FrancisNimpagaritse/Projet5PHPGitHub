@@ -22,7 +22,7 @@ $title='Posts';
                 <div class="col-lg-7">
                     <div class="blog_text_slider owl-carousel">
                         <div class="item">
-                            <div class="blog_text">
+                            <div class="blog_text" style="border-radius:7px;">
                                 <div class="cat">
                                     <a class="cat_btn" href="#">New</a>
                                     <a href="#"><i class="fa fa-calendar" aria-hidden="true"></i> <?='Par '.$newPost->firstname.', '. date_format(new DateTime($newPost->updatedAt),"d-m-Y H:i:s");?></a>

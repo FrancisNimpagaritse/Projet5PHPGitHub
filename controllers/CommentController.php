@@ -17,11 +17,11 @@ class CommentController extends Controller
     public function add()
     {
         //Avoid data send by GET method
-        if (HttpRequest::method() == 'POST') {
+        if ($this->httpRequest->method() == 'POST') {
             //Validate entries 
             $validation = new Validator();
 
-            $validation->Validate(HttpRequest::postData(), [
+            $validation->Validate($this->httpRequest->getPost(), [
                 'message' => [
                     'required' => true,
                     'min-length' => 1,
@@ -45,7 +45,7 @@ class CommentController extends Controller
                 //Assign values to the new user to create
                 $comment->setPostId($postid)
                         ->setMessage($message)
-                        ->setAuthorId($_SESSION['user_id']);
+                        ->setAuthorId($this->httpRequest->getSession('user_id'));
 
                 $this->commentManager->create($comment);
                 //$this->render('posts/index',['resultMessage' => $resultMessage]);
@@ -79,9 +79,11 @@ class CommentController extends Controller
 
     public function delete()
     {
-        if (Token::check('token')) {
+        $token = new Token($this->httpRequest);
+        if ($token->check('token')) {
             $commentToDelete = $this->commentManager->findById($this->id);
             $message = "Commentaire supprimé avec success";
+            
             $this->commentManager->delete($commentToDelete);
 
             $comments = $this->commentManager->findAll();

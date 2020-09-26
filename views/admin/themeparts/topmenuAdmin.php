@@ -23,10 +23,13 @@
     <ul class="navbar-nav ml-auto">
       <?php if(isset($_SESSION['user_id'])) : ?>
         <li class="nav-item">
-        <a href="#" class="nav-link" style="color:blue;"> <strong>Bienvenue <?=$_SESSION['user_firstname'];?></strong></a>
+          <a href="#" class="nav-link" style="color:blue;"> <strong>Bienvenue <?=$_SESSION['user_firstname'];?></strong></a>
         </li>
         <li class="nav-item">
-        <a href="<?=URL_PATH;?>authentication/logout" class="nav-link text-danger"><i class="fas fa-user-times"></i> Logout</a>
+          <a href="<?=URL_PATH;?>home" target="_blank" class="nav-link text-success"><i class="fas fa-eye"></i> Voir le site</a>
+        </li>
+        <li class="nav-item">
+          <a href="<?=URL_PATH;?>authentication/logout" class="nav-link text-danger"><i class="fas fa-user-times"></i> Logout</a>
         </li>
       <?php else : ?>
         <li class="nav-item">
