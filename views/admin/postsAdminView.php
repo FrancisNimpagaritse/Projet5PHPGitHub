@@ -66,13 +66,13 @@
                               <?=$post->status;?>
                               <?php if ($post->status=='attente')  //$post->id . '&token=' . $_SESSION['user']['token'];
                               { ?>
-                              <a href="<?=$_ENV['URL_PATH']?>posts/publish/<?=$post->id . '&token=' . HttpRequest::getSession('token');?>" class="btn btn-xs btn-warning mb-2">publier</a> 
+                              <a href="<?=Validator::escapingData($_ENV['URL_PATH'])?>posts/publish/<?=$post->id . '&token=' . HttpRequest::getSession('token');?>" class="btn btn-xs btn-warning mb-2">publier</a> 
                               <?php } else { ?>
-                                <a href="<?=$_ENV['URL_PATH']?>posts/unPublish/<?=$post->id . '&token=' . HttpRequest::getSession('token');?>" class="btn btn-xs btn-danger mb-2">retirer</a> 
+                                <a href="<?=Validator::escapingData($_ENV['URL_PATH'])?>posts/unPublish/<?=$post->id . '&token=' . HttpRequest::getSession('token');?>" class="btn btn-xs btn-danger mb-2">retirer</a> 
                               <?php } ?>
                              </td>                              
                             <td>
-                              <a href="<?=$_ENV['URL_PATH']?>posts/edit/<?=$post->id . '&token=' . HttpRequest::getSession('token');?>" class="btn btn-xs btn-primary mb-2"><i class="fas fa-pencil-alt"></i></a>
+                              <a href="<?=Validator::escapingData($_ENV['URL_PATH'])?>posts/edit/<?=$post->id . '&token=' . HttpRequest::getSession('token');?>" class="btn btn-xs btn-primary mb-2"><i class="fas fa-pencil-alt"></i></a>
                             </td>
                         </tr> 
                     <?php endforeach ; ?>               

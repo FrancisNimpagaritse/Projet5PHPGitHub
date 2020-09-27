@@ -11,7 +11,7 @@
     <div class="card-body login-card-body">
       <p class="login-box-msg">Veuillez remplir le formulaire pour réinitialiser votre mot de passe</p>
 
-      <form action="<?=$_ENV['URL_PATH']?>authentication/resetPassword" method="post">        
+      <form action="<?=Validator::escapingData($_ENV['URL_PATH'])?>authentication/resetPassword" method="post">        
         <div class="input-group mb-3">
           <input type="email" id="email" name="email" class="form-control <?=(!empty($data['email_error'])) ? 'is-invalid' : ''; ?>" value="<?=Validator::escapingData($data['email']);?>" placeholder="Email">
             <div class="input-group-append">
@@ -62,7 +62,7 @@
 
       <div class="row">        
         <div class="col-6">
-          <a href="<?=$_ENV['URL_PATH']?>" class="btn btn-light mt-2 text-left"><i class="fa fa-backward"></i>Retour blog</a>
+          <a href="<?=Validator::escapingData($_ENV['URL_PATH'])?>" class="btn btn-light mt-2 text-left"><i class="fa fa-backward"></i>Retour blog</a>
         </div>
       </div>
     </div>

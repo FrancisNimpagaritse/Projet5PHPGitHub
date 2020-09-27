@@ -30,7 +30,7 @@ $title='Posts';
                                 </div>
                                 <a href="#"><h4><?=$newPost->title;?></h4></a>
                                 <p><?=$newPost->content;?></p>
-                                <a class="blog_btn" href="<?=$_ENV['URL_PATH']?>posts/show/<?=$newPost->id;?>">Lire la suite</a>
+                                <a class="blog_btn" href="<?=Validator::escapingData($_ENV['URL_PATH'])?>posts/show/<?=$newPost->id;?>">Lire la suite</a>
                             </div>
                         </div>
                         <div class="item">
@@ -73,7 +73,7 @@ $title='Posts';
                         <!-- Popular -->
                         <article class="blog_style1">
                             <div class="blog_img">
-                                <img class="img-fluid" src="<?=$_ENV['URL_PATH']?>public/visitor/img/blogposts/blog-Populaire.jpg" alt="">
+                                <img class="img-fluid" src="<?=Validator::escapingData($_ENV['URL_PATH'])?>public/visitor/img/blogposts/blog-Populaire.jpg" alt="">
                             </div>
                             <div class="blog_text">
                                 
@@ -85,7 +85,7 @@ $title='Posts';
                                     </div>
                                     <a href="#"><h4><?=$popularOne->title;?></h4></a>
                                     <p><?=$popularOne->content;?></p>
-                                    <a class="blog_btn" href="<?=$_ENV['URL_PATH']?>posts/show/<?=$popularOne->id;?>">Lire la suite</a>
+                                    <a class="blog_btn" href="<?=Validator::escapingData($_ENV['URL_PATH'])?>posts/show/<?=$popularOne->id;?>">Lire la suite</a>
                                 </div>
                                 
                             </div>
@@ -109,7 +109,7 @@ $title='Posts';
                                                 </div>
                                                 <a href="#"><h4><?=$post->title;?></h4></a>
                                                 <p><?=$post->content;?></p>
-                                                <a class="blog_btn" href="<?=$_ENV['URL_PATH']?>posts/show/<?=$post->id;?>">Lire la suite</a>
+                                                <a class="blog_btn" href="<?=Validator::escapingData($_ENV['URL_PATH'])?>posts/show/<?=$post->id;?>">Lire la suite</a>
                                             </div>
                                         </div>
                                     </article>

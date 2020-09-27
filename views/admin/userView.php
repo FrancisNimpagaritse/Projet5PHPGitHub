@@ -57,8 +57,8 @@
                             <td><?=$user->getNewpwd();?></td>
                             <td><?=date_format(new DateTime($user->getUpdatedAt()),"d-m-Y H:i:s");?></td>
                             <td>
-                            <a href="<?=$_ENV['URL_PATH']?>user/edit/<?=$user->getId() . '&token=' . $_SESSION['user']['token'];?>" class="btn btn-primary mb-2"><i class="fas fa-pencil-alt"></i></a> 
-                            <a href="<?=$_ENV['URL_PATH']?>user/delete/<?=$user->getId() . '&token=' . $_SESSION['user']['token'];?>" class="btn btn-danger mb-2"><i class="far fa-trash-alt"></i></a>
+                            <a href="<?=Validator::escapingData($_ENV['URL_PATH'])?>user/edit/<?=$user->getId() . '&token=' . $_SESSION['user']['token'];?>" class="btn btn-primary mb-2"><i class="fas fa-pencil-alt"></i></a> 
+                            <a href="<?=Validator::escapingData($_ENV['URL_PATH'])?>user/delete/<?=$user->getId() . '&token=' . $_SESSION['user']['token'];?>" class="btn btn-danger mb-2"><i class="far fa-trash-alt"></i></a>
                             </td>
                         </tr>
                     <?php endforeach ; ?>
