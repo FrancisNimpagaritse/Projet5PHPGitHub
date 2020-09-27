@@ -1,5 +1,7 @@
 {
     "require": {
-        "twig/twig": "^3.0"
+        "twig/twig": "^3.0",
+        "symfony/polyfill-mbstring": "v1.17",
+        "vlucas/phpdotenv": "v5.1.0"
     }
 }

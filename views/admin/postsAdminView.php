@@ -11,7 +11,7 @@
           <div class="col-sm-6">
             <h4>Gestion des posts</h4>            
                 <?php              
-                if(isset($_GET['success'])) {                  
+                if($this->httpRequest->getKeyExists('success')) {                  
                   echo '<div class="col-md-6 col-md-offset-3 alert alert-success text-center">Post mis à jour avec succès</div>';
                 }
                 ?>
@@ -66,13 +66,13 @@
                               <?=$post->status;?>
                               <?php if ($post->status=='attente')  //$post->id . '&token=' . $_SESSION['user']['token'];
                               { ?>
-                              <a href="<?=URL_PATH;?>posts/publish/<?=$post->id . '&token=' . HttpRequest::getSession('token');?>" class="btn btn-xs btn-warning mb-2">publier</a> 
+                              <a href="<?=$_ENV['URL_PATH']?>posts/publish/<?=$post->id . '&token=' . HttpRequest::getSession('token');?>" class="btn btn-xs btn-warning mb-2">publier</a> 
                               <?php } else { ?>
-                                <a href="<?=URL_PATH;?>posts/unPublish/<?=$post->id . '&token=' . HttpRequest::getSession('token');?>" class="btn btn-xs btn-danger mb-2">retirer</a> 
+                                <a href="<?=$_ENV['URL_PATH']?>posts/unPublish/<?=$post->id . '&token=' . HttpRequest::getSession('token');?>" class="btn btn-xs btn-danger mb-2">retirer</a> 
                               <?php } ?>
                              </td>                              
                             <td>
-                              <a href="<?=URL_PATH;?>posts/edit/<?=$post->id . '&token=' . HttpRequest::getSession('token');?>" class="btn btn-xs btn-primary mb-2"><i class="fas fa-pencil-alt"></i></a>
+                              <a href="<?=$_ENV['URL_PATH']?>posts/edit/<?=$post->id . '&token=' . HttpRequest::getSession('token');?>" class="btn btn-xs btn-primary mb-2"><i class="fas fa-pencil-alt"></i></a>
                             </td>
                         </tr> 
                     <?php endforeach ; ?>               

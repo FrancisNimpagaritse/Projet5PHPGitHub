@@ -1,7 +1,7 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="../../index3.html" class="brand-link">
-      <img src="<?=URL_PATH;?>views/admin/myImage/softwaredev1.png"
+      <img src="<?=$_ENV['URL_PATH']?>views/admin/myImage/softwaredev1.png"
            alt="Logo"
            class="brand-image img-circle elevation-3"
            style="opacity: .8">
@@ -13,7 +13,7 @@
       <!-- Sidebar user (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="<?=URL_PATH;?>views/admin/myImage/francis-01.png" class="img-circle elevation-2" alt="User Image">
+          <img src="<?=$_ENV['URL_PATH']?>views/admin/myImage/francis-01.png" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
           <a href="#" class="d-block"><?=$_SESSION['user_firstname'];?></a>
@@ -26,7 +26,7 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->         
           <li class="nav-item">
-            <a href="<?=URL_PATH;?>homeAdmin" class="nav-link">
+            <a href="<?=$_ENV['URL_PATH']?>homeAdmin" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
               <p>
                 Accueil                
@@ -43,7 +43,7 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="<?=URL_PATH;?>user/index" class="nav-link">
+                <a href="<?=$_ENV['URL_PATH']?>user/index" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Liste des utilisateurs</p>
                 </a>
@@ -60,13 +60,13 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="<?=URL_PATH;?>posts/list" class="nav-link">
+                <a href="<?=$_ENV['URL_PATH']?>posts/list" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Liste des posts</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="<?=URL_PATH;?>posts/add" class="nav-link">
+                <a href="<?=$_ENV['URL_PATH']?>posts/add" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Créer un post</p>
                 </a>
@@ -83,7 +83,7 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="<?=URL_PATH;?>comment/index" class="nav-link">
+                <a href="<?=$_ENV['URL_PATH']?>comment/index" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Liste commentaires</p>
                 </a>

@@ -25,9 +25,9 @@
                     </div>
                     <div class="col-lg-3 col-md-6 col-sm-6">
                         <?php if(isset($_SESSION['user_id'])) : ?>
-                            <a class="btn btn-primary" href="<?=URL_PATH;?>authentication/logout">Logout</a>
+                            <a class="btn btn-primary" href="<?=$_ENV['URL_PATH']?>authentication/logout">Logout</a>
                         <?php else : ?>									
-                            <a class="btn btn-primary" href="<?=URL_PATH;?>authentication/login">Login</a>								
+                            <a class="btn btn-primary" href="<?=$_ENV['URL_PATH']?>authentication/login">Login</a>								
                         <?php endif ; ?>                        
                     </div>	
                     <div class="col-lg-2 col-md-6 col-sm-6">

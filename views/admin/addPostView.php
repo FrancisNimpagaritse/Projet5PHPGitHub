@@ -34,7 +34,7 @@
               </div>
               <!-- /.card-header -->
               <!-- form start -->
-              <form role="form" action="<?=URL_PATH;?>posts/add" method="post">
+              <form role="form" action="<?=$_ENV['URL_PATH']?>posts/add" method="post">
                 <div class="card-body">
                   <div class="form-group">
                     <label for="title">title <sup>*</sup></label>

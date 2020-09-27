@@ -49,9 +49,9 @@ class CommentController extends Controller
 
                 $this->commentManager->create($comment);
                 //$this->render('posts/index',['resultMessage' => $resultMessage]);
-                header('Location: '. URL_PATH.'posts/index?success');
+                header('Location: ' . $_ENV['URL_PATH'] . 'posts/index?success');
             } else {
-                header('Location: '. URL_PATH.'posts/index?error');
+                header('Location: ' . $_ENV['URL_PATH'] . 'posts/index?error');
             }
         }
     }

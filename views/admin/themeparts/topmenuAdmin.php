@@ -21,22 +21,22 @@
     
     <!-- Right navbar Login & links -->
     <ul class="navbar-nav ml-auto">
-      <?php if(isset($_SESSION['user_id'])) : ?>
+      <?php if($this->httpRequest->sessionExists('user_id')) : ?>
         <li class="nav-item">
           <a href="#" class="nav-link" style="color:blue;"> <strong>Bienvenue <?=$_SESSION['user_firstname'];?></strong></a>
         </li>
         <li class="nav-item">
-          <a href="<?=URL_PATH;?>home" target="_blank" class="nav-link text-success"><i class="fas fa-eye"></i> Voir le site</a>
+          <a href="<?=$_ENV['URL_PATH']?>home" target="_blank" class="nav-link text-success"><i class="fas fa-eye"></i> Voir le site</a>
         </li>
         <li class="nav-item">
-          <a href="<?=URL_PATH;?>authentication/logout" class="nav-link text-danger"><i class="fas fa-user-times"></i> Logout</a>
+          <a href="<?=$_ENV['URL_PATH']?>authentication/logout" class="nav-link text-danger"><i class="fas fa-user-times"></i> Logout</a>
         </li>
       <?php else : ?>
         <li class="nav-item">
-            <a href="<?=URL_PATH;?>user/register" class="nav-link text-primary"><i class="fas fa-user"></i> S'inscrire</a>
+            <a href="<?=$_ENV['URL_PATH']?>user/register" class="nav-link text-primary"><i class="fas fa-user"></i> S'inscrire</a>
         </li>
         <li class="nav-item">
-            <a href="<?=URL_PATH;?>authentication/login" class="nav-link text-success"><i class="fas fa-user"></i> Login</a>
+            <a href="<?=$_ENV['URL_PATH']?>authentication/login" class="nav-link text-success"><i class="fas fa-user"></i> Login</a>
         </li>    
       <?php endif ; ?>
       <!-- Notifications Dropdown Menu -->

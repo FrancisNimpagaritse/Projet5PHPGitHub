@@ -3,15 +3,17 @@
 session_start();
 
 //Load Config file
-require_once 'config/config.php';
+require_once realpath(dirname(__DIR__, 1).'/vendor/autoload.php');
+require_once 'config/Config.php';
 require_once 'HttpRequest.php';
 require_once 'Token.php';
 require_once 'Validator.php';
 
 //Load base controller
-require_once(APPROOT_REQUIRE.'core/Controller.php');
+$config = new Config();
+require_once($_ENV['APPROOT_REQUIRE'].'core/Controller.php');
+//print_r($_ENV); die();
 $request = new HttpRequest();
-
 if (!$request->getKeyExists('uc')) {
     $url[0] = "home";
 } else {
@@ -41,5 +43,5 @@ try {
     $controller->$action();
 
 } catch(Exception $e) {    
-    header('Location: '. URL_PATH.'home/page404');
+    header('Location: '. $_ENV['URL_PATH'].'home/page404');
 }

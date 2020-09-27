@@ -15,7 +15,7 @@ class Token
 
     public function check($token)
     {
-        $tokenName=$this->request->getGet('token');//check well the Config class and its get method;
+        $tokenName=$this->request->getGet('token');
 
         if ( $this->request->sessionExists($token) && $tokenName == $this->request->getSession($token)) {
             $this->request->delete($tokenName);

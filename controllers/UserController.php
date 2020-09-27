@@ -85,7 +85,7 @@ class UserController extends Controller
                                         
                 //insert into db using manager's create method
                 $this->userManager->create($user);
-                header('Location: '. URL_PATH.'user/login');
+                header('Location: ' . $_ENV['URL_PATH'] . 'user/login');
             } else {                    
                 $data = [
                     'firstname' => $firstname,
@@ -127,7 +127,7 @@ class UserController extends Controller
         
         if ($token->check('token')) {
 
-            if (isset($_POST['submit'])) {
+            if ($this->httpRequest->method() == 'POST') {
                 
                 //Validate entries 
                 $validation = new Validator();
@@ -178,7 +178,7 @@ class UserController extends Controller
                     //insert into db using manager's create method
                     $this->userManager->update($userToUpdate);     
                 
-                    header('Location: '. URL_PATH.'user/index');
+                    header('Location: ' . $_ENV['URL_PATH'] . 'user/index');
                 } else {
                     //Initialize data
                     $data = [
@@ -204,7 +204,7 @@ class UserController extends Controller
                 //Check for ownership
                 if ($user->getId() != $this->httpRequest->getSession('user_id')){
                     //TO BE USED FOR posts
-                    header('Location: '. URL_PATH.'user/index');
+                    header('Location: ' . $_ENV['URL_PATH'] . 'user/index');
                 }
                 //Initialize data for edit form
                 $data = [
@@ -239,7 +239,7 @@ class UserController extends Controller
             if (!$isDeleteOk) {
                 die('Impossible de supprimer l\'élémént!');
             } else {
-                header('Location: '. URL_PATH.'user/index');
+                header('Location: ' . $_ENV['URL_PATH'] . 'user/index');
             }
         }
     }
