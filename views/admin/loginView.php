@@ -11,7 +11,7 @@
     <div class="card-body login-card-body">
       <p class="login-box-msg">Entrez vos identifiants</p>
 
-      <form action="<?=URL_PATH?>authentication/login" method="post">
+      <form action="<?=$_ENV['URL_PATH']?>authentication/login" method="post">
         <div class="input-group mb-3">
           <input type="email" id="email" name="email" class="form-control <?=(!empty($data['email_error'])) ? 'is-invalid' : ''; ?>" value="<?php if ($this->httpRequest->cookieExists("email")) { echo Validator::escapingData($this->httpRequest->getCookieData(["email"])); } else { echo Validator::escapingData($data['email']);} ?>" placeholder="Email">
             <div class="input-group-append">
@@ -47,7 +47,7 @@
           <!-- /.col -->
           <div class="col">
             <p></p>
-            <a href="<?=URL_PATH;?>user/register" class="btn btn-danger btn-block">Pas inscrit? S'inscrire
+            <a href="<?=$_ENV['URL_PATH'];?>user/register" class="btn btn-danger btn-block">Pas inscrit? S'inscrire
             </a>
           </div>
         </div>
@@ -57,10 +57,10 @@
       </div>
       <div class="row">
         <div class="col-6">
-          <a href="<?=URL_PATH;?>authentication/forgotPassword" class="btn btn-light mt-2">Password oublié</a>
+          <a href="<?=$_ENV['URL_PATH'];?>authentication/forgotPassword" class="btn btn-light mt-2">Password oublié</a>
         </div>
         <div class="col-6">
-          <a href="<?=URL_PATH;?>" class="btn btn-light mt-2 text-left"><i class="fa fa-backward"></i>Retour blog</a>
+          <a href="<?=$_ENV['URL_PATH'];?>" class="btn btn-light mt-2 text-left"><i class="fa fa-backward"></i>Retour blog</a>
         </div>
       </div>
     </div>

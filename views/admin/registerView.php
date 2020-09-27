@@ -11,7 +11,7 @@
     <div class="card-body login-card-body">
       <p class="login-box-msg">Veuillez remplir le formulaire pour vous inscrire</p>
 
-      <form action="<?=URL_PATH ?>user/register" method="post">
+      <form action="<?=$_ENV['URL_PATH']?>user/register" method="post">
         <div class="input-group mb-3">
           <input type="text" id="firstname" name="firstname" class="form-control <?=(!empty($data['firstname_error'])) ? 'is-invalid' : '';?>" value="<?=Validator::escapingData($data['firstname']);?>" placeholder="Prénom">
             <div class="input-group-append">
@@ -59,7 +59,7 @@
 
         <div class="row">
           <div class="col-8">            
-            <a href="<?=URL_PATH;?>authentication/login" class="btn btn-success">Déjà inscrit? Connexion
+            <a href="<?=$_ENV['URL_PATH']?>authentication/login" class="btn btn-success">Déjà inscrit? Connexion
             </a>
           </div>
           <!-- /.col -->
@@ -82,7 +82,7 @@
 
       <div class="row">        
         <div class="col-6">
-          <a href="<?=URL_PATH;?>" class="btn btn-light mt-2 text-left"><i class="fa fa-backward"></i>Retour blog</a>
+          <a href="<?=$_ENV['URL_PATH']?>" class="btn btn-light mt-2 text-left"><i class="fa fa-backward"></i>Retour blog</a>
         </div>
       </div>
     </div>

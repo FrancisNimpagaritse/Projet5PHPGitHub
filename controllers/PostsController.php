@@ -36,7 +36,7 @@ class PostsController extends Controller
 
         $post = $this->postManager->showOneById($this->id);
         if (!$post) {
-            header('Location: '. URL_PATH.'home/page404');
+            header('Location: ' . $_ENV['URL_PATH'] . 'home/page404');
         }
         $comments = $this->commentManager->findCommentsByPost($this->id);
         $this->render('show',['post'=>$post, 'comments'=>$comments]);
@@ -104,7 +104,7 @@ class PostsController extends Controller
                 //insert into db using manager's create method
                 $this->postManager->create($post);
             
-                header('Location: '. URL_PATH.'posts/list?success');
+                header('Location: ' . $_ENV['URL_PATH'] . 'posts/list?success');
 
             } else {
                 $data = [
@@ -148,7 +148,7 @@ class PostsController extends Controller
         
         $this->postManager->publishOne($postToPublish);
 
-        header('Location: '. URL_PATH.'posts/list?success');
+        header('Location: ' . $_ENV['URL_PATH'] . 'posts/list?success');
     }
 
     public function unPublish()
@@ -158,7 +158,7 @@ class PostsController extends Controller
 
         $this->postManager->unPublishOne($postToUnpublish);
 
-        header('Location: '. URL_PATH.'posts/list?success');
+        header('Location: ' . $_ENV['URL_PATH'] . 'posts/list?success');
     }
     
     public function edit()
@@ -223,7 +223,7 @@ class PostsController extends Controller
 
                     $this->postManager->update($postToUpdate);
                         
-                    header('Location: '. URL_PATH.'posts/list?success');
+                    header('Location: ' . $_ENV['URL_PATH'] . 'posts/list?success');
 
                 } else {
                     $data = [
@@ -247,7 +247,7 @@ class PostsController extends Controller
 
                 //Check for ownership
                 if ($user->getId() != $this->httpRequest->getSession('user_id')) {
-                    header('Location: '. URL_PATH.'post/list');
+                    header('Location: ' . $_ENV['URL_PATH'] . 'post/list');
                 }
                 //Initialize data for edit form
                 $data = [

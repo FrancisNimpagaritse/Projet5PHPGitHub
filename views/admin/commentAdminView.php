@@ -62,13 +62,13 @@
                               <?=$comment->status;?>
                               <?php if ($comment->status=='attente')
                               { ?>
-                              <a href="<?=URL_PATH;?>comment/publish/<?=$comment->id . '&token=' . $this->httpRequest->getSession('token');?>" class="btn btn-xs btn-warning mb-2">publier</a> 
+                              <a href="<?=$_ENV['URL_PATH']?>comment/publish/<?=$comment->id . '&token=' . $this->httpRequest->getSession('token');?>" class="btn btn-xs btn-warning mb-2">publier</a> 
                               <?php } else { ?>
-                                <a href="<?=URL_PATH;?>comment/unPublish/<?=$comment->id . '&token=' . $this->httpRequest->getSession('token');?>" class="btn btn-xs btn-danger mb-2">retirer</a> 
+                                <a href="<?=$_ENV['URL_PATH']?>comment/unPublish/<?=$comment->id . '&token=' . $this->httpRequest->getSession('token');?>" class="btn btn-xs btn-danger mb-2">retirer</a> 
                               <?php } ?>
                              </td>                              
                             <td>
-                              <a href="<?=URL_PATH;?>comment/delete/<?=$comment->id . '&token=' . $this->httpRequest->getSession('token');?>" class="btn btn-xs btn-danger mb-2"><i class="far fa-trash-alt"></i></a>
+                              <a href="<?=$_ENV['URL_PATH']?>comment/delete/<?=$comment->id . '&token=' . $this->httpRequest->getSession('token');?>" class="btn btn-xs btn-danger mb-2"><i class="far fa-trash-alt"></i></a>
                             </td>
                         </tr> 
                     <?php endforeach ; ?>               

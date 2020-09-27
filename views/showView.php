@@ -15,7 +15,7 @@ ob_start();
 						<div class="banner_content text-center">
 							<h2>Détails du Blog Post </h2>
 							<div class="page_link">
-								<a href="<?=URL_PATH;?>home">Accueil</a>
+								<a href="<?=$_ENV['URL_PATH']?>home">Accueil</a>
 								<a href="#">Post Details</a>
 							</div>
 						</div>
@@ -32,7 +32,7 @@ ob_start();
                 <div class="row">
                     <div class="col-lg-8">
        					<div class="main_blog_details">
-       						<img class="img-fluid" src="<?=URL_PATH;?>public/visitor/img/blog/news-blog.jpg" alt="">
+       						<img class="img-fluid" src="<?=$_ENV['URL_PATH']?>public/visitor/img/blog/news-blog.jpg" alt="">
        						<a href="#"><h4><?=$post->title;?> <br /> A Discount Toner</h4></a>
        						<div class="user_details">
        							<div class="float-left">
@@ -46,7 +46,7 @@ ob_start();
        										<p><?=date_format(new DateTime($post->updatedAt),"d-m-Y H:i:s");?></p>
        									</div>
        									<div class="d-flex">
-       										<img src="<?=URL_PATH;?>public/visitor/img/blog/user-img.jpg" alt="">
+       										<img src="<?=$_ENV['URL_PATH']?>public/visitor/img/blog/user-img.jpg" alt="">
        									</div>
        								</div>
        							</div>
@@ -71,7 +71,7 @@ ob_start();
                                         <div class="single-comment justify-content-between d-flex">
                                             <div class="user justify-content-between d-flex">
                                                 <div class="thumb">
-                                                    <img src="<?=URL_PATH;?>public/visitor/img/blog/c1.jpg" alt="">
+                                                    <img src="<?=$_ENV['URL_PATH']?>public/visitor/img/blog/c1.jpg" alt="">
                                                 </div>
                                                 <div class="desc">
                                                     <h5><a href="#"><?=$comment->firstname.' '.$comment->lastname;?></a></h5>
@@ -91,7 +91,7 @@ ob_start();
                         </div>
                         <div class="comment-form">
                             <h4>Laissez votre commentaire</h4>
-                            <form action="<?=URL_PATH;?>comment/add" method="POST">
+                            <form action="<?=$_ENV['URL_PATH']?>comment/add" method="POST">
                                 <div class="form-group form-inline">
                                   <div class="form-group col-lg-6 col-md-6 name">
                                     <input type="text" class="form-control" id="name" placeholder="Votre prénom" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Votre prénom'" required>
@@ -110,7 +110,7 @@ ob_start();
                                         <button type="submit" class="primary-btn submit_btn">Poster Commentaire</button>
                                     <!-- Button trigger modal -->
                                 <?php } else { ?>                                    
-                                    <a class="btn btn-dark" href="<?=URL_PATH;?>authentication/login">Connectez-vous pour commenter</a>
+                                    <a class="btn btn-dark" href="<?=$_ENV['URL_PATH']?>authentication/login">Connectez-vous pour commenter</a>
                                 <?php } ?>
                                 	
                             </form>
@@ -128,7 +128,7 @@ ob_start();
                                 <div class="br"></div>
                             </aside>
                             <aside class="single_sidebar_widget author_widget">
-                                <img class="author_img img-fluid" src="<?=URL_PATH;?>public/visitor/img/blog/author.png" alt="">
+                                <img class="author_img img-fluid" src="<?=$_ENV['URL_PATH']?>public/visitor/img/blog/author.png" alt="">
                                 <h4>François Nimpagaritse</h4>
                                 <p>Auteur du blog</p>
                                 

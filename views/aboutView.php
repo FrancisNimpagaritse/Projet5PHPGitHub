@@ -16,7 +16,7 @@ $title='About';
                     <div class="banner_content text-center" style="background:grey;border-radius:7px;">
                         <h2>Ma mission</h2>
                         <div class="page_link">
-                            <a href="<?=URL_PATH;?>home">Accueil</a>
+                            <a href="<?=$_ENV['URL_PATH']?>home">Accueil</a>
                             <a href="#">Détails</a>
                         </div>
                     </div>

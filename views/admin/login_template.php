@@ -5,11 +5,11 @@
 <?=$content;?>
 
 <!-- jQuery -->
-<script src="<?=URL_PATH;?>public/admin/plugins/jquery/jquery.min.js"></script>
+<script src="<?=$_ENV['URL_PATH']?>public/admin/plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
-<script src="<?=URL_PATH;?>public/admin/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="<?=$_ENV['URL_PATH']?>public/admin/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
-<script src="<?=URL_PATH;?>public/admin/dist/js/adminlte.min.js"></script>
+<script src="<?=$_ENV['URL_PATH']?>public/admin/dist/js/adminlte.min.js"></script>
 
 </body>
 </html>
