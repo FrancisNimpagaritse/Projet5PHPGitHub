@@ -18,7 +18,6 @@ class Token
         $tokenName=$this->request->getGet('token');
 
         if ( $this->request->sessionExists($token) && $tokenName == $this->request->getSession($token)) {
-            $this->request->delete($tokenName);
             return true;
         } else {
             return false;

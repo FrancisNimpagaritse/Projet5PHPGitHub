@@ -34,7 +34,7 @@
               </div>
               <!-- /.card-header -->
               <!-- form start -->
-              <form role="form" action="<?=$_ENV['URL_PATH']?>posts/edit/<?=Validator::escapingData($data['id']). '&token=' . $this->httpRequest->getSession('token');?>" method="post">
+              <form role="form" action="<?=Validator::escapingData($_ENV['URL_PATH'])?>posts/edit/<?=Validator::escapingData($data['id']). '&token=' . $this->httpRequest->getSession('token');?>" method="post">
                 <div class="card-body">
                   <div class="form-group">
                     <label for="title">title <sup>*</sup></label>

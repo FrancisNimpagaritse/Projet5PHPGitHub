@@ -32,7 +32,7 @@
               <div class="icon">
                 <i class="ion ion-bag"></i>
               </div>
-              <a href="<?=$_ENV['URL_PATH']?>posts/list" class="small-box-footer">voir <i class="fas fa-arrow-circle-right"></i></a>
+              <a href="<?=Validator::escapingData($_ENV['URL_PATH'])?>posts/list" class="small-box-footer">voir <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <!-- ./col -->
@@ -47,7 +47,7 @@
               <div class="icon">
                 <i class="ion ion-stats-bars"></i>
               </div>
-              <a href="<?=$_ENV['URL_PATH']?>comment/index" class="small-box-footer">voir <i class="fas fa-arrow-circle-right"></i></a>
+              <a href="<?=Validator::escapingData($_ENV['URL_PATH'])?>comment/index" class="small-box-footer">voir <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <!-- ./col -->
@@ -62,7 +62,7 @@
               <div class="icon">
                 <i class="ion ion-person-add"></i>
               </div>
-              <a href="<?=$_ENV['URL_PATH']?>user/index" class="small-box-footer">voir <i class="fas fa-arrow-circle-right"></i></a>
+              <a href="<?=Validator::escapingData($_ENV['URL_PATH'])?>user/index" class="small-box-footer">voir <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>          
         </div>
@@ -78,7 +78,7 @@
               <div class="icon">
                 <i class="ion ion-bag"></i>
               </div>
-              <a href="<?=$_ENV['URL_PATH']?>posts/list" class="small-box-footer">voir <i class="fas fa-arrow-circle-right"></i></a>
+              <a href="<?=Validator::escapingData($_ENV['URL_PATH'])?>posts/list" class="small-box-footer">voir <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <!-- ./col -->
@@ -93,7 +93,7 @@
               <div class="icon">
                 <i class="ion ion-stats-bars"></i>
               </div>
-              <a href="<?=$_ENV['URL_PATH']?>comment/index" class="small-box-footer">voir <i class="fas fa-arrow-circle-right"></i></a>
+              <a href="<?=Validator::escapingData($_ENV['URL_PATH'])?>comment/index" class="small-box-footer">voir <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <!-- ./col -->
@@ -108,7 +108,7 @@
               <div class="icon">
                 <i class="ion ion-person-add"></i>
               </div>
-              <a href="<?=$_ENV['URL_PATH']?>user/index" class="small-box-footer">voir <i class="fas fa-arrow-circle-right"></i></a>
+              <a href="<?=Validator::escapingData($_ENV['URL_PATH'])?>user/index" class="small-box-footer">voir <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>          
         </div>
@@ -124,7 +124,7 @@
               <div class="icon">
                 <i class="ion ion-bag"></i>
               </div>
-              <a href="<?=$_ENV['URL_PATH']?>posts/list" class="small-box-footer">voir <i class="fas fa-arrow-circle-right"></i></a>
+              <a href="<?=Validator::escapingData($_ENV['URL_PATH'])?>posts/list" class="small-box-footer">voir <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <!-- ./col -->
@@ -139,7 +139,7 @@
               <div class="icon">
                 <i class="ion ion-stats-bars"></i>
               </div>
-              <a href="<?=$_ENV['URL_PATH']?>comment/index" class="small-box-footer">voir <i class="fas fa-arrow-circle-right"></i></a>
+              <a href="<?=Validator::escapingData($_ENV['URL_PATH'])?>comment/index" class="small-box-footer">voir <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <!-- ./col -->
@@ -154,7 +154,7 @@
               <div class="icon">
                 <i class="ion ion-person-add"></i>
               </div>
-              <a href="<?=$_ENV['URL_PATH']?>user/index" class="small-box-footer">voir <i class="fas fa-arrow-circle-right"></i></a>
+              <a href="<?=Validator::escapingData($_ENV['URL_PATH'])?>user/index" class="small-box-footer">voir <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>         
         </div>        

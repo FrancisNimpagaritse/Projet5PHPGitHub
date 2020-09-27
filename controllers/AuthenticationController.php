@@ -87,10 +87,8 @@ class AuthenticationController extends Controller
     }
     
     public function logout()
-    {
-        setcookie('user_id','',time()-3600);
+    {        
         $this->httpRequest->setCookieData('user_id', $this->httpRequest->getSession('user_id'), -3600);
-        setcookie('user_firstname','',time()-3600);
         $this->httpRequest->setCookieData('user_firstname', $this->httpRequest->getSession('user_firstname'), -3600);
         $this->httpRequest->deleteSession('user_id');
         $this->httpRequest->deleteSession('user_firstname');
