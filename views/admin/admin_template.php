@@ -1,12 +1,13 @@
 <?php
 
-  if(!isset($_SESSION['user_id']) && !isset($_COOKIE['user_firstname'])) {
+  if(!$this->httpRequest->sessionExists('user_id') && !$this->httpRequest->cookieExists('user_firstname')) {
     header('Location: '. URL_PATH.'authentication/login');
       exit();
   }
   
-  $_SESSION['user_firstname'] = (isset($_COOKIE['user_firstname']) && !empty($_COOKIE['user_firstname'])) ? $_COOKIE['user_firstname'] : $_SESSION['user_firstname'];
-  ?>
+  $this->httpRequest->setSession('user_firstname', $this->httpRequest->cookieExists('user_firstname') ? $this->httpRequest->getCookieData('user_firstname') : $this->httpRequest->getSession('user_firstname'));
+  
+?>
 
 <!DOCTYPE html>
 <html>

@@ -82,4 +82,10 @@ class HttpRequest
         else
             return false;
     }
+
+    public function getCookieData($name)
+    {
+        return $_COOKIE[$name];
+    }
+
 }
