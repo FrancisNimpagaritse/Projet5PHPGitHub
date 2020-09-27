@@ -9,9 +9,9 @@ $title='Posts';
 
         <!--================Home Banner Area =================-->
         <?php               
-                if (isset($_GET['success']) && isset($_SESSION['user_id'])) {
+                if ($this->httpRequest->getKeyExists('success') && $this->httpRequest->sessionExists('user_id')) {
                   echo '<div class="col-md-6 col-md-offset-3 alert alert-success text-center">Votre commentaire a bien été enregistré</div>';
-                } else if (isset($_GET['error'])){
+                } else if ($this->httpRequest->getKeyExists('error')){
                     echo '<div class="col-md-6 col-md-offset-3 alert alert-danger text-center">Votre commentaire n\'a pas été enregistré</div>';
                 }
         ?>

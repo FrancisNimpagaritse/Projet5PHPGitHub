@@ -13,7 +13,7 @@
 
       <form action="<?=URL_PATH?>authentication/login" method="post">
         <div class="input-group mb-3">
-          <input type="email" id="email" name="email" class="form-control <?=(!empty($data['email_error'])) ? 'is-invalid' : ''; ?>" value="<?php if (isset($_COOKIE["email"])) { echo Validator::escapingData($_COOKIE["email"]); } else { echo Validator::escapingData($data['email']);} ?>" placeholder="Email">
+          <input type="email" id="email" name="email" class="form-control <?=(!empty($data['email_error'])) ? 'is-invalid' : ''; ?>" value="<?php if ($this->httpRequest->cookieExists("email")) { echo Validator::escapingData($this->httpRequest->getCookieData(["email"])); } else { echo Validator::escapingData($data['email']);} ?>" placeholder="Email">
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-envelope"></span>

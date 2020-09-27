@@ -177,7 +177,7 @@ class AuthenticationController extends Controller
     {       
         if ($this->httpRequest->getKeyExists('token')) {
             //Check if user with that token exists in db
-            $userWithToken = $this->userManager->findByToken($_GET['token']);
+            $userWithToken = $this->userManager->findByToken($this->httpRequest->getGet('token'));
             
             if ($userWithToken) {
             //Initialize data
@@ -234,9 +234,11 @@ class AuthenticationController extends Controller
             $confirm_password = $cleanData['confirm_password'];
 
             //Check if that email exists in db valable en registration
-            $errors = $validation->getErrors();            
+            $errors = $validation->getErrors();
             
-            $userToUpdate = $this->userManager->findByToken($_POST['token']); 
+            if(!$this->httpRequest->getGet('token')) {
+                $userToUpdate = $this->userManager->findByToken($this->httpRequest->getGet('token')); //$_POST['token']
+            }
                 
             if (!$userToUpdate) {
                 //User not found
@@ -249,7 +251,7 @@ class AuthenticationController extends Controller
                 
                 //Validate
                 $userToUpdate->setPassword($pass_hash)
-                                ->setToken($_POST['token'])
+                                ->setToken($this->httpRequest->getGet('token'))
                                 ->setUpdatedAt(date("Y-m-d H:i:s"));
                     
                 //update paswword & token in db
@@ -263,7 +265,7 @@ class AuthenticationController extends Controller
                     'email' => $email,
                     'password' => $password,
                     'confirm_password' => $confirm_password,
-                    'token' => $_POST['token'],
+                    'token' => $this->httpRequest->getGet('token'),
                     'email_error' => $errors['email'] ?? '',
                     'password_error' => $errors['password'] ?? '',
                     'confirm_password_error' => $errors['confirm_password'] ?? '',
