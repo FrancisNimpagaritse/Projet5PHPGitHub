@@ -237,7 +237,7 @@ class UserController extends Controller
             $isDeleteOk = $userManager->delete($user);
 
             if (!$isDeleteOk) {
-                die('Impossible de supprimer l\'élémént!');
+                echo 'Impossible de supprimer l\'élémént!';
             } else {
                 header('Location: ' . $_ENV['URL_PATH'] . 'user/index');
             }
