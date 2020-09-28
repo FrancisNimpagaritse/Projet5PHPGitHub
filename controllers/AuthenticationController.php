@@ -54,11 +54,11 @@ class AuthenticationController extends Controller
                 }
 
                 if ($this->httpRequest->getSession('profile') == 'admin') {
-                    header('Location: '. $_ENV['URL_PATH'].'Homeadmin');
+                    header('Location: '. $this->env['URL_PATH'].'Homeadmin');
                     return;
                 }                          
                 
-                header('Location: ' . $_ENV['URL_PATH'] . 'posts');
+                header('Location: ' . $this->env['URL_PATH'] . 'posts');
                                 
             } else {
                 
@@ -97,7 +97,7 @@ class AuthenticationController extends Controller
         
         session_destroy();
         
-        header('Location: ' . $_ENV['URL_PATH'] . 'authentication/login'); 
+        header('Location: ' . $this->env['URL_PATH'] . 'authentication/login'); 
     }
 
     public function forgotPassword()
@@ -138,7 +138,7 @@ class AuthenticationController extends Controller
             if(!$errors) { 
                 //Generate a random token
                 $token = uniqid();
-                $url = 'http://monblog.franimpa.fr' . $_ENV['URL_PATH'] . "authentication/resetStart?token=".$token;
+                $url = 'http://monblog.franimpa.fr' . $this->env['URL_PATH'] . "authentication/resetStart?token=".$token;
                 
                 //Email data
                 $message = "Bonjour, voici le lien pour réinitialiser votre mot de passe. Cliquez-le: ". $url;
@@ -154,7 +154,7 @@ class AuthenticationController extends Controller
                     //update token in db
                     $this->userManager->updateToken($user);
                     
-                    header('Location: ' . $_ENV['URL_PATH'] . 'authentication/login');
+                    header('Location: ' . $this->env['URL_PATH'] . 'authentication/login');
                 } else {
                     echo 'Une erreur est survenue!';
                 }
@@ -256,7 +256,7 @@ class AuthenticationController extends Controller
                 $this->userManager->updatePassword($userToUpdate);
                 $this->userManager->updateToken($userToUpdate);
                 
-                header('Location: ' . $_ENV['URL_PATH'] . 'authentication/login');
+                header('Location: ' . $this->env['URL_PATH'] . 'authentication/login');
             } else {
                 //Initialize data
                 $data = [

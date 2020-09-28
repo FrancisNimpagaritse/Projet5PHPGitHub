@@ -2,7 +2,6 @@
 
   if(!$this->httpRequest->sessionExists('user_id') && !$this->httpRequest->cookieExists('user_firstname')) {
     header('Location: ' . Validator::escapingData($this->env['URL_PATH']) . 'authentication/login');
-      exit();
   }
   
   $this->httpRequest->setSession('user_firstname', $this->httpRequest->cookieExists('user_firstname') ? $this->httpRequest->getCookieData('user_firstname') : $this->httpRequest->getSession('user_firstname'));
