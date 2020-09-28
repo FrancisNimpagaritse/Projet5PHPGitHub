@@ -104,7 +104,7 @@ class PostsController extends Controller
                 //insert into db using manager's create method
                 $this->postManager->create($post);
             
-                header('Location: ' . $_ENV['URL_PATH'] . 'posts/list?success');
+                header('Location: ' . $this->env['URL_PATH'] . 'posts/list?success');
 
             } else {
                 $data = [
@@ -148,7 +148,7 @@ class PostsController extends Controller
         
         $this->postManager->publishOne($postToPublish);
 
-        header('Location: ' . $_ENV['URL_PATH'] . 'posts/list?success');
+        header('Location: ' . $this->env['URL_PATH'] . 'posts/list?success');
     }
 
     public function unPublish()
@@ -158,7 +158,7 @@ class PostsController extends Controller
 
         $this->postManager->unPublishOne($postToUnpublish);
 
-        header('Location: ' . $_ENV['URL_PATH'] . 'posts/list?success');
+        header('Location: ' . $this->env['URL_PATH'] . 'posts/list?success');
     }
     
     public function edit()
@@ -223,7 +223,7 @@ class PostsController extends Controller
 
                     $this->postManager->update($postToUpdate);
                         
-                    header('Location: ' . $_ENV['URL_PATH'] . 'posts/list?success');
+                    header('Location: ' . $this->env['URL_PATH'] . 'posts/list?success');
 
                 } else {
                     $data = [
@@ -247,7 +247,7 @@ class PostsController extends Controller
 
                 //Check for ownership
                 if ($user->getId() != $this->httpRequest->getSession('user_id')) {
-                    header('Location: ' . $_ENV['URL_PATH'] . 'post/list');
+                    header('Location: ' . $this->env['URL_PATH'] . 'post/list');
                 }
                 //Initialize data for edit form
                 $data = [

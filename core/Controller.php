@@ -21,7 +21,7 @@ abstract class Controller
     //Load model and get data from it
     public function loadModel(string $model)
     {
-        require_once($_ENV['APPROOT_REQUIRE'].'models/'.$model.'.php');
+        require_once($this->env['APPROOT_REQUIRE'].'models/'.$model.'.php');
         
         //Instantiate model class
         return new $model();
@@ -32,11 +32,11 @@ abstract class Controller
     {
         extract($data);
 
-        if (file_exists($_ENV['APPROOT_REQUIRE'].'views/'.$view.'View.php')) {
-            require_once($_ENV['APPROOT_REQUIRE'].'views/'.$view.'View.php');
+        if (file_exists($this->env['APPROOT_REQUIRE'].'views/'.$view.'View.php')) {
+            require_once($this->env['APPROOT_REQUIRE'].'views/'.$view.'View.php');
             return;
         } 
         
-        header('Location: ' . $_ENV['URL_PATH'] . 'home/page404');        
+        header('Location: ' . $this->env['URL_PATH'] . 'home/page404');        
     }
 }
