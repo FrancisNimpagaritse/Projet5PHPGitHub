@@ -4,14 +4,16 @@ abstract class Controller
 {
     protected $id;
     protected $httpRequest;
+    protected $env;
 
     public function __construct()
     {
+        $this->env = $_ENV ?? [];
         $this->httpRequest = (new HttpRequest())
-            ->setPost($_POST)
-            ->setServer($_SERVER);
+            ->setPost($_POST ?? [])
+            ->setServer($_SERVER ?? []);
 
-        if ($this->httpRequest->getKeyExists('uc')) { //isset($_GET['uc'])
+        if ($this->httpRequest->getKeyExists('uc')) {
             $url = explode('/',filter_var($this->httpRequest->getGet('uc'), FILTER_SANITIZE_URL));
             $this->id = $url[2] ?? null;
         }
@@ -29,6 +31,7 @@ abstract class Controller
     public function render(string $view, array $data = [])
     {
         extract($data);
+
         if (file_exists($_ENV['APPROOT_REQUIRE'].'views/'.$view.'View.php')) {
             require_once($_ENV['APPROOT_REQUIRE'].'views/'.$view.'View.php');
             return;
