@@ -12,7 +12,7 @@
     <div class="card-body login-card-body">
       <p class="login-box-msg">Vous avez oublié votre mot de passe? Demandez un autre.</p>
 
-      <form action="<?=Validator::escapingData($_ENV['URL_PATH'])?>authentication/requestPassword" method="post">
+      <form action="<?=Validator::escapingData($this->env['URL_PATH'])?>authentication/requestPassword" method="post">
         <div class="input-group mb-3">
           <input type="email" name="email" class="form-control <?=(!empty($data['email_error']) || !empty($data['email_unknown'])) ? 'is-invalid' : ''; ?>" placeholder="Email">
           <div class="input-group-append">
@@ -34,7 +34,7 @@
       </form>
 
       <p class="mt-3 mb-1">
-        <a href="<?=Validator::escapingData($_ENV['URL_PATH'])?>authentication/login">Se Connecter</a>
+        <a href="<?=Validator::escapingData($this->env['URL_PATH'])?>authentication/login">Se Connecter</a>
       </p>      
     </div>
     <!-- /.login-card-body -->

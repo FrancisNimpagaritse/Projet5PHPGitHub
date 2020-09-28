@@ -80,7 +80,7 @@ class Validator
     public static function escapingData($value)
     {
         $data = trim($value);
-        $data = htmlspecialchars($value);
+        $data = htmlspecialchars($data);
 
         return $data;
     }

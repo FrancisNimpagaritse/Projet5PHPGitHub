@@ -33,8 +33,8 @@
                 <h3 class="card-title">Ajouter un post blog</h3>
               </div>
               <!-- /.card-header -->
-              <!-- form start -->
-              <form role="form" action="<?=Validator::escapingData($_ENV['URL_PATH'])?>posts/add" method="post">
+              <!-- form start -->              
+              <form role="form" action="<?=Validator::escapingData($this->env['URL_PATH'])?>posts/add" method="post">
                 <div class="card-body">
                   <div class="form-group">
                     <label for="title">title <sup>*</sup></label>

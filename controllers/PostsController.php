@@ -36,7 +36,7 @@ class PostsController extends Controller
 
         $post = $this->postManager->showOneById($this->id);
         if (!$post) {
-            header('Location: ' . $_ENV['URL_PATH'] . 'home/page404');
+            header('Location: ' . $this->env['URL_PATH'] . 'home/page404');
         }
         $comments = $this->commentManager->findCommentsByPost($this->id);
         $this->render('show',['post'=>$post, 'comments'=>$comments]);

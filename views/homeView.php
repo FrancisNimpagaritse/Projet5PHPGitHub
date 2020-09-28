@@ -65,7 +65,7 @@
                 <div class="col-lg-4">
                     <div class="blog_right_sidebar">                        
                         <aside class="single_sidebar_widget author_widget text-center">
-                            <img class="author_img img-fluid rounded center-block" src="<?=Validator::escapingData($_ENV['URL_PATH'])?>views/admin/myImage/francis-01.png" style="width:310px; height:320px;" alt="">
+                            <img class="author_img img-fluid rounded center-block" src="<?=Validator::escapingData($this->env['URL_PATH'])?>views/admin/myImage/francis-01.png" style="width:310px; height:320px;" alt="">
                             <div class="text-center">
                                 <h4>François Nimpagaritse</h4>
                             </div>                            
@@ -73,7 +73,7 @@
                                 <div class="blog_text_inner ">
                                     <div class="cat p-1">
                                         <a class="cat_btn mb-2" href="#">Le développeur multi-compétent</a>
-                                        <a class="blog_btn mt-2 pb-0" href="<?=Validator::escapingData($_ENV['URL_PATH'])?>views/admin/myImage/CV_François_Nimpagaritse.pdf" target="_blank">Voir mon CV</a>
+                                        <a class="blog_btn mt-2 pb-0" href="<?=Validator::escapingData($this->env['URL_PATH'])?>views/admin/myImage/CV_François_Nimpagaritse.pdf" target="_blank">Voir mon CV</a>
                                     </div>
                                 </div>
 							</div>
@@ -108,7 +108,7 @@
             </div>
         </div>
         <div class="col-lg-9">
-            <form class="row contact_form" action="<?=Validator::escapingData($_ENV['URL_PATH'])?>home/send" method="post" id="contactForm">
+            <form class="row contact_form" action="<?=Validator::escapingData($this->env['URL_PATH'])?>home/send" method="post" id="contactForm">
                 <div class="col-md-6">
                     <div class="form-group">
                         <input type="text" class="form-control" id="name" name="name" placeholder="Saisir votre nom et prénom" value="<?=Validator::escapingData($data['name']);?>" required>
