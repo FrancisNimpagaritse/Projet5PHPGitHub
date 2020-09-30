@@ -9,10 +9,9 @@ require_once 'HttpRequest.php';
 require_once 'Token.php';
 require_once 'Validator.php';
 
-//Load base controller
 $config = new Config();
 require_once($_ENV['APPROOT_REQUIRE'].'core/Controller.php');
-//print_r($_ENV); die();
+
 $request = new HttpRequest();
 if (!$request->getKeyExists('uc')) {
     $url[0] = "home";

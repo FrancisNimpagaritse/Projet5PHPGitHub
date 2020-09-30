@@ -6,7 +6,7 @@ Informations générales
 ---------------------------  
 L'aboutissement de ce projet a été possible grâce aux nombreux cours disponibles sur la plateforme d'OpenClassrooms ainsi que d'autres documentations disponibles sur le web.  
 
-Le thème Bootstrap utilisé est Clean Blog crée par Colorlib. Plus d'informations 
+Le thème Bootstrap utilisé est Opium créé par Colorlib. Plus d'informations 
 
 Installation
 -------------- 
