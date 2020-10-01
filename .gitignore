@@ -1,5 +1,4 @@
 # Ignoring some folders and file
-/public/*
 /vendor/*
 composer.lock
 myblog.sql
