@@ -1,7 +1,7 @@
 <?php
 
 class Token
-{    
+{
     public static function generate()
     {
        return hash("sha512", microtime().rand(0,999999));
@@ -10,11 +10,5 @@ class Token
     public static function validToken($token)
     {
         return ($_SESSION[$token] == $_POST[$token]);
-    }  
-    /*
-    public function validateToken($token)
-    {
-        return ($this->request->getSession($token) == $this->request->postKeyData($token));
-    }   
-    */ 
+    }
 }

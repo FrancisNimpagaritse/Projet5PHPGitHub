@@ -161,7 +161,7 @@ class UserController extends Controller
             }
 
             if (!$errors) { 
-                
+
                 //Get user to update from Manager
                 $userToUpdate = $this->userManager->findById($this->id); 
                 //Assign values to the new user to create
@@ -169,9 +169,9 @@ class UserController extends Controller
                             ->setLastname($lastname)
                             ->setEmail($email)
                             ->setUpdatedAt(date("Y-m-d H:i:s"));
-                                
+
                 //insert into db using manager's create method
-                $this->userManager->update($userToUpdate);     
+                $this->userManager->update($userToUpdate);
             
                 header('Location: ' . $this->env['URL_PATH'] . 'user/index');
             } else {
@@ -188,7 +188,7 @@ class UserController extends Controller
                 'password_error' => $errors['password'] ?? '',
                 'confirm_password_error' => $errors['confirm_password'] ?? ''
                 
-                ];            
+                ];
                 //Reload view with errors
                 $this->render('admin/editUser',$data);
             }
@@ -208,13 +208,13 @@ class UserController extends Controller
                 'email' => $user->getEmail(),
                 'firstname_error' => '',
                 'lastname_error' => '',
-                'email_error' => '',                
+                'email_error' => '',
                 'password_error' => '',
                 'confirm_password_error' => '' 
             ];
             //Load view
-            $this->render('admin/editUser',$data);                
-        }     
+            $this->render('admin/editUser',$data);
+        }
     }
 
     public function delete()

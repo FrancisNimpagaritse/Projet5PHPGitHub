@@ -37,6 +37,6 @@ abstract class Controller
             return;
         } 
         
-        header('Location: ' . $this->env['URL_PATH'] . 'home/page404');        
+        header('Location: ' . $this->env['URL_PATH'] . 'home/page404');
     }
 }
