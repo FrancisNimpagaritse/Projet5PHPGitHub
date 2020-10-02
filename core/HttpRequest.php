@@ -60,10 +60,7 @@ class HttpRequest
 
     public function sessionExists($name)
     {
-        if (isset($_SESSION[$name]))
-            return true;
-        else
-            return false;
+        return isset($_SESSION[$name]);
     }
 
     public function deleteSession($name)
@@ -81,10 +78,7 @@ class HttpRequest
 
     public function cookieExists($name)
     {
-        if (isset($_COOKIE[$name]))
-            return true;
-        else
-            return false;
+        return isset($_COOKIE[$name]);
     }
 
     public function getCookieData($name)

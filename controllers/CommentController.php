@@ -25,10 +25,10 @@ class CommentController extends Controller
                 'message' => [
                     'required' => true,
                     'min-length' => 1,
-                    'max-length' => 50, 
+                    'max-length' => 50,
                 ],
                 'postid' => [
-                    'required' => true, 
+                    'required' => true,
                 ]
             ]);
             //Get cleaned and validated data
@@ -40,7 +40,7 @@ class CommentController extends Controller
             $errors = $validation->getErrors();
             //print_r($errors); die();
             //If errors is empty
-            if (!$errors) {                
+            if (!$errors) {
                 $comment = new Comment();
                 //Assign values to the new user to create
                 $comment->setPostId($postid)
@@ -48,9 +48,10 @@ class CommentController extends Controller
                         ->setAuthorId($this->httpRequest->getSession('user_id'));
 
                 $this->commentManager->create($comment);
-                //$this->render('posts/index',['resultMessage' => $resultMessage]);
+                
                 header('Location: ' . $this->env['URL_PATH'] . 'posts/index?success');
             } else {
+                
                 header('Location: ' . $this->env['URL_PATH'] . 'posts/index?error');
             }
         }
