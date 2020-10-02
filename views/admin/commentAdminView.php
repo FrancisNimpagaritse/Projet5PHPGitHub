@@ -1,6 +1,9 @@
-<?php $title = "Commentaires"; ?>
+<?php $title = "Commentaires";
 
-<?php ob_start(); ?>
+//create deletion token and save it in session
+$csrf = $this->httpRequest->setSession('csrf', Token::generate());
+
+ob_start(); ?>
 
   
   <!-- Content Wrapper. Contains page content -->
@@ -30,11 +33,11 @@
           <div class="card">
             <div class="card-header">
               <h3 class="card-title">Liste des commentaires</h3>
-              <?php                
-                if (isset($message)) {
-                  echo '<div class="col-md-6 col-md-offset-3 alert alert-success text-center">' . $message . '</div>';
+              <?php              
+                if($this->httpRequest->getKeyExists('success')) {                  
+                  echo '<div class="col-md-6 col-md-offset-3 alert alert-success text-center">Opération réalisée avec succès !</div>';
                 }
-                ?>
+              ?>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
@@ -62,13 +65,13 @@
                               <?=$comment->status;?>
                               <?php if ($comment->status=='attente')
                               { ?>
-                              <a href="<?=Validator::escapingData($this->env['URL_PATH'])?>comment/publish/<?=$comment->id . '&token=' . $this->httpRequest->getSession('token');?>" class="btn btn-xs btn-warning mb-2">publier</a> 
+                              <a href="<?=Validator::escapingData($this->env['URL_PATH'])?>comment/publish/<?=$comment->id . '&token=' . $csrf;?>" class="btn btn-xs btn-warning mb-2">publier</a> 
                               <?php } else { ?>
-                                <a href="<?=Validator::escapingData($this->env['URL_PATH'])?>comment/unPublish/<?=$comment->id . '&token=' . $this->httpRequest->getSession('token');?>" class="btn btn-xs btn-danger mb-2">retirer</a> 
+                                <a href="<?=Validator::escapingData($this->env['URL_PATH'])?>comment/unPublish/<?=$comment->id . '&token=' . $csrf;?>" class="btn btn-xs btn-danger mb-2">retirer</a> 
                               <?php } ?>
                              </td>                              
                             <td>
-                              <a href="<?=Validator::escapingData($this->env['URL_PATH'])?>comment/delete/<?=$comment->id . '&token=' . $this->httpRequest->getSession('token');?>" class="btn btn-xs btn-danger mb-2"><i class="far fa-trash-alt"></i></a>
+                              <a href="<?=Validator::escapingData($this->env['URL_PATH'])?>comment/delete/<?=$comment->id . '&token=' . $csrf; ?>" class="btn btn-xs btn-danger mb-2"><i class="far fa-trash-alt"></i></a>
                             </td>
                         </tr> 
                     <?php endforeach ; ?>               

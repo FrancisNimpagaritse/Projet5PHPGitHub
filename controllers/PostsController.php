@@ -163,109 +163,105 @@ class PostsController extends Controller
     
     public function edit()
     {
-        $token = new Token($this->httpRequest);
-        
-        if ($token->check('token')) {
+        if ($this->httpRequest->method() == 'POST' && Token::validToken('csrf')) {
+           //Validate entries 
+            $validation = new Validator();
+            
+            $validation->Validate($this->httpRequest->getPost(),[
+                'title' => [
+                    'required' => true,
+                    'min-length' => 3,
+                    'max-length' => 50, 
+                ],
+                'chapo' => [
+                    'required' => true,
+                    'min-length' => 3,
+                    'max-length' => 50, 
+                ],
+                'category' => [
+                    'required' => true,
+                    'min-length' => 2,
+                    'max-length' => 50, 
+                ],
+                'content' => [
+                    'required' => true,
+                    'min-length' => 20,
+                    'max-length' => 500, 
+                ],
+                'postImage' => [
+                    'required' => true,
+                    'min-length' => 5,
+                    'max-length' => 50
+                ] 
+            ]);
+            //Get cleaned and validated data
+            $cleanData = $validation->getClean();
+            
+            $title = $cleanData['title'];
+            $chapo = $cleanData['chapo'];
+            $category = $cleanData['category'];
+            $content = $cleanData['content'];
+            $postImage = $cleanData['postImage'];
+            
+            $errors = $validation->getErrors();
+            
+            //If errors is empty
+            if (!$errors) {            
+                //Get post to update from Manager
+                $postToUpdate = $this->postManager->findById($this->id);                      
+                //Assign values to the post to edit
+                $postToUpdate->settitle($title)
+                            ->setchapo($chapo)
+                            ->setcategory($category)
+                            ->setcontent($content)
+                            ->setAuthorId($this->httpRequest->getSession('user_id'))
+                            ->setPostImage($postImage);
 
-           if ($this->httpRequest->method() == 'POST') {
-                //Validate entries 
-                $validation = new Validator();
-                
-                $validation->Validate($this->httpRequest->getPost(),[
-                    'title' => [
-                        'required' => true,
-                        'min-length' => 3,
-                        'max-length' => 50, 
-                    ],
-                    'chapo' => [
-                        'required' => true,
-                        'min-length' => 3,
-                        'max-length' => 50, 
-                    ],
-                    'category' => [
-                        'required' => true,
-                        'min-length' => 2,
-                        'max-length' => 50, 
-                    ],
-                    'content' => [
-                        'required' => true,
-                        'min-length' => 20,
-                        'max-length' => 500, 
-                    ],
-                    'postImage' => [
-                        'required' => true,
-                        'min-length' => 5,
-                        'max-length' => 50
-                    ] 
-                ]);
-                //Get cleaned and validated data
-                $cleanData = $validation->getClean();
-                
-                $title = $cleanData['title'];
-                $chapo = $cleanData['chapo'];
-                $category = $cleanData['category'];
-                $content = $cleanData['content'];
-                $postImage = $cleanData['postImage'];
-                
-                $errors = $validation->getErrors();
-                
-                //If errors is empty
-                if (!$errors) {            
-                    //Get post to update from Manager
-                    $postToUpdate = $this->postManager->findById($this->id);                      
-                    //Assign values to the post to edit
-                    $postToUpdate->settitle($title)
-                                ->setchapo($chapo)
-                                ->setcategory($category)
-                                ->setcontent($content)
-                                ->setAuthorId($this->httpRequest->getSession('user_id'))
-                                ->setPostImage($postImage);
+                $this->postManager->update($postToUpdate);
+                    
+                header('Location: ' . $this->env['URL_PATH'] . 'posts/list?success');
 
-                    $this->postManager->update($postToUpdate);
-                        
-                    header('Location: ' . $this->env['URL_PATH'] . 'posts/list?success');
-
-                } else {
-                    $data = [
-                        'title' => $title,
-                        'chapo' => $chapo,
-                        'category' => $category,
-                        'content' => $content,
-                        'postImage' => $postImage,
-                        'title_error' => $errors['title'] ?? '',
-                        'chapo_error' => $errors['chapo'] ?? '',
-                        'category_error' => $errors['category'] ?? '',
-                        'content_error' => $errors['content'] ?? '',
-                        'postImage_error' => $errors['postImage'] ?? ''
-                    ];
-                    //Reload view with errors
-                    $this->render('admin/editPost',$data);
-                }            
-            } else { //Initial load view for update
-                $post = $this->postManager->findById($this->id);
-                $user = $this->userManager->findById($post->getAuthorId());
-
-                //Check for ownership
-                if ($user->getId() != $this->httpRequest->getSession('user_id')) {
-                    header('Location: ' . $this->env['URL_PATH'] . 'post/list');
-                }
-                //Initialize data for edit form
+            } else {
                 $data = [
-                    'id' => $this->id,
-                    'title' => $post->getTitle(),
-                    'category' => $post->getCategory(),
-                    'chapo' => $post->getChapo(),
-                    'content' => $post->getContent(),
-                    'postImage' => $post->getPostImage(),
-                    'title_error' => '',
-                    'category_error' => '',
-                    'chapo_error' => '',
-                    'content_error' => '',
-                    'postImage_error' => ''
+                    'title' => $title,
+                    'chapo' => $chapo,
+                    'category' => $category,
+                    'content' => $content,
+                    'postImage' => $postImage,
+                    'title_error' => $errors['title'] ?? '',
+                    'chapo_error' => $errors['chapo'] ?? '',
+                    'category_error' => $errors['category'] ?? '',
+                    'content_error' => $errors['content'] ?? '',
+                    'postImage_error' => $errors['postImage'] ?? ''
                 ];
-                //Load view
+                //Reload view with errors
                 $this->render('admin/editPost',$data);
+            }    
+        } else { //Initial load view for update
+            $post = $this->postManager->findById($this->id);
+            $user = $this->userManager->findById($post->getAuthorId());
+
+            //Check for ownership
+            if ($user->getId() != $this->httpRequest->getSession('user_id')) {
+                header('Location: ' . $this->env['URL_PATH'] . 'post/list');
             }
+            //Initialize data for edit form
+            $data = [
+                'id' => $this->id,
+                'title' => $post->getTitle(),
+                'category' => $post->getCategory(),
+                'chapo' => $post->getChapo(),
+                'content' => $post->getContent(),
+                'postImage' => $post->getPostImage(),
+                'title_error' => '',
+                'category_error' => '',
+                'chapo_error' => '',
+                'content_error' => '',
+                'postImage_error' => ''
+            ];
+            //Load view
+            $this->render('admin/editPost',$data);
         }
+        
     }
 }

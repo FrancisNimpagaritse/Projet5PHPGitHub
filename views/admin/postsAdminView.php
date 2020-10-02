@@ -1,6 +1,9 @@
-<?php $title = "Liste des blog posts"; ?>
+<?php $title = "Liste des blog posts";
 
-<?php ob_start(); ?>
+//create edit token and save it in session
+$csrf = $this->httpRequest->setSession('csrf', Token::generate());
+
+ob_start(); ?>
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -66,13 +69,13 @@
                               <?=$post->status;?>
                               <?php if ($post->status=='attente')  //$post->id . '&token=' . $_SESSION['user']['token'];
                               { ?>
-                              <a href="<?=Validator::escapingData($this->env['URL_PATH'])?>posts/publish/<?=$post->id . '&token=' . HttpRequest::getSession('token');?>" class="btn btn-xs btn-warning mb-2">publier</a> 
+                              <a href="<?=Validator::escapingData($this->env['URL_PATH'])?>posts/publish/<?=$post->id . '&token=' . $csrf;?>" class="btn btn-xs btn-warning mb-2">publier</a> 
                               <?php } else { ?>
-                                <a href="<?=Validator::escapingData($this->env['URL_PATH'])?>posts/unPublish/<?=$post->id . '&token=' . HttpRequest::getSession('token');?>" class="btn btn-xs btn-danger mb-2">retirer</a> 
+                                <a href="<?=Validator::escapingData($this->env['URL_PATH'])?>posts/unPublish/<?=$post->id . '&token=' . $csrf;?>" class="btn btn-xs btn-danger mb-2">retirer</a> 
                               <?php } ?>
                              </td>                              
                             <td>
-                              <a href="<?=Validator::escapingData($this->env['URL_PATH'])?>posts/edit/<?=$post->id . '&token=' . HttpRequest::getSession('token');?>" class="btn btn-xs btn-primary mb-2"><i class="fas fa-pencil-alt"></i></a>
+                              <a href="<?=Validator::escapingData($this->env['URL_PATH'])?>posts/edit/<?=$post->id;?>" class="btn btn-xs btn-primary mb-2"><i class="fas fa-pencil-alt"></i></a>
                             </td>
                         </tr> 
                     <?php endforeach ; ?>               

@@ -1,6 +1,9 @@
-<?php $title = "Modifier un blog post"; ?>
+<?php $title = "Modifier un blog post";
 
-<?php ob_start(); ?>
+//create edit token and save it in session
+$csrf = $this->httpRequest->setSession('csrf', Token::generate());
+
+ob_start(); ?>
 
 <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -34,7 +37,7 @@
               </div>
               <!-- /.card-header -->
               <!-- form start -->
-              <form role="form" action="<?=Validator::escapingData($this->env['URL_PATH'])?>posts/edit/<?=Validator::escapingData($data['id']). '&token=' . $this->httpRequest->getSession('token');?>" method="post">
+              <form role="form" action="<?=Validator::escapingData($this->env['URL_PATH'])?>posts/edit/<?=Validator::escapingData($data['id']);?>" method="post">
                 <div class="card-body">
                   <div class="form-group">
                     <label for="title">title <sup>*</sup></label>
@@ -65,7 +68,8 @@
                   <div class="form-group">
                     <label for="postImage">image</label>
                     <input type="text" id="postImage" name="postImage" class="form-control <?=(!empty($data['postImage_error'])) ? 'is-invalid' : ''; ?>" value="<?=Validator::escapingData($data['postImage']);?>" placeholder="Image">
-                    <span class="invalid-feedback"><?=Validator::escapingData($data['postImage_error']);?></span>              
+                    <span class="invalid-feedback"><?=Validator::escapingData($data['postImage_error']);?></span> 
+                    <input type="hidden" name="csrf" value="<?=$csrf; ?>">             
                   </div>
                 </div>
                 <!-- /.card-body -->
