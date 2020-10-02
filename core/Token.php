@@ -1,27 +1,20 @@
 <?php
 
 class Token
-{
-    private $request;
-    public function __construct(HttpRequest $request)
-    {
-        $this->request = $request;
-    }
+{    
     public static function generate()
     {
-       //return Session::sessionData('token', hash("sha512", microtime().rand(0,999999)));
        return hash("sha512", microtime().rand(0,999999));
     }
 
-    public function check($token)
+    public static function validToken($token)
     {
-        $tokenName=$this->request->getGet('token');
-
-        if ( $this->request->sessionExists($token) && $tokenName == $this->request->getSession($token)) {
-            return true;
-        } else {
-            return false;
-        }
-        
-    }
+        return ($_SESSION[$token] == $_POST[$token]);
+    }  
+    /*
+    public function validateToken($token)
+    {
+        return ($this->request->getSession($token) == $this->request->postKeyData($token));
+    }   
+    */ 
 }

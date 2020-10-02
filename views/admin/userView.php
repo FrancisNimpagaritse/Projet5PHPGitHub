@@ -1,6 +1,9 @@
-<?php $title = "Utilisateurs inscrits"; ?>
+<?php $title = "Utilisateurs inscrits";
 
-<?php ob_start(); ?>
+//create edit token and save it in session
+$csrf = $this->httpRequest->setSession('csrf', Token::generate());
+
+ob_start(); ?>
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -57,8 +60,8 @@
                             <td><?=$user->getNewpwd();?></td>
                             <td><?=date_format(new DateTime($user->getUpdatedAt()),"d-m-Y H:i:s");?></td>
                             <td>
-                            <a href="<?=Validator::escapingData($this->env['URL_PATH'])?>user/edit/<?=$user->getId() . '&token=' . $_SESSION['user']['token'];?>" class="btn btn-primary mb-2"><i class="fas fa-pencil-alt"></i></a> 
-                            <a href="<?=Validator::escapingData($this->env['URL_PATH'])?>user/delete/<?=$user->getId() . '&token=' . $_SESSION['user']['token'];?>" class="btn btn-danger mb-2"><i class="far fa-trash-alt"></i></a>
+                            <a href="<?=Validator::escapingData($this->env['URL_PATH'])?>user/edit/<?=$user->getId() . '&token=' . $csrf;?>" class="btn btn-primary mb-2"><i class="fas fa-pencil-alt"></i></a> 
+                            <a href="<?=Validator::escapingData($this->env['URL_PATH'])?>user/delete/<?=$user->getId() . '&token=' . $csrf;?>" class="btn btn-danger mb-2"><i class="far fa-trash-alt"></i></a>
                             </td>
                         </tr>
                     <?php endforeach ; ?>

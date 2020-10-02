@@ -1,6 +1,9 @@
-<?php $title = "Modifier un utilisateur"; ?>
+<?php $title = "Modifier un utilisateur";
 
-<?php ob_start(); ?>
+//create edit token and save it in session
+$csrf = $this->httpRequest->setSession('csrf', Token::generate());
+
+ob_start(); ?>
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -61,6 +64,7 @@
                     <label for="confirm_password">Confirmer mot de passe <sup>*</sup></label>
                     <input type="password" id="confirm_password" name="confirm_password" class="form-control <?=(!empty($data['confirm_password_error'])) ? 'is-invalid' : ''; ?>" value="<?=Validator::escapingData($data['confirm_password']) ?? ''; ?>" placeholder="Confirmer mot de passe">
                     <span class="invalid-feedback"><?=Validator::escapingData($data['confirm_password_error']);?></span>              
+                    <input type="hidden" name="csrf" value="<?=$csrf; ?>"> 
                   </div>
                 </div>
                 <!-- /.card-body -->

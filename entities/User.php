@@ -12,9 +12,6 @@ class User
     private $updatedAt;
     private $token;
 
-    
-
-
     /**
      * Get the value of id
      */ 

@@ -58,29 +58,41 @@ class CommentController extends Controller
     
     public function publish()
     {
-        $commentToPublish = $this->commentManager->findById($this->id);
-        $message = "Commentaire publié avec success";
-        $this->commentManager->publishOne($commentToPublish);
+        $sessionToken = $this->httpRequest->getSession('csrf');
+        $getToken = $this->httpRequest->getGet('token');
         
-        $comments = $this->commentManager->findAll();
-        $this->render('admin/commentAdmin', ['comments'=> $comments, 'message' => $message]);
+        if($sessionToken == $getToken) {
+            $commentToPublish = $this->commentManager->findById($this->id);
+            $this->commentManager->publishOne($commentToPublish);
+            
+           header('Location: ' . $this->env['URL_PATH'] . 'comment/index?success');
+        } else {
+            throw new Exception("Impossible de réaliser l'action !");
+        }
     }
 
     public function unPublish()
     {
-        //Get post to unPublish from db
-        $commentToUnpublish = $this->commentManager->findById($this->id);
-        $message = "Commentaire retiré de la publication avec success";
-        $this->commentManager->unPublishOne($commentToUnpublish);
+        $sessionToken = $this->httpRequest->getSession('csrf');
+        $getToken = $this->httpRequest->getGet('token');
         
-        $comments = $this->commentManager->findAll();
-        $this->render('admin/commentAdmin', ['comments'=> $comments, 'message' => $message]);
+        if($sessionToken == $getToken) {
+            //Get post to unPublish from db
+            $commentToUnpublish = $this->commentManager->findById($this->id);
+            $this->commentManager->unPublishOne($commentToUnpublish);
+            
+            header('Location: ' . $this->env['URL_PATH'] . 'comment/index?success');
+        } else {
+            throw new Exception("Impossible de réaliser l'action !");
+        }
     }
 
     public function delete()
     {
-        $token = new Token($this->httpRequest);
-        if ($token->check('token')) {
+        $sessionToken = $this->httpRequest->getSession('csrf');
+        $getToken = $this->httpRequest->getGet('token');
+        
+        if($sessionToken == $getToken) {
             $commentToDelete = $this->commentManager->findById($this->id);
             $message = "Commentaire supprimé avec success";
             
@@ -88,6 +100,8 @@ class CommentController extends Controller
 
             $comments = $this->commentManager->findAll();
             $this->render('admin/commentAdmin', ['comments'=> $comments, 'message' => $message]);
+        } else {
+            throw new Exception("Impossible de réaliser l'action !");
         }
     }
 }

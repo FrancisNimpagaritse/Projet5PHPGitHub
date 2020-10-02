@@ -45,7 +45,7 @@ class AuthenticationController extends Controller
                 $this->httpRequest->setSession('user_firstname', $loggedInUser->getFirstname());
                 $this->httpRequest->setSession('user_lastname', $loggedInUser->getLastname());
                 $this->httpRequest->setSession('profile', $loggedInUser->getProfile());
-                $this->httpRequest->setSession('token', Token::generate());
+                //$this->httpRequest->setSession('token', Token::generate());
             
                 //Session cookies
                 if ($this->httpRequest->postKeyExists('remember')) {

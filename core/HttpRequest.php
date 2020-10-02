@@ -3,7 +3,6 @@
 class HttpRequest
 {
     private $post;
-    //private $get;
 
     public function setServer($server)
     {
@@ -32,6 +31,11 @@ class HttpRequest
     public function postKeyExists($key)
     {
         return isset($this->post[$key]);
+    }
+
+    public function postKeyData($key)
+    {
+        return $_POST[$key];
     }
 
     public function getKeyExists($key)
@@ -87,5 +91,4 @@ class HttpRequest
     {
         return $_COOKIE[$name];
     }
-
 }

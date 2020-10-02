@@ -8,10 +8,7 @@ class Comment
     private $authorId;
     private $createAt;
     private $status;
-
     
-
-
     /**
      * Get the value of id
      */ 
