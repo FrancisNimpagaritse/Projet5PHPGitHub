@@ -17,18 +17,7 @@ class UserManager extends Model
         $this->pdoStmt->bindValue(':email', $user->getEmail(), PDO::PARAM_STR);
         $this->pdoStmt->bindValue(':password', $user->getPassword(), PDO::PARAM_STR);
          
-        $isExecuteOk = $this->pdoStmt->execute();
-
-        if (!$isExecuteOk) {
-            return false;
-        }
-        //Get the last inserted Id
-        $id = $pdo->LastInsertId();
-
-        //Find the last inserted user by his Id
-        $user = $this->findById($id);
-
-        return true;        
+        return $this->pdoStmt->execute();
     }
 
     //Find all users
@@ -77,9 +66,9 @@ class UserManager extends Model
         if ($isExecuteOk) {
             $user = $this->pdoStmt->fetchObject('User');            
             return $user;
-        }
-        
-        return null;        
+        } else {
+            return false;
+        }        
     }
 
     public function findByEmail($email)
@@ -95,9 +84,9 @@ class UserManager extends Model
         if ($isExecuteOk) {
             $user = $this->pdoStmt->fetchObject('User');
             return $user;
-        } 
-        
-        return null;    
+        } else {
+            return false;
+        }        
     }
 
     public function findByToken($token)
@@ -110,12 +99,12 @@ class UserManager extends Model
 
          $isExecuteOk = $this->pdoStmt->execute();
         
-         if ($isExecuteOk) {
+        if ($isExecuteOk) {
             $user = $this->pdoStmt->fetchObject('User');
             return $user;
-         }
-
-         return null;       
+        } else {
+        return false;       
+        }
     }
 
     public function login($email, $pass)
@@ -135,9 +124,9 @@ class UserManager extends Model
             $hashed_password = $user->getPassword();
             if (password_verify($pass, $hashed_password)) {
                 return $user;
-            } 
-            
-            return false;
+            } else {
+                return false;
+            }
         }                
     }
 

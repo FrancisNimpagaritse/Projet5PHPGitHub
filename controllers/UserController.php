@@ -64,12 +64,12 @@ class UserController extends Controller
             $password = $cleanData['password'];
             
             $errors = $validation->getErrors();
-        
             //Check if that email exists in db valable en registration
             if ($this->userManager->findByEmail($email)) {
                 //User found duplicate error else continue
                 $errors['email_duplic'] = 'Email déja utilisé !';
             }
+            //print_r($errors); die();
             //If errors is empty
             if (!$errors) {
 
@@ -82,10 +82,11 @@ class UserController extends Controller
                         ->setLastname($lastname)
                         ->setEmail($email)
                         ->setPassword($pass_hash);
-                                        
-                //insert into db using manager's create method
+                
                 $this->userManager->create($user);
-                header('Location: ' . $this->env['URL_PATH'] . 'user/login');
+
+                header('Location: ' . $this->env['URL_PATH'] . 'authentication/login?success');
+
             } else {                    
                 $data = [
                     'firstname' => $firstname,

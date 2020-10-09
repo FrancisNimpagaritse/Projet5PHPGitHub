@@ -16,13 +16,7 @@ class CommentManager extends Model
         $this->pdoStmt->bindValue(':message', $comment->getMessage(), PDO::PARAM_STR);        
         $this->pdoStmt->bindValue(':userid', $comment->getAuthorId(), PDO::PARAM_INT);
          
-        $isExecuteOk = $this->pdoStmt->execute();
-
-        if ($isExecuteOk==false) {
-            return false;
-        } 
-        
-        return true;        
+        return $this->pdoStmt->execute();
     }
 
     //Find all posts
@@ -34,11 +28,7 @@ class CommentManager extends Model
         $this->pdoStmt->execute();
         $comments = $this->pdoStmt->fetchAll(PDO::FETCH_OBJ);
     
-        if (!$comments) {            
-            return null;
-        } else {
-            return $comments;
-        } 
+        return $comments;
     }
 
     //count all comments
@@ -90,14 +80,11 @@ class CommentManager extends Model
 
         $this->pdoStmt = $pdo->query('SELECT c.id, c.postid, c.message, u.firstname as author, c.createdAt, c.status FROM comments c 
         INNER JOIN users u ON c.authorId = u.id WHERE p.status = "publié" ORDER BY c.createdAt DESC');
+        
         $this->pdoStmt->execute();
         $comments = $this->pdoStmt->fetchAll(PDO::FETCH_OBJ);
     
-        if (!$comments) {            
-            return null;
-        } else {
-            return $comments;
-        } 
+        return $comments;
     }
 
     //Only published comment
@@ -135,11 +122,7 @@ class CommentManager extends Model
         if ($isExecuteOk) {
             $comment = $this->pdoStmt->fetchObject('Comment');
 
-            if ($comment==false) {
-                return null;
-            } else {
-                return $comment;
-            }
+            return $comment;
         } else {
              return false;
         }        
@@ -159,11 +142,7 @@ class CommentManager extends Model
         $this->pdoStmt->execute();
         $result = $this->pdoStmt->fetch(PDO::FETCH_OBJ);
    
-        if (!$result) {            
-            return null;
-        } else {
-            return $result;
-        } 
+        return $result;
     }    
     
     public function publishOne(Comment $comment)

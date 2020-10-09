@@ -54,7 +54,7 @@
                 <span class="fas fa-lock"></span>
               </div>
             </div>
-          <span class="invalid-feedback"><?=Validator::escapingData($data['password_error']);?></span> 
+          <span class="invalid-feedback"><?=Validator::escapingData($data['confirm_password_error']);?></span> 
         </div>
 
         <div class="row">

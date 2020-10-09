@@ -18,9 +18,7 @@ class User
     public function getId()
     {
         return $this->id;
-    }
-
-    
+    }    
 
     /**
      * Get the value of firstname

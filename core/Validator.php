@@ -18,7 +18,7 @@ class Validator
                 $value = $postData[$field];
 
                 if ($rule == 'required' && empty($value)) {                     
-                    $this->addError($field, "Le champ {$field} ne peut pas être vide !");
+                    $this->addError($field, "Ce champ ne peut pas être vide !");
                 } else if (!empty($value)) {
                     switch($rule) 
                     {
@@ -36,7 +36,7 @@ class Validator
 
                         case 'matches':
                             if ($value != $postData[$rule_value]) {
-                                $this->addError($field, "{$rule_value} doit correspondrent à {$field} !");
+                                $this->addError($field, "Les 2 mots de passe saisis ne correspondent pas !");
                             }
                         break;
 

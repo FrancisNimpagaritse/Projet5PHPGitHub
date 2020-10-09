@@ -21,7 +21,7 @@ Créer une base données sur votre SGDB (MySQL) et importer le fichier myblog.sq
 
 * Etape 3
 
-Installer toutes les dépendances du projet
+Installer toutes les dépendances du projet avec composer install
 
 * Etape 4
 

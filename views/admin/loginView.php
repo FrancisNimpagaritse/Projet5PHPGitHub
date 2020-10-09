@@ -6,6 +6,11 @@
   <div class="login-logo">
     <a href="#"><b>Log</b>in</a>
   </div>
+  <?php              
+  if($this->httpRequest->getKeyExists('success')) {                  
+    echo '<div class="alert alert-success text-center">Votre compte a bien été créé. Vous pouvez vous connecter maintenant !</div>';
+  }
+  ?>
   <!-- /.login-logo -->
   <div class="card">
     <div class="card-body login-card-body">
