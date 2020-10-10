@@ -1,5 +1,4 @@
 # Ignoring some folders and file
 /vendor/*
 composer.lock
-myblog.sql
 .env
